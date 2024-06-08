@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>댓글 추가</title>
 </head>
 <body>
 	<%
