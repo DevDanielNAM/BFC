@@ -116,6 +116,10 @@
 								</article>
 								<article class="reply-view-more-button">
 									<img id="reply-more-button" src="../resources/images/kebab_menu_icon.png" alt="reply more button" width="19" height="19" />									
+									<ul id="reply-view-more-button-lists">
+										<li>수정</li>
+										<li>삭제</li>
+									</ul>
 								</article>
 							</section>
 						</section>
