@@ -41,11 +41,22 @@ public class ReplyDAO {
  public void addReply(ReplyDTO reply) {
      String sql = "INSERT INTO Reply (content, createdAt, writerId, writerNickname) VALUES (?, ?, ?, ?)";
      try (Connection conn = getConnection();
-          PreparedStatement ps = conn.prepareStatement(sql)) {
+         PreparedStatement ps = conn.prepareStatement(sql)) {
          ps.setString(1, reply.getContent());
          ps.setTimestamp(2, reply.getCreatedAt());
          ps.setInt(3, reply.getWriterId());
          ps.setString(4, reply.getWriterNickname());
+         ps.executeUpdate();
+     } catch (SQLException e) {
+         e.printStackTrace();
+     }
+ }
+ 
+ public void deleteReply(int replyId) {
+     String sql = "DELETE FROM Reply WHERE replyId = ?";
+     try (Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+         ps.setInt(1, replyId);
          ps.executeUpdate();
      } catch (SQLException e) {
          e.printStackTrace();
