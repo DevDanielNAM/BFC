@@ -28,7 +28,7 @@
 						<article class="reply-view-more-button">
 							<img id="reply-more-button-<%= i %>" class="reply-more-button" src="../resources/images/kebab_menu_icon.png" alt="reply more button" width="19" height="19" />									
 							<ul id="reply-view-more-button-lists-<%= i %>" class="reply-view-more-button-lists">
-								<li><a onclick="return confirm('댓글을 수정하시겠습니까?');">수정</a></li>
+								<li><a class="edit-reply" data-content="<%= reply.getContent() %>" data-index="<%= i %>">수정</a></li>
 								<li><a href="deleteReply.jsp?replyId=<%= reply.getReplyId() %>" onclick="return confirm('댓글을 삭제하시겠습니까?');">삭제</a></li>
 							</ul>
 						</article>
@@ -36,9 +36,15 @@
 				</section>
 				
 				<section class="reply-view-content">
-					<article>
+					<article id="reply-content-<%= i %>">
 						<%= reply.getContent() %>
 					</article>
+					<form class="edit-reply-form" id="edit-reply-form-<%= i %>" action="editReply.jsp" method="post" style="display:none;">
+	                    <input type="hidden" name="replyId" value="<%= reply.getReplyId() %>">
+	                    <textarea name="replyContent" rows="3"><%= reply.getContent() %></textarea>
+	                    <input type="submit" value="수정하기" onclick="return confirm('댓글을 수정하시겠습니까?');">
+	                    <input type="button" class="cancel-edit" data-index="<%= i %>" value="취소하기">
+                	</form>
 				</section>
 			</section>
 		</li>
