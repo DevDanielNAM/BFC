@@ -306,3 +306,41 @@ input[type=button], input[type=submit] {
 	border-radius: 5px;
 	cursor: pointer;
 }
+
+.edit-reply-form {
+	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+
+.edit-reply-form > textarea {
+	width: 98%;
+	margin: 0 auto 10px auto;
+    padding: 5px;
+    border-radius: 7px;
+    resize: none;
+}
+
+.edit-reply-form > input[type=submit], .edit-reply-form > input[type=button] {
+	margin-left: 10px;
+	color: white;
+}
+
+.edit-reply-form > input[type=submit] {
+    background-color: #65A1E7;
+    transition: background-color 1s ease-out;
+}
+
+.edit-reply-form > input[type=submit]:hover {
+	background-color: #1d78e2;
+}
+
+
+.edit-reply-form > input[type=button] {
+    background-color: #E47C7C;
+    text-align: center;
+    transition: background-color 1s ease-out;
+}
+
+.edit-reply-form > input[type=button]:hover {
+	background-color: #cd0909;
+}
