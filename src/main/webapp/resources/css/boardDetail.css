@@ -198,8 +198,7 @@ hr {
 }
 
 #reply-write-button:hover {
-	background-color: #024a9f;
-	
+	background-color: #024a9f;	
 }
 
 .reply-view-lists {
@@ -235,10 +234,10 @@ hr {
 	cursor: pointer;
 }
 
-#reply-view-more-button-lists {
+.reply-view-more-button-lists {
 	position: absolute;
 	list-style: none;
-    width: 30px;
+    width: 40px;
     top: 1.5rem;
     right: 0.2rem;
 	cursor: pointer;
@@ -247,13 +246,45 @@ hr {
     transition: opacity 0.3s ease, height 0.3s ease;
 }
 
-#reply-view-more-button-lists.show {
+.reply-view-more-button-lists.show {
     display: block;
     opacity: 1;
 }
 
-#reply-view-more-button-lists > li {
+.reply-view-more-button-lists > li:first-child {
 	margin: 3px auto;
+    background-color: #65A1E7;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 1s ease-out;
+}
+
+.reply-view-more-button-lists > li:first-child:hover {
+	background-color: #1d78e2;
+}
+
+.reply-view-more-button-lists > li:first-child > a {
+	text-decoration: none;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.reply-view-more-button-lists > li:nth-child(2) {
+	margin: 3px auto;
+    background-color: #E47C7C;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 1s ease-out;
+}
+
+.reply-view-more-button-lists > li:nth-child(2):hover {
+	background-color: #cd0909;
+}
+
+.reply-view-more-button-lists > li:nth-child(2) > a {
+	text-decoration: none;
+    color: white;
+    font-size: 0.8rem;
 }
 
 .reply-profile {
@@ -274,4 +305,42 @@ input[type=button], input[type=submit] {
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
+}
+
+.edit-reply-form {
+	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+
+.edit-reply-form > textarea {
+	width: 98%;
+	margin: 0 auto 10px auto;
+    padding: 5px;
+    border-radius: 7px;
+    resize: none;
+}
+
+.edit-reply-form > input[type=submit], .edit-reply-form > input[type=button] {
+	margin-left: 10px;
+	color: white;
+}
+
+.edit-reply-form > input[type=submit] {
+    background-color: #65A1E7;
+    transition: background-color 1s ease-out;
+}
+
+.edit-reply-form > input[type=submit]:hover {
+	background-color: #1d78e2;
+}
+
+
+.edit-reply-form > input[type=button] {
+    background-color: #E47C7C;
+    text-align: center;
+    transition: background-color 1s ease-out;
+}
+
+.edit-reply-form > input[type=button]:hover {
+	background-color: #cd0909;
 }

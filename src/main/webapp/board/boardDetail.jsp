@@ -44,12 +44,12 @@
 						</li>
 					</ul>					
 				</article>
-				
+				<!-- DB에서 가져올 예정 -->
 				<section class="course-detail">
 					<section class="course-detail-title-wrap">
 						<article class="course-detail-title">
-							<h1 id="course-detail-title">title</h1>
-							<h4 id="course-detail-location">location</h4>
+							<h1 id="course-detail-title">코스별 제목</h1>
+							<h4 id="course-detail-location">코스 위치</h4>
 						</article>
 					</section>
 					
@@ -67,18 +67,24 @@
 					
 					<section class="course-detail-content">
 						<article>
-						contentcontentcontentcontentcontentcontentcontentcontent
-						contentcontentcontentcontentcontentcontentcontentcontent
-						contentcontentcontentcontentcontentcontentcontentcontent
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
 						</article>
 					</section>
 					
 					<section class="course-detail-tags">
 						<ul>
-							<li>#tag</li>
-							<li>#tag</li>
-							<li>#tag</li>
-							<li>#tag</li>
+							<li>#이기대</li>
+							<li>#영화의전당</li>
+							<li>#오륙도</li>
+							<li>#신세계센텀시티</li>
 						</ul>
 					</section>
 				</section>
@@ -96,43 +102,15 @@
 		<!-- reply section -->
 		<section class="reply">
 			<section class="reply-write">
-				<form class="reply-form" action="" method="post" onsubmit="return confirmSubmission()">
+				<form class="reply-form" action="addReply.jsp" method="POST" onsubmit="return confirmSubmission()">
 					<h4 id="reply-write-title">댓글 추가</h4>
 					<textarea id="reply-write-area" name="replyContent" rows="5" placeholder="댓글을 입력하세요"></textarea>
 					<input type="submit" id="reply-write-button" value="추가하기"/>
 				</form>
 			</section>
 			
-			<ul class="reply-view-lists">
-				<li class="reply-view-list">
-					<section class="reply-view">
-						<section class="reply-profile">
-							<img id="reply-profile-image" src="../resources/images/profile.png" alt="reply-profile" width="41" height="41">
-							<section class="reply-profile-contents-wrap">
-								<article class="reply-profile-contents">
-								<!-- DB에서 가져올 예정 -->
-									<h3 id="reply-profile-nickname">백경이</h3>
-									<h6 id="reply-profile-date">2024.06.08. 18:00</h6>
-								</article>
-								<article class="reply-view-more-button">
-									<img id="reply-more-button" src="../resources/images/kebab_menu_icon.png" alt="reply more button" width="19" height="19" />									
-									<ul id="reply-view-more-button-lists">
-										<li>수정</li>
-										<li>삭제</li>
-									</ul>
-								</article>
-							</section>
-						</section>
-						
-						<section class="reply-view-content">
-						<!-- DB에서 가져올 예정 -->
-							<article>
-								댓글 내용
-							</article>
-						</section>
-					</section>
-				</li>
-			</ul>
+			<jsp:include page="replyList.jsp" />
+			
 		</section>
 	
 	</main>
