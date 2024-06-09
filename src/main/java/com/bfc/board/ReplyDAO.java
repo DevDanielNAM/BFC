@@ -52,6 +52,18 @@ public class ReplyDAO {
      }
  }
  
+ public void updateReply(int replyId, String content) {
+     String sql = "UPDATE Reply SET content = ? WHERE replyId = ?";
+     try (Connection conn = getConnection();
+          PreparedStatement ps = conn.prepareStatement(sql)) {
+         ps.setString(1, content);
+         ps.setInt(2, replyId);
+         ps.executeUpdate();
+     } catch (SQLException e) {
+         e.printStackTrace();
+     }
+ }
+ 
  public void deleteReply(int replyId) {
      String sql = "DELETE FROM Reply WHERE replyId = ?";
      try (Connection conn = getConnection();
