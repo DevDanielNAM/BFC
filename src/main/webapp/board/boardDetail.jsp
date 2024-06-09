@@ -44,12 +44,12 @@
 						</li>
 					</ul>					
 				</article>
-				
+				<!-- DB에서 가져올 예정 -->
 				<section class="course-detail">
 					<section class="course-detail-title-wrap">
 						<article class="course-detail-title">
-							<h1 id="course-detail-title">title</h1>
-							<h4 id="course-detail-location">location</h4>
+							<h1 id="course-detail-title">코스별 제목</h1>
+							<h4 id="course-detail-location">코스 위치</h4>
 						</article>
 					</section>
 					
@@ -67,18 +67,24 @@
 					
 					<section class="course-detail-content">
 						<article>
-						contentcontentcontentcontentcontentcontentcontentcontent
-						contentcontentcontentcontentcontentcontentcontentcontent
-						contentcontentcontentcontentcontentcontentcontentcontent
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
+						여기는 코스별 내용을 입력하는 곳입니다!
 						</article>
 					</section>
 					
 					<section class="course-detail-tags">
 						<ul>
-							<li>#tag</li>
-							<li>#tag</li>
-							<li>#tag</li>
-							<li>#tag</li>
+							<li>#이기대</li>
+							<li>#영화의전당</li>
+							<li>#오륙도</li>
+							<li>#신세계센텀시티</li>
 						</ul>
 					</section>
 				</section>
