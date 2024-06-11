@@ -1,20 +1,20 @@
 <%@ page import="java.util.*, java.sql.*, com.bfc.board.ReplyDTO, com.bfc.board.ReplyDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:useBean id="replyDAO" class="com.bfc.board.ReplyDAO" scope="page" />
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" href="../resources/css/boardDetail.css">
 </head>
 	<%
-        ReplyDAO replyDAO = new ReplyDAO();
-        List<ReplyDTO> replyList = replyDAO.getAllReplies();
+		List<ReplyDTO> replyList = replyDAO.getAllReplies();
 	%>
 
     <ul class="reply-view-lists">
      	<%
      	for (int i = 0; i < replyList.size(); i++) {
-            ReplyDTO reply = replyList.get(i);
+     		ReplyDTO reply = replyList.get(i);
         %>
 		<li class="reply-view-list">
 			<section class="reply-view">
