@@ -1,6 +1,7 @@
 <%@ page import="java.util.*, java.sql.*, com.bfc.board.ReplyDTO, com.bfc.board.ReplyDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:useBean id="replyDAO" class="com.bfc.board.ReplyDAO" scope="request" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
 
         if (replyIdStr != null && !replyIdStr.trim().isEmpty() && replyContent != null && !replyContent.trim().isEmpty()) {
             int replyId = Integer.parseInt(replyIdStr);
-            ReplyDAO replyDAO = new ReplyDAO();
+            
             replyDAO.updateReply(replyId, replyContent);
             response.sendRedirect("boardDetail.jsp");
         } else {
