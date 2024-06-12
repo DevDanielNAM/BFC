@@ -2,7 +2,7 @@
 
 .contents {
 	width: 88%;
-	margin: auto;	
+	margin: auto;
 }
 
 .content-wrap {
@@ -19,6 +19,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    position: relative;
 }
 
 .course-lists {
@@ -26,6 +27,7 @@
 	list-style: none;
 	padding: 0;
     margin: 0 auto;
+    transition: transform 0.5s ease;
 }
 
 .course-lists li {
@@ -33,6 +35,7 @@
 	height: 180px;
 	margin: 0 15px;
 	cursor: pointer;
+	position: relative;
 }
 
 .course-lists li > img {
@@ -40,6 +43,17 @@
 	height: 100%;
 	border-radius: 10px;
 	box-shadow: 2px 2px 10px 0px rgba(150,149,149,1);
+}
+
+.course-image-title {
+	position: absolute;
+	top: 33%;
+	width: 95%;
+	text-align: center;
+	padding: 0 5px;
+	color: white;
+	word-break: break-all;
+	overflow-wrap: break-word;
 }
 
 .profile, .reply-profile {
@@ -87,6 +101,27 @@
 
 #content-delete-button:hover {
 	background-color: #cd0909;
+}
+
+.prev-button {
+	background-image: url("../images/prev_button.png");
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	cursor: pointer;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.next-button {
+	background-image: url("../images/next_button.png");
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	cursor: pointer;
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
 }
 
 .course-detail {
@@ -343,4 +378,9 @@ input[type=button], input[type=submit] {
 
 .edit-reply-form > input[type=button]:hover {
 	background-color: #cd0909;
+}
+
+.disabled {
+    opacity: 0.35;
+    pointer-events: none;
 }
