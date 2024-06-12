@@ -53,4 +53,41 @@ public class PostDAO {
 	     }
 	     return image;
 	 }
+
+	 	 public PostDTO getPostDetail(int postId) {
+		 PostDTO postDTO = new PostDTO();
+		 String sql = "SELECT * FROM Post WHERE PostId = " + postId;
+	     try (Connection conn = getConnection();
+	          PreparedStatement ps = conn.prepareStatement(sql);
+	          ResultSet rs = ps.executeQuery()) {
+	         while (rs.next()) {
+	        	 postDTO.setUserId(rs.getInt("UserId"));
+	        	 postDTO.setPostId(rs.getInt("PostId"));
+	        	 postDTO.setTitle(rs.getString("title"));
+	        	 postDTO.setCreatedAt(rs.getDate("createdAt"));
+	        	 postDTO.setContents(getContentDetail(postId));
+	         }
+	     } catch (SQLException e) {
+	         e.printStackTrace();
+	     }
+		 return postDTO;
+	 }
+	 
+	 public List<ContentDTO> getContentDetail(int postId) {
+		 List<ContentDTO> contents = new ArrayList<>();
+		 String sql = "SELECT * FROM Content WHERE PostId = " + postId;
+	     try (Connection conn = getConnection();
+	          PreparedStatement ps = conn.prepareStatement(sql);
+	          ResultSet rs = ps.executeQuery()) {
+	         while (rs.next()) {
+	        	 ContentDTO contentDTO = new ContentDTO();
+	        	 contentDTO.setContent(rs.getString("content"));
+	        	 contentDTO.setImage(rs.getString("image"));
+	        	 contents.add(contentDTO);
+	         }
+	     } catch (SQLException e) {
+	         e.printStackTrace();
+	     }
+		 return contents;
+	 }
 }
