@@ -32,17 +32,23 @@
 					<ul class="course-lists">
 						<li>
 							<img src="../uploadImages/board1/img01.jpeg" />
+							<h1 class="course-image-title">img 1</h1>
 						</li>
 						<li>
 							<img src="../uploadImages/board1/img02.jpeg" />
+							<h1 class="course-image-title">img 2</h1>
 						</li>
 						<li>
 							<img src="../uploadImages/board1/img03.jpeg" />
+							<h1 class="course-image-title">img 3</h1>
 						</li>
 						<li>
 							<img src="../uploadImages/board1/img04.jpeg" />
+							<h1 class="course-image-title">img 4</h1>
 						</li>
-					</ul>					
+					</ul>
+					<div class="prev-button"></div>
+					<div class="next-button"></div>					
 				</article>
 				<!-- DB에서 가져올 예정 -->
 				<section class="course-detail">
