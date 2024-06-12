@@ -104,3 +104,90 @@ textarea.addEventListener("input", () => {
     textarea.style.height = "auto"; // Reset height to auto
     textarea.style.height = (textarea.scrollHeight) + "px"; // Set height to scrollHeight
 });
+
+
+// Carousel Slide
+document.addEventListener("DOMContentLoaded", () => {
+      const content = document.querySelector(".content");
+      const courseLists = document.querySelector(".course-lists");
+      const slides = document.querySelectorAll(".course-lists li");
+      const prevButton = document.querySelector(".prev-button");
+      const nextButton = document.querySelector(".next-button");
+      const LIST_WIDTH = 210;
+      const LIST_MARGIN = 15;
+      const totalSlides = slides.length;
+      let contentWidth = content.offsetWidth;
+      let currentIndex = 0;
+      let maxIndex = 1;
+
+	  
+      function updateSlidePosition() {
+        const newTransformValue = -currentIndex * Math.floor((contentWidth / LIST_WIDTH)) * LIST_WIDTH + "px";
+        courseLists.style.transform = `translateX(${newTransformValue})`;
+      }
+
+      function checkButtonVisibility() {
+        if (contentWidth - totalSlides * LIST_WIDTH >= 0) {
+          prevButton.style.display = 'none';
+          nextButton.style.display = 'none';
+        } else {
+          prevButton.style.display = 'block';
+          nextButton.style.display = 'block';
+        }
+      }
+      
+      function updateMaxIndex() {
+        contentWidth = content.offsetWidth;
+        if ((totalSlides * LIST_WIDTH - contentWidth) < LIST_MARGIN) { 
+          maxIndex = 0;
+        } else if ((totalSlides * LIST_WIDTH - contentWidth) < (LIST_WIDTH + LIST_MARGIN)) { 
+          maxIndex = 1;
+        } else if(Math.floor((contentWidth / LIST_WIDTH)) === 1) {
+			maxIndex = totalSlides - 1;
+		} else {
+			maxIndex = Math.round(totalSlides / Math.floor((contentWidth / LIST_WIDTH))) - 1;
+		}
+        updateButtonStates();
+      }
+
+      function updateButtonStates() {
+        if (currentIndex === 0) {
+          prevButton.classList.add('disabled');
+        } else {
+          prevButton.classList.remove('disabled');
+        }
+
+        if (currentIndex >= maxIndex) {
+          nextButton.classList.add('disabled');
+        } else {
+          nextButton.classList.remove('disabled');
+        }
+      }
+      updateButtonStates();
+
+      prevButton.addEventListener("click", () => {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateSlidePosition();
+          updateButtonStates();
+        }
+      });
+
+      nextButton.addEventListener("click", () => {
+        if (currentIndex < maxIndex) {
+          currentIndex++;
+          updateSlidePosition();
+          updateButtonStates();
+        }
+      });
+
+      window.addEventListener("resize", () => {
+		checkButtonVisibility();
+		updateMaxIndex();
+		currentIndex = 0;
+		courseLists.style.transform = `translateX(0)`;
+	  });
+      checkButtonVisibility();
+      updateMaxIndex();
+});
+
