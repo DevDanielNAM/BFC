@@ -29,13 +29,14 @@ try {
     String pw = "tiger";
 	
     // Post 테이블에 삽입
-    String postQuery = "INSERT INTO Post (title, userId, createdAt) VALUES (?, ?, NOW())";
+    String postQuery = "INSERT INTO Post (title, userId, createdAt) VALUES (?, ?, ?)";
     Class.forName("oracle.jdbc.driver.OracleDriver");
     Connection conn = DriverManager.getConnection(dbUrl, id, pw);
     
     PreparedStatement pstmt = conn.prepareStatement(postQuery, Statement.RETURN_GENERATED_KEYS);
     pstmt.setString(1, title);
     pstmt.setInt(2, userId);
+    pstmt.setCreatedAt(new Timestamp(System.currentTimeMillis()));
     pstmt.executeUpdate();
     
     ResultSet generatedKeys = pstmt.getGeneratedKeys();
