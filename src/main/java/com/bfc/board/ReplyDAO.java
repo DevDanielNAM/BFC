@@ -4,8 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReplyDAO {
-    
+public class ReplyDAO {    
     private static final String DB_URL = "jdbc:mysql://localhost:3306/bfc?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
     private static final String DB_USER = "scott";
     private static final String DB_PASSWORD = "tiger";

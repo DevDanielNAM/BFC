@@ -32,6 +32,7 @@ String uploadPath = getServletContext().getRealPath("/uploadImages/board" + newP
 File uploadDir = new File(uploadPath);
 if (!uploadDir.exists()) {
     uploadDir.mkdirs();
+
 }
 
 MultipartRequest multi = new MultipartRequest(request, uploadPath,
