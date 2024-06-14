@@ -14,7 +14,7 @@
 	if (type.equals("수정")) {
 		response.sendRedirect("boardUpdate.jsp?postId=" + postId);
 	} else if(type.equals("삭제")) {
-		postDAO.deletePostByPodtId(Integer.parseInt(postId));
+		postDAO.deletePostByPostId(Integer.parseInt(postId));
 		response.sendRedirect("../main/main.jsp");
 	}
 	%>
