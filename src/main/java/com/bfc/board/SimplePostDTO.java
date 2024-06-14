@@ -1,9 +1,12 @@
 package com.bfc.board;
+
+import java.util.*;
 public class SimplePostDTO {
 	private int userId;
 	private int postId;
 	private String title;
 	private String image;
+	private List<HashtagDTO> tags;
 	public int getUserId() {
 		return userId;
 	}
@@ -27,5 +30,11 @@ public class SimplePostDTO {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+	public List<HashtagDTO> getTags() {
+		return tags;
+	}
+	public void setTags(List<HashtagDTO> tags) {
+		this.tags = tags;
 	}
 }

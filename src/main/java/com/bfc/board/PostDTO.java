@@ -1,11 +1,12 @@
 package com.bfc.board;
 import java.util.*;
+import java.sql.Timestamp;
 
 public class PostDTO {
 	private int userId;
 	private int postId;
 	private String title;
-	private Date createdAt;
+	private Timestamp createdAt;
 	private List<ContentDTO> contents;
 	public int getUserId() {
 		return userId;
@@ -25,10 +26,10 @@ public class PostDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Date getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 	public List<ContentDTO> getContents() {
