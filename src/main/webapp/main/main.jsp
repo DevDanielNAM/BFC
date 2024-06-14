@@ -2,6 +2,7 @@
 <%@ page import="java.util.*, java.sql.*" %>
 <%@ page import="com.bfc.board.PostDAO" %>
 <%@ page import="com.bfc.board.SimplePostDTO" %>
+<%@ page import="com.bfc.board.HashtagDTO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,14 +19,33 @@
         <h2>부산 풀코스에 오신 것을 환영합니다!</h2>
         <p>다양한 여행지를 탐색하고, 각 여행지에 대한 코스 확인할 수 있습니다.</p>
     </section>
+<!-- Random Hashtags -->
+	<section class="random-hashtags">
+	    <h3>해시태그 추천</h3>
+	    <p>태그로도 검색이 가능합니다!</p>
+	    <div class="hashtags">
+	        <%
+	            PostDAO postDAO2 = new PostDAO();
+	            List<String> randomHashtags = postDAO2.getRandomHashtags(6); // 6개의 랜덤 해시태그 가져오기
 
-    <!-- Search -->
-    <section class="search-bar">
-        <form action="main.jsp" method="get">
-            <input type="text" name="query" placeholder="여행지를 검색하세요...">
-            <button type="submit">검색</button>
-        </form>
-    </section>
+	            for (String hashtag : randomHashtags) {
+	        %>
+	        <span class="hashtag"><%= hashtag %></span>
+	        <%
+	            }
+	        %>
+	    </div>
+	</section>
+	<!-- Search -->
+	<section class="search-bar">
+	    <form action="main.jsp" method="get">
+	        <input type="text" name="query" placeholder="여행지나 해시태그를 검색하세요">
+	        <button type="submit">검색</button>
+	    </form>
+	</section>
+
+	
+
 
     <!-- Main -->
     <main>
@@ -35,9 +55,9 @@
             <div class="posts">
                 <%
                     int pageSize = 6; // 한 페이지에 보여줄 포스트 개수
-                    int currentPage = 1; // 기본적으로 첫 번째 페이지를 보여줍니다.
+                    int currentPage = 1; // 기본적으로 첫 번째 페이지
 
-                    // 페이지 파라미터가 있을 경우 해당 페이지로 설정합니다.
+                    // 페이지 파라미터가 있을 경우 해당 페이지로 설정
                     String pageParam = request.getParameter("page");
                     if (pageParam != null && !pageParam.isEmpty()) {
                         currentPage = Integer.parseInt(pageParam);
@@ -47,7 +67,7 @@
                     List<SimplePostDTO> allPosts;
                     String query = request.getParameter("query");
 
-                    // 검색어가 있을 경우 해당 키워드를 포함하는 포스트만 가져옵니다.
+                    // 검색어가 있을 경우 해당 키워드를 포함하는 포스트만 가져옴
                     if (query != null && !query.trim().isEmpty()) {
                         allPosts = postDAO.searchPosts(query);
                     } else {
@@ -67,7 +87,13 @@
                 <div class="post" onclick="moveBoardDetail(<%= post.getPostId() %>)">
                     <img class="contentImg" src="../resources/images/<%= post.getImage() %>" width="100%" />
                     <br>
-                    <%= post.getTitle() %>
+                    <h2><%= post.getTitle() %></h2>
+                    <!-- 해시태그 출력 -->
+                    <div class="tags">
+                        <% for (HashtagDTO tag : post.getTags()) { %>
+                            <span class="tag"><%= tag.getTag() %></span>
+                        <% } %>
+                    </div>
                 </div>
                 <%
                     } 

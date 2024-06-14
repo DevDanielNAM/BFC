@@ -71,8 +71,6 @@ for(int i = 0 ; i <= fieldcount; i++){ // 코스 리스트
             tags.add(hashtagDTO);
         }
     }
-    
-    
 	ContentDTO contentDTO = new ContentDTO();
 	contentDTO.setContentTitle(contentTitle);
 	contentDTO.setUserId(userId);
