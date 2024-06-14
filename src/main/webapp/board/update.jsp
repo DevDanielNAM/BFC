@@ -18,9 +18,15 @@
 //String userId = (String) session.getAttribute("userId");
 int userId = 1;
 
+//경로 설정
+String uploadPath = getServletContext().getRealPath("/uploadImages/board2");
 
-// 파일 업로드 처리   // 절대 경로 처리 밖에 안되는 거 같습니다. 각자 절대 경로로 설정해주세요!
-MultipartRequest multi = new MultipartRequest(request, "C:\\Users/oo7ba/Desktop/InDBSpace/BFC/src/main/webapp/resources/images",
+File uploadDir = new File(uploadPath);
+if (!uploadDir.exists()) {
+uploadDir.mkdirs();
+}
+
+MultipartRequest multi = new MultipartRequest(request, uploadPath,
 		5 * 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
 
 String title = multi.getParameter("title");
