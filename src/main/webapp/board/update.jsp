@@ -18,9 +18,15 @@
 //String userId = (String) session.getAttribute("userId");
 int userId = 1;
 
+//경로 설정
+String uploadPath = getServletContext().getRealPath("/uploadImages/board2");
 
-// 파일 업로드 처리   // 절대 경로 처리 밖에 안되는 거 같습니다. 각자 절대 경로로 설정해주세요!
-MultipartRequest multi = new MultipartRequest(request, "C:\\Users/oo7ba/Desktop/InDBSpace/BFC/src/main/webapp/resources/images",
+File uploadDir = new File(uploadPath);
+if (!uploadDir.exists()) {
+uploadDir.mkdirs();
+}
+
+MultipartRequest multi = new MultipartRequest(request, uploadPath,
 		5 * 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
 
 String title = multi.getParameter("title");
@@ -54,15 +60,17 @@ for(int i = 0 ; i < fieldcount; i++){ // 코스 리스트
 	
 	String tname = "tag" + i;
 	String tag = multi.getParameter("" + tname);
-    String[] tagsArray = tag.split(" ");
     
-    List<HashtagDTO> tags = new ArrayList<>();
+	List<HashtagDTO> tags = new ArrayList<>();
     
-    for(String t : tagsArray){ // 해쉬태그 리스트
-    	HashtagDTO hashtagDTO = new HashtagDTO();
-    	hashtagDTO.setTag(t);
-    	hashtagDTO.setUserId(userId);
-    	tags.add(hashtagDTO);
+    if(tag != null && !tag.trim().isEmpty()) {
+        String[] tagsArray = tag.split(" ");
+        for(String t : tagsArray){ // 해쉬태그 리스트
+            HashtagDTO hashtagDTO = new HashtagDTO();
+            hashtagDTO.setTag(t);
+            hashtagDTO.setUserId(userId);
+            tags.add(hashtagDTO);
+        }
     }
 	ContentDTO contentDTO = new ContentDTO();
 	contentDTO.setContentTitle(contentTitle);
