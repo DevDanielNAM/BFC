@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class PostDAO {
 	 private Connection getConnection() {
-		 String dbUrl = "jdbc:mysql://localhost:3306/bfc?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
-		 String id = "root";
-		 String pw = "비밀번호 변경해주세요";
+		 String dbUrl = "jdbc:mysql://localhost:3306/scott";
+		 String id = "scott";
+		 String pw = "tiger";
 	     Connection conn = null;
 	     try {
 	    	 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -309,6 +309,104 @@ public class PostDAO {
 	        }
 	    }
 	    
+
+	    public List<SimplePostDTO> getAllPosts() {
+	        List<SimplePostDTO> simplePosts = new ArrayList<>();
+	        String sql = "SELECT * FROM Post";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql);
+	             ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                SimplePostDTO simplePost = new SimplePostDTO();
+		        	 simplePost.setUserId(rs.getInt("UserId"));
+		        	 simplePost.setPostId(rs.getInt("PostId"));
+		        	 simplePost.setTitle(rs.getString("title"));
+		        	 simplePost.setImage(getImage(simplePost.getPostId()));
+		        	 simplePost.setTags(getHashtagsByPostId(simplePost.getPostId()));
+		        	 simplePosts.add(simplePost);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return simplePosts;
+	    }
+	    
+	    public List<SimplePostDTO> searchPosts(String query) {
+	        List<SimplePostDTO> searchedPosts = new ArrayList<>();
+	        String sql = "SELECT p.postId, p.title, c.image " +
+	                     "FROM Post p " +
+	                     "JOIN Content c ON p.postId = c.postId " +
+	                     "JOIN HashTag h ON c.contentId = h.contentId " +
+	                     "WHERE p.title LIKE ? OR h.tag LIKE ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setString(1, "%" + query + "%");
+	            ps.setString(2, "%" + query + "%");
+
+	            try (ResultSet rs = ps.executeQuery()) {
+	                while (rs.next()) {
+	                    int postId = rs.getInt("postId");
+	                    String title = rs.getString("title");
+	                    String image = rs.getString("image");
+
+	                    SimplePostDTO post = new SimplePostDTO();
+	                    post.setPostId(postId);
+	                    post.setTitle(title);
+	                    post.setImage(image);
+	                    post.setTags(getHashtagsByPostId(postId)); // 여행지의 해시태그 설정
+
+	                    searchedPosts.add(post);
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        return searchedPosts;
+	    }
+
+//	    public List<SimplePostDTO> searchPosts(String query) {
+//	        List<SimplePostDTO> searchedPosts = new ArrayList<>();
+//	        String sql = "SELECT p.postId, p.title, c.image, c.content FROM Post p JOIN Content c ON p.postId = c.postId WHERE p.title LIKE ?";
+//	        try (Connection conn = getConnection();
+//	             PreparedStatement ps = conn.prepareStatement(sql)) {
+//	            ps.setString(1, "%" + query + "%");
+//	            try (ResultSet rs = ps.executeQuery()) {
+//	                while (rs.next()) {
+//	                    SimplePostDTO post = new SimplePostDTO();
+//	                    post.setPostId(rs.getInt("postId"));
+//	                    post.setTitle(rs.getString("title"));
+//	                    post.setImage(getImage(post.getPostId()));
+//	                    post.setTags(getHashtagsByPostId(post.getPostId()));
+//	                    searchedPosts.add(post);
+//	                }
+//	            }
+//	        } catch (SQLException e) {
+//	            e.printStackTrace();
+//	        }
+//	        return searchedPosts;
+//	    }
+
+	    
+	    public List<String> getRandomHashtags(int count) {
+	        List<String> hashtags = new ArrayList<>();
+	        String sql = "SELECT DISTINCT tag FROM HashTag ORDER BY RAND() LIMIT ?";
+
+	        try (Connection conn = getConnection();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	            pstmt.setInt(1, count);
+
+	            try (ResultSet rs = pstmt.executeQuery()) {
+	                while (rs.next()) {
+	                    hashtags.add(rs.getString("tag"));
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        return hashtags;
+	    }
 	    
 
 	 

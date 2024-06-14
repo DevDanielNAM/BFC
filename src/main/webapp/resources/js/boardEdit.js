@@ -101,4 +101,5 @@ function addFields() {
 
     document.getElementById("fc").value = fieldCount;
     fieldCount++;
+
 }

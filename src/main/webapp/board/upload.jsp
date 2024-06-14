@@ -95,5 +95,3 @@ else{
 	 out.println("</script>");
 }
 %>
-
-

@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+.header {
+    background-color: #f8f8f8;
+    padding: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header .container {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .site-name h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.header .login-button button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #066AE0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.header .login-button button:hover {
+    background-color: #024a9f;
+}
+.site-name h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.site-name h1 a {
+    text-decoration: none;
+    color: #333; /* 링크 색상 */
+    transition: color 0.3s ease; /* 색상 변경 애니메이션 */
+}
+
+.site-name h1 a:hover {
+    color: #066AE0; /* 호버 시 색상 변경 */
+}
