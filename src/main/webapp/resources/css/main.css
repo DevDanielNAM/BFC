@@ -1,0 +1,177 @@
+@charset "UTF-8";
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.site-banner {
+    width: 90%;
+    margin: 20px auto;
+    background-color: #e8f4fc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.site-banner h2 {
+    margin: 0 0 10px 0;
+    font-size: 2rem;
+}
+
+.site-banner p {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.search-bar {
+    width: 90%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.search-bar form {
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar input[type="text"] {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    font-size: 1rem;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #066AE0;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #024a9f;
+}
+
+.contents {
+    width: 88%;
+    margin: auto;
+    text-align: center;
+}
+
+.posts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* 행 시작점에 정렬 */
+}
+
+.post {
+    width: calc(33.33% - 20px); /* 한 행에 최대 3개의 포스트 */
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.post:hover {
+    transform: scale(1.05);
+}
+
+.contentImg {
+    width: 100%;
+    height: auto;
+}
+
+.post h2 {
+    margin: 0.5rem 0;
+}
+
+.post p {
+    padding: 0 1rem 1rem 1rem;
+    text-align: left;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    padding: 10px;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #066AE0;
+    border: 1px solid #066AE0;
+    border-radius: 5px;
+}
+
+.pagination a:hover {
+    background-color: #066AE0;
+    color: white;
+}
+
+/* 등록 버튼 */
+.registration-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000; /* 다른 요소 위에 오도록 z-index 설정 */
+}
+
+.registration-button button {
+    padding: 15px 20px; /* 버튼 패딩 수정 */
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #066AE0;
+    color: white;
+    border: none;
+    border-radius: 50%; /* 동그란 원 형태 */
+    width: 150px; /* 버튼 너비를 3배 늘립니다 */
+    height: 150px; /* 버튼 높이를 3배 늘립니다 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.registration-button button:hover {
+    background-color: #024a9f;
+}
+
+/* 마이페이지 버튼 */
+.mypage-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px; /* 왼쪽으로 위치 수정 */
+    z-index: 1000; /* 다른 요소 위에 오도록 z-index 설정 */
+}
+
+.mypage-button button {
+    padding: 15px 20px; /* 버튼 패딩 수정 */
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #066AE0;
+    color: white;
+    border: none;
+    border-radius: 50%; /* 동그란 원 형태 */
+    width: 150px; /* 버튼 너비를 3배 늘립니다 */
+    height: 150px; /* 버튼 높이를 3배 늘립니다 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mypage-button button:hover {
+    background-color: #024a9f;
+}
+

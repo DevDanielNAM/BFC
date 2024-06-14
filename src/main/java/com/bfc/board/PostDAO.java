@@ -5,12 +5,12 @@ import java.sql.*;
 
 public class PostDAO {
 	 private Connection getConnection() {
-		 String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
+		 String dbUrl = "jdbc:mysql://localhost:3306/scott";
 		 String id = "scott";
 		 String pw = "tiger";
 	     Connection conn = null;
 	     try {
-	    	 Class.forName("oracle.jdbc.driver.OracleDriver");
+	    	 Class.forName("com.mysql.cj.jdbc.Driver");
 	    	 conn = DriverManager.getConnection(dbUrl, id, pw);
 	     } catch (Exception e) {
 	         e.printStackTrace();
@@ -90,4 +90,45 @@ public class PostDAO {
 	     }
 		 return contents;
 	 }
+	 
+	 public List<SimplePostDTO> getAllPosts() {
+	        List<SimplePostDTO> simplePosts = new ArrayList<>();
+	        String sql = "SELECT * FROM Post";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql);
+	             ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                SimplePostDTO simplePost = new SimplePostDTO();
+	                simplePost.setUserId(rs.getInt("userId"));
+	                simplePost.setPostId(rs.getInt("postId"));
+	                simplePost.setTitle(rs.getString("title"));
+	                simplePost.setImage(getImage(simplePost.getPostId()));
+	                simplePosts.add(simplePost);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return simplePosts;
+	    }
+	 
+	 public List<SimplePostDTO> searchPosts(String query) {
+	        List<SimplePostDTO> searchedPosts = new ArrayList<>();
+	        String sql = "SELECT p.postId, p.title, c.image FROM Post p JOIN Content c ON p.postId = c.postId WHERE p.title LIKE ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setString(1, "%" + query + "%");
+	            try (ResultSet rs = ps.executeQuery()) {
+	                while (rs.next()) {
+	                    SimplePostDTO post = new SimplePostDTO();
+	                    post.setPostId(rs.getInt("postId"));
+	                    post.setTitle(rs.getString("title"));
+	                    post.setImage(getImage(post.getPostId()));
+	                    searchedPosts.add(post);
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return searchedPosts;
+	    }
 }

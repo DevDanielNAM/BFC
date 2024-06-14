@@ -4,12 +4,12 @@ import java.sql.*;
 
 public class UserDAO {
 	 private Connection getConnection() {
-		 String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
+		 String dbUrl = "jdbc:mysql://localhost:3306/scott";
 		 String id = "scott";
 		 String pw = "tiger";
 	     Connection conn = null;
 	     try {
-	    	 Class.forName("oracle.jdbc.driver.OracleDriver");
+	    	 Class.forName("com.mysql.cj.jdbc.Driver");
 	    	 conn = DriverManager.getConnection(dbUrl, id, pw);
 	     } catch (Exception e) {
 	         e.printStackTrace();

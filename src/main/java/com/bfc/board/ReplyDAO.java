@@ -6,14 +6,14 @@ import java.util.List;
 
 public class ReplyDAO {
     
-    private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:XE";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/scott";
     private static final String DB_USER = "scott";
     private static final String DB_PASSWORD = "tiger";
 
     private Connection getConnection() throws SQLException {
     	Connection conn = null;
     	try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

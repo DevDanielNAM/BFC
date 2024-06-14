@@ -14,8 +14,8 @@
 int userId = 1;
 
 
-// 파일 업로드 처리   // 절대 경로 처리 밖에 안되는 거 같습니다. 각자 절대 경로로 설정해주세요!
-MultipartRequest multi = new MultipartRequest(request, "C:\\Users/oo7ba/Desktop/InDBSpace/BFC/src/main/webapp/resources/images",
+// 파일 업로드 처리   // 절대 경로 처리 밖에 안되는 거 같습니다. 각자 절대 경로로 설정해주세요! C:\\Users/user/Desktop/work2/BFC/src/main/webapp/resources/images
+MultipartRequest multi = new MultipartRequest(request, "C:\\Users/user/Desktop/work2/BFC/src/main/webapp/resources/images",
 		5 * 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
 
 String title = multi.getParameter("title");
@@ -24,19 +24,19 @@ int fieldcount = Integer.parseInt(fc);
 
 // 데이터베이스 처리
 try {
-    String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
+    String dbUrl = "jdbc:mysql://localhost:3306/scott";
     String id = "scott";
     String pw = "tiger";
 	
     // Post 테이블에 삽입
     String postQuery = "INSERT INTO Post (title, userId, createdAt) VALUES (?, ?, ?)";
-    Class.forName("oracle.jdbc.driver.OracleDriver");
+    Class.forName("com.mysql.cj.jdbc.Driver");
     Connection conn = DriverManager.getConnection(dbUrl, id, pw);
     
     PreparedStatement pstmt = conn.prepareStatement(postQuery, Statement.RETURN_GENERATED_KEYS);
     pstmt.setString(1, title);
     pstmt.setInt(2, userId);
-    pstmt.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+    pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
     pstmt.executeUpdate();
     
     ResultSet generatedKeys = pstmt.getGeneratedKeys();
