@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ReplyDAO {
     
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/scott";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/scott?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false\"";
     private static final String DB_USER = "scott";
     private static final String DB_PASSWORD = "tiger";
 
@@ -24,7 +24,7 @@ public class ReplyDAO {
 
     public List<ReplyDTO> getAllReplies() {
         List<ReplyDTO> replies = new ArrayList<>();
-        String sql = "SELECT * FROM Reply ORDER BY replyId ASC";
+        String sql = "SELECT * FROM BFC.Reply ORDER BY replyId ASC";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -47,7 +47,7 @@ public class ReplyDAO {
     }
 
     public void addReply(ReplyDTO reply) {
-        String sql = "INSERT INTO Reply (content, createdAt, writerId, writerNickname) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO BFC.Reply (content, createdAt, writerId, writerNickname) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -64,7 +64,7 @@ public class ReplyDAO {
     }
 
     public void updateReply(int replyId, String content) {
-        String sql = "UPDATE Reply SET content = ? WHERE replyId = ?";
+        String sql = "UPDATE BFC.Reply SET content = ? WHERE replyId = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -79,7 +79,7 @@ public class ReplyDAO {
     }
 
     public void deleteReply(int replyId) {
-        String sql = "DELETE FROM Reply WHERE replyId = ?";
+        String sql = "DELETE FROM BFC.Reply WHERE replyId = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

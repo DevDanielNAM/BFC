@@ -1,5 +1,8 @@
+<%@ page import="java.util.*, java.sql.*, com.bfc.board.PostDTO, com.bfc.board.ContentDTO, com.bfc.member.UserDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:useBean id="postDAO" class="com.bfc.board.PostDAO" scope="page" />
+<jsp:useBean id="userDAO" class="com.bfc.member.UserDAO" scope="page" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +14,13 @@
 	<!-- Header -->
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	
+	<%-- <%
+		PostDTO postDetail = postDAO.getPostDetail(34);
+		UserDTO userInfo = userDAO.getUserInfo(postDetail.getUserId());
+		List<ContentDTO> contentList = postDetail.getContents();
+		ContentDTO content = contentList.get(0);
+	%> --%>
+	
 	<!-- Main -->
 	<main>
 		<!-- contents section -->
@@ -18,15 +28,16 @@
 			<section class="profile">
 				<img id="profile-image" src="../resources/images/profile.png" alt="profile" width="41" height="41">
 				<article class="profile-contents">
-				<!-- DB에서 가져올 예정 -->
 					<h3 id="profile-nickname">백경이</h3>
 					<h6 id="profile-date">2024.06.08. 18:00</h6>
+					<%-- <h3 id="profile-nickname"><%= userInfo.getNickname() %></h3>
+					<h6 id="profile-date"><%= postDetail.getCreatedAt().toString().substring(0, 19) %></h6> --%>
 				</article>
 			</section>
 			
-			<section class="content-wrap">	
-			<!-- DB에서 가져올 예정 -->	
+			<section class="content-wrap">
 				<h1 id="content-title">백경이의 부산 풀코스</h1>
+				<%-- <h1 id="content-title"><%= postDetail.getTitle() %></h1> --%>
 				
 				<article class="content">
 					<ul class="course-lists">
@@ -50,12 +61,14 @@
 					<div class="prev-button"></div>
 					<div class="next-button"></div>					
 				</article>
-				<!-- DB에서 가져올 예정 -->
+				
 				<section class="course-detail">
 					<section class="course-detail-title-wrap">
 						<article class="course-detail-title">
 							<h1 id="course-detail-title">코스별 제목</h1>
 							<h4 id="course-detail-location">코스 위치</h4>
+							<%-- <h1 id="course-detail-title"><%= content.getContentTitle() %></h1>
+							<h4 id="course-detail-location"><%= content.getContentLocation() %></h4> --%>
 						</article>
 					</section>
 					
@@ -73,6 +86,7 @@
 					
 					<section class="course-detail-content">
 						<article>
+						<%-- <%= content.getContent() %> --%>
 						여기는 코스별 내용을 입력하는 곳입니다!
 						여기는 코스별 내용을 입력하는 곳입니다!
 						여기는 코스별 내용을 입력하는 곳입니다!

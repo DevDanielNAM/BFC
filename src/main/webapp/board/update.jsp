@@ -23,26 +23,27 @@ String uploadPath = getServletContext().getRealPath("/uploadImages/board2");
 
 File uploadDir = new File(uploadPath);
 if (!uploadDir.exists()) {
- uploadDir.mkdirs();
+uploadDir.mkdirs();
 }
 
 MultipartRequest multi = new MultipartRequest(request, uploadPath,
 		5 * 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
 
 String title = multi.getParameter("title");
-String fc = multi.getParameter("fc");
-int fieldcount = Integer.parseInt(fc);
+int postId = Integer.parseInt(multi.getParameter("postId"));
+int fieldcount = Integer.parseInt(multi.getParameter("fc"));
 
 PostDAO postDAO = new PostDAO();
 PostDTO postDTO = new PostDTO();
 List<ContentDTO> contents = new ArrayList<>();
 
+postDTO.setPostId(postId);
 postDTO.setUserId(userId);
 postDTO.setTitle(title);
 postDTO.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
 Enumeration files = multi.getFileNames();
-for(int i = 0 ; i <= fieldcount; i++){ // 코스 리스트
+for(int i = 0 ; i < fieldcount; i++){ // 코스 리스트
 	String name = "title" + i;
 	String contentTitle = multi.getParameter("" + name);
 	
@@ -71,8 +72,6 @@ for(int i = 0 ; i <= fieldcount; i++){ // 코스 리스트
             tags.add(hashtagDTO);
         }
     }
-    
-    
 	ContentDTO contentDTO = new ContentDTO();
 	contentDTO.setContentTitle(contentTitle);
 	contentDTO.setUserId(userId);
@@ -84,9 +83,9 @@ for(int i = 0 ; i <= fieldcount; i++){ // 코스 리스트
 }
 postDTO.setContents(contents);
 
-if(postDAO.uploadPost(postDTO)){
+if(postDAO.updatePost(postDTO)){
     out.println("<script type='text/javascript'>");
-    out.println("alert('게시글이 등록되었습니다.');");
+    out.println("alert('게시글이 수정되었습니다.');");
     out.println("window.location.href = '../main/main.jsp';");
     out.println("</script>");
 }
@@ -96,4 +95,5 @@ else{
 	 out.println("window.location.href = '../main/main.jsp';");
 	 out.println("</script>");
 }
+
 %>

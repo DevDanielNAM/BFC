@@ -20,7 +20,7 @@ public class UserDAO {
 	 public UserDTO getUserInfo(int UserId) {
 		 UserDTO userDTO = new UserDTO();
 		 userDTO.setUserId(UserId);
-	     String sql = "SELECT * FROM Users WHERE UserId = " + UserId;
+	     String sql = "SELECT * FROM User WHERE UserId = " + UserId;
 	     try (Connection conn = getConnection();
 	          PreparedStatement ps = conn.prepareStatement(sql);
 	          ResultSet rs = ps.executeQuery()) {
@@ -37,7 +37,7 @@ public class UserDAO {
 	 
 	 public boolean updateUserInfo(UserDTO userDTO) {
 			boolean success = false;
-			String sql = "UPDATE users SET nickname = ?, password = ? WHERE userId = ?";
+			String sql = "UPDATE user SET nickname = ?, password = ? WHERE userId = ?";
 			try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 				ps.setString(1, userDTO.getNickname());
 				ps.setString(2, userDTO.getPassword());

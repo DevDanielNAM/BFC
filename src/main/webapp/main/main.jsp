@@ -44,12 +44,14 @@
                     }
 
                     PostDAO postDAO = new PostDAO();
-                    List<SimplePostDTO> allPosts = postDAO.getAllPosts();
+                    List<SimplePostDTO> allPosts;
                     String query = request.getParameter("query");
 
                     // 검색어가 있을 경우 해당 키워드를 포함하는 포스트만 가져옵니다.
                     if (query != null && !query.trim().isEmpty()) {
                         allPosts = postDAO.searchPosts(query);
+                    } else {
+                        allPosts = postDAO.getAllPosts(); // 검색어가 없을 경우 전체 포스트 가져오기
                     }
 
                     int totalPosts = allPosts.size();
@@ -77,9 +79,16 @@
                 <%
                     // 페이지 링크 출력
                     for (int i = 1; i <= totalPages; i++) {
+                        // 검색어(query)가 있을 때와 없을 때의 링크 구성
+                        if (query != null && !query.trim().isEmpty()) {
                 %>
                 <a href="main.jsp?page=<%= i %>&query=<%= query %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
                 <%
+                        } else {
+                %>
+                <a href="main.jsp?page=<%= i %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
+                <%
+                        }
                     }
                 %>
             </div>
@@ -90,10 +99,12 @@
     <div class="registration-button">
         <button type="button" onclick="location.href='../board/boardEdit.jsp'">여행지 등록</button>
     </div>
- 	<!-- 마이페이지 버튼 -->
+    
+    <!-- 마이페이지 버튼 -->
     <div class="mypage-button">
         <button type="button" onclick="location.href='../member/mypage.jsp'">마이페이지</button>
     </div>
+
     <!-- Footer -->
     <jsp:include page="../common/footer.jsp"></jsp:include>
 
