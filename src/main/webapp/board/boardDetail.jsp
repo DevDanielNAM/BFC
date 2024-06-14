@@ -1,4 +1,6 @@
-<%@ page import="java.util.*, java.sql.*, com.bfc.board.PostDTO, com.bfc.board.ContentDTO, com.bfc.member.UserDTO" %>
+<%@page import="java.net.URLEncoder"%>
+<%@ page import="java.util.*, java.sql.*, com.bfc.board.PostDTO, com.bfc.board.ContentDTO, com.bfc.member.UserDTO, com.bfc.board.HashtagDTO" %>
+<%@ page import="java.net.URLDecoder" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:useBean id="postDAO" class="com.bfc.board.PostDAO" scope="page" />
@@ -13,13 +15,23 @@
 <body>
 	<!-- Header -->
 	<jsp:include page="../common/header.jsp"></jsp:include>
-	
-	<%-- <%
-		PostDTO postDetail = postDAO.getPostDetail(34);
+	<%
+		int postId = 16; //Integer.parseInt(request.getParameter("postId"));
+		String IMG_PATH = "../uploadImages/board" + postId;
+		
+		Map<String, List<String>> contentImagesTitlesLocations = postDAO.getContentImagesTitlesLocations(postId);
+		List<String> contentIds = contentImagesTitlesLocations.get("contentIds");
+		List<String> contents = contentImagesTitlesLocations.get("contents");
+		List<String> contentTitles = contentImagesTitlesLocations.get("contentTitles");
+		List<String> locations = contentImagesTitlesLocations.get("locations");
+		List<String> images = contentImagesTitlesLocations.get("images");
+
+		PostDTO postDetail = postDAO.getPostDetail(postId);
 		UserDTO userInfo = userDAO.getUserInfo(postDetail.getUserId());
 		List<ContentDTO> contentList = postDetail.getContents();
 		ContentDTO content = contentList.get(0);
-	%> --%>
+		int contentId = contentList.get(0).getContentId();
+	%>
 	
 	<!-- Main -->
 	<main>
@@ -28,47 +40,37 @@
 			<section class="profile">
 				<img id="profile-image" src="../resources/images/profile.png" alt="profile" width="41" height="41">
 				<article class="profile-contents">
-					<h3 id="profile-nickname">백경이</h3>
-					<h6 id="profile-date">2024.06.08. 18:00</h6>
-					<%-- <h3 id="profile-nickname"><%= userInfo.getNickname() %></h3>
-					<h6 id="profile-date"><%= postDetail.getCreatedAt().toString().substring(0, 19) %></h6> --%>
+					<h3 id="profile-nickname"><%= userInfo.getNickname() %></h3>
+					<h6 id="profile-date"><%= postDetail.getCreatedAt().toString().substring(0, 19) %></h6>
 				</article>
 			</section>
 			
 			<section class="content-wrap">
-				<h1 id="content-title">백경이의 부산 풀코스</h1>
-				<%-- <h1 id="content-title"><%= postDetail.getTitle() %></h1> --%>
+				<h1 id="content-title"><%= postDetail.getTitle() %></h1>
 				
 				<article class="content">
 					<ul class="course-lists">
-						<li>
-							<img src="../uploadImages/board1/img01.jpeg" />
-							<h1 class="course-image-title">img 1</h1>
-						</li>
-						<li>
-							<img src="../uploadImages/board1/img02.jpeg" />
-							<h1 class="course-image-title">img 2</h1>
-						</li>
-						<li>
-							<img src="../uploadImages/board1/img03.jpeg" />
-							<h1 class="course-image-title">img 3</h1>
-						</li>
-						<li>
-							<img src="../uploadImages/board1/img04.jpeg" />
-							<h1 class="course-image-title">img 4</h1>
-						</li>
+						<% 
+							int contentCount = postDAO.getContentCount(postId); 
+							for(int i=0; i<contentCount; i++) {
+						%>
+							<li>
+								<img src="<%= IMG_PATH %>/<%= URLEncoder.encode(images.get(i), "UTF-8") %>" />
+								<h1 class="course-image-title"><%= contentTitles.get(i) %></h1>
+							</li>
+						<%
+							}
+						%>
 					</ul>
 					<div class="prev-button"></div>
 					<div class="next-button"></div>					
 				</article>
-				
+				<!-- 이미지를 클릭하면 i를 넘겨준다 -->
 				<section class="course-detail">
 					<section class="course-detail-title-wrap">
 						<article class="course-detail-title">
-							<h1 id="course-detail-title">코스별 제목</h1>
-							<h4 id="course-detail-location">코스 위치</h4>
-							<%-- <h1 id="course-detail-title"><%= content.getContentTitle() %></h1>
-							<h4 id="course-detail-location"><%= content.getContentLocation() %></h4> --%>
+							<h1 id="course-detail-title"><%= contentTitles.get(0) %></h1>
+							<h4 id="course-detail-location"><%= locations.get(0) %></h4>
 						</article>
 					</section>
 					
@@ -86,33 +88,29 @@
 					
 					<section class="course-detail-content">
 						<article>
-						<%-- <%= content.getContent() %> --%>
-						여기는 코스별 내용을 입력하는 곳입니다!
-						여기는 코스별 내용을 입력하는 곳입니다!
-						여기는 코스별 내용을 입력하는 곳입니다!
-						여기는 코스별 내용을 입력하는 곳입니다!
-						여기는 코스별 내용을 입력하는 곳입니다!
-						여기는 코스별 내용을 입력하는 곳입니다!
-						여기는 코스별 내용을 입력하는 곳입니다!
-						여기는 코스별 내용을 입력하는 곳입니다!
-						여기는 코스별 내용을 입력하는 곳입니다!
+						<%= contents.get(0) %>
 						</article>
 					</section>
 					
 					<section class="course-detail-tags">
 						<ul>
-							<li>#이기대</li>
-							<li>#영화의전당</li>
-							<li>#오륙도</li>
-							<li>#신세계센텀시티</li>
+							<% 
+								List<HashtagDTO> hashtagList = postDAO.getHashtags(Integer.parseInt(contentIds.get(0)));
+								
+								for(int i=0; i<hashtagList.size(); i++) {
+							%>							
+								<li>#<%= hashtagList.get(i).getTag() %></li>
+							<%
+								}
+							%>
 						</ul>
 					</section>
 				</section>
 			</section>
-			
+			<!-- 로그인한 상태에서만 보이기 -->
 			<section class="content-buttons">
-				<input type="button" id="content-edit-button" value="수정하기" onclick="callConfirm('수정')" />
-				<input type="button" id="content-delete-button" value="삭제하기" onclick="callConfirm('삭제')" />
+			<input type="button" id="content-edit-button" value="수정하기" onclick="callConfirm('수정', <%= postId %>)" />
+				<input type="button" id="content-delete-button" value="삭제하기" onclick="callConfirm('삭제', <%= postId %>)" />
 			</section>
 		</section>
 		
@@ -121,6 +119,7 @@
 		
 		<!-- reply section -->
 		<section class="reply">
+			<!-- textarea 클릭 시 로그인 여부 확인 -->
 			<section class="reply-write">
 				<form class="reply-form" action="addReply.jsp" method="POST" onsubmit="return confirmSubmission()">
 					<h4 id="reply-write-title">댓글 추가</h4>

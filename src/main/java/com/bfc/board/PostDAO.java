@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class PostDAO {
 	 private Connection getConnection() {
-		 String dbUrl = "jdbc:mysql://localhost:3306/scott";
+		 String dbUrl = "jdbc:mysql://localhost:3306/bfc?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
 		 String id = "scott";
 		 String pw = "tiger";
 	     Connection conn = null;
@@ -96,6 +96,40 @@ public class PostDAO {
 	     }
 		 return contents;
 	 }
+	 
+	 public Map<String, List<String>> getContentImagesTitlesLocations(int postId) {
+		 	List<String> contentIds = new ArrayList<>();
+		 	List<String> contents = new ArrayList<>();
+		    List<String> contentTitles = new ArrayList<>();
+		    List<String> locations = new ArrayList<>();
+		    List<String> images = new ArrayList<>();
+		    
+		    String sql = "SELECT contentId, content, contentTitle, location, image FROM Content WHERE PostId = " + postId;
+		    try (Connection conn = getConnection();
+		         PreparedStatement ps = conn.prepareStatement(sql);
+		         ResultSet rs = ps.executeQuery()) {
+		        while (rs.next()) {
+		        	contentIds.add(rs.getString("contentId"));
+		        	contents.add(rs.getString("content"));
+		            contentTitles.add(rs.getString("contentTitle"));
+		            locations.add(rs.getString("location"));
+		            images.add(rs.getString("image"));
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    
+		    Map<String, List<String>> result = new HashMap<>();
+		    result.put("contentIds", contentIds);
+		    result.put("contents", contents);
+		    result.put("contentTitles", contentTitles);
+		    result.put("locations", locations);
+		    result.put("images", images);
+		    
+		    return result;
+		}
+
+
 	 
 	 public List<HashtagDTO> getHashtags(int contendId) {  // �� �ڽ��� �ؽ��±� ��Ʈ�� ��������
 		 List<HashtagDTO> tags = new ArrayList<>();
@@ -274,7 +308,7 @@ public class PostDAO {
 	        }
 	    }
 	    
-	    public void deleteHashtagsByPodtId(int postId) {   // �ؽ��±� ����
+	    public void deleteHashtagsByPostId(int postId) {   // �ؽ��±� ����
 	        String sql = "DELETE FROM Hashtag WHERE postId = ?";
 	        try (Connection conn = getConnection();
 	             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -285,7 +319,7 @@ public class PostDAO {
 	        }
 	    }
 	    
-	    public void deleteContentByPodtId(int postId) {   // �ڽ� ����
+	    public void deleteContentByPostId(int postId) {   // �ڽ� ����
 	        String sql = "DELETE FROM Content WHERE postId = ?";
 	        try (Connection conn = getConnection();
 	             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -296,9 +330,9 @@ public class PostDAO {
 	        }
 	    }
 	    
-	    public void deletePostByPodtId(int postId) {   // PostId�� ����Ʈ ����
-	    	deleteHashtagsByPodtId(postId);
-	    	deleteContentByPodtId(postId);
+	    public void deletePostByPostId(int postId) {   // PostId�� ����Ʈ ����
+	    	deleteHashtagsByPostId(postId);
+	    	deleteContentByPostId(postId);
 	        String sql = "DELETE FROM Post WHERE postId = ?";
 	        try (Connection conn = getConnection();
 	             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -309,6 +343,24 @@ public class PostDAO {
 	        }
 	    }
 	    
+      public int getLastPostId() {
+          int lastPostId = 0;
+          String query = "SELECT MAX(postId) AS lastPostId FROM Post";
+
+          try (Connection conn = getConnection();
+               PreparedStatement pstmt = conn.prepareStatement(query);
+               ResultSet rs = pstmt.executeQuery()) {
+
+              if (rs.next()) {
+                  lastPostId = rs.getInt("lastPostId");
+              }
+
+          } catch (SQLException e) {
+              e.printStackTrace();
+          }
+
+          return lastPostId;
+      }	 
 
 	    public List<SimplePostDTO> getAllPosts() {
 	        List<SimplePostDTO> simplePosts = new ArrayList<>();
@@ -404,10 +456,24 @@ public class PostDAO {
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
-
 	        return hashtags;
 	    }
 	    
+	    public int getContentCount(int postId) {
+	        int count = 0;
+	        String sql = "SELECT COUNT(*) AS contentCount FROM Content WHERE PostId = ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, postId);
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    count = rs.getInt("contentCount");
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return count;
+	    }
 
-	 
 }

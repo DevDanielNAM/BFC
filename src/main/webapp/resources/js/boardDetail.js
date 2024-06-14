@@ -1,6 +1,7 @@
-const callConfirm = (type) => {
+const callConfirm = (type, postId) => {
+	console.log(postId)
 	if(confirm(`${type}하시겠습니까?`)){
-		window.location.href = "boardEditDeleteRedirect.jsp?type=" + encodeURIComponent(type);
+		window.location.href = "boardEditDeleteRedirect.jsp?type=" + encodeURIComponent(type) + "&postId=" + encodeURIComponent(postId);
 	} else {
 		alert(`${type}하기가 취소되었습니다`);
 	}
