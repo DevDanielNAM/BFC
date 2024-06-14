@@ -34,9 +34,21 @@ const callCacelConfirm = (type) => {
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="content0">내용:</label>
+						<label for="title0">코스 제목:</label> <input type="text" name="title0"
+							id="title0" size="1" required>
+					</div>
+					<div class="form-group">
+						<label for="location0">코스 위치:</label> <input type="text"
+							name="location0" id="location0" size="1" required>
+					</div>
+					<div class="form-group">
+						<label for="content0">코스 소개:</label>
 						<textarea name="content0" id="content0" rows="15" cols="40"
 							required style="resize: none;"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="tag0">태그:</label> <input type="text" name="tag0"
+							id="tag0" size="1" placeholder="각 태그들은 띄어쓰기로 구분됩니다." required>
 					</div>
 				</div>
             </div>
