@@ -17,7 +17,7 @@
 <script>
 const callCacelConfirm = (type) => {
 	if(confirm(`취소하시겠습니까?`)){
-		window.location.href = "main.jsp";
+		window.location.href = "../main/main.jsp";
 	}
 };
 </script>
