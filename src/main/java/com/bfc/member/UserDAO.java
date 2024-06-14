@@ -5,8 +5,8 @@ import java.sql.*;
 public class UserDAO {
 	 private Connection getConnection() {
 		 String dbUrl = "jdbc:mysql://localhost:3306/bfc?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
-		 String id = "root";
-		 String pw = "비밀번호 변경해주세요";
+		 String id = "scott";
+		 String pw = "tiger";
 	     Connection conn = null;
 	     try {
 	    	 Class.forName("com.mysql.cj.jdbc.Driver");
