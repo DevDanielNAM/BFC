@@ -7,6 +7,7 @@ public class UserDAO {
 		 String dbUrl = "jdbc:mysql://localhost:3306/scott";
 		 String id = "scott";
 		 String pw = "tiger";
+
 	     Connection conn = null;
 	     try {
 	    	 Class.forName("com.mysql.cj.jdbc.Driver");

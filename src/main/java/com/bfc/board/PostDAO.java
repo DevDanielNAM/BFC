@@ -309,7 +309,7 @@ public class PostDAO {
 	        }
 	    }
 	    
-	    
+
 	    public List<SimplePostDTO> getAllPosts() {
 	        List<SimplePostDTO> simplePosts = new ArrayList<>();
 	        String sql = "SELECT * FROM Post";
@@ -408,6 +408,6 @@ public class PostDAO {
 	        return hashtags;
 	    }
 	    
-	    
+
 	 
 }
