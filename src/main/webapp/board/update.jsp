@@ -54,15 +54,17 @@ for(int i = 0 ; i < fieldcount; i++){ // 코스 리스트
 	
 	String tname = "tag" + i;
 	String tag = multi.getParameter("" + tname);
-    String[] tagsArray = tag.split(" ");
     
-    List<HashtagDTO> tags = new ArrayList<>();
+	List<HashtagDTO> tags = new ArrayList<>();
     
-    for(String t : tagsArray){ // 해쉬태그 리스트
-    	HashtagDTO hashtagDTO = new HashtagDTO();
-    	hashtagDTO.setTag(t);
-    	hashtagDTO.setUserId(userId);
-    	tags.add(hashtagDTO);
+    if(tag != null && !tag.trim().isEmpty()) {
+        String[] tagsArray = tag.split(" ");
+        for(String t : tagsArray){ // 해쉬태그 리스트
+            HashtagDTO hashtagDTO = new HashtagDTO();
+            hashtagDTO.setTag(t);
+            hashtagDTO.setUserId(userId);
+            tags.add(hashtagDTO);
+        }
     }
 	ContentDTO contentDTO = new ContentDTO();
 	contentDTO.setContentTitle(contentTitle);
