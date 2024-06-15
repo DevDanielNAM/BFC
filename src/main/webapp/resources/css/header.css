@@ -1,9 +1,8 @@
-@charset "UTF-8";
-
 .header {
     background-color: #f8f8f8;
-    padding: 20px 0;
+    padding: 5px 0; /* 위아래 padding을 5px로 조정 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 50px; /* 헤더의 세로 크기를 50px로 설정 */
 }
 
 .header .container {
@@ -16,11 +15,11 @@
 
 .header .site-name h1 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.2rem; /* 폰트 사이즈를 줄임 */
 }
 
 .header .login-button button {
-    padding: 10px 20px;
+    padding: 8px 12px; /* 버튼의 padding을 조정하여 높이를 맞춤 */
     font-size: 1rem;
     cursor: pointer;
     background-color: #066AE0;
@@ -32,9 +31,10 @@
 .header .login-button button:hover {
     background-color: #024a9f;
 }
+
 .site-name h1 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.2rem; /* 폰트 사이즈를 줄임 */
 }
 
 .site-name h1 a {

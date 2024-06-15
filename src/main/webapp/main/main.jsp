@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>여행지 소개 메인 페이지</title>
 <link rel="stylesheet" href="../resources/css/main.css">
+<script type="text/javascript" src="../resources/js/main.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -19,6 +20,7 @@
         <h2>부산 풀코스에 오신 것을 환영합니다!</h2>
         <p>다양한 여행지를 탐색하고, 각 여행지에 대한 코스 확인할 수 있습니다.</p>
     </section>
+
     <!-- Random Hashtags -->
     <section class="random-hashtags">
         <h3>추천 해시태그!</h3>
@@ -36,7 +38,6 @@
         </div>
     </section>
 
-
     <!-- 해시태그 검색 -->
     <section class="search-bar">
         <form action="main.jsp" method="get">
@@ -46,7 +47,7 @@
     </section>
     
     <!-- 포스트 제목으로 검색 -->
-     <section class="search-bar">
+    <section class="search-bar">
         <form action="main.jsp" method="get">
             <input type="text" name="query" placeholder="글 제목으로 검색하기">
             <button type="submit">검색</button>
@@ -148,7 +149,5 @@
 
     <!-- Footer -->
     <jsp:include page="../common/footer.jsp"></jsp:include>
-
-    <script type="text/javascript" src="../resources/js/boardMain.js" defer></script>
 </body>
 </html>

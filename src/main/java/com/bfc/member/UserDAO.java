@@ -50,4 +50,25 @@ public class UserDAO {
 			}
 			return success;
 		} 
+	 
+	 public boolean registerUser(UserDTO user) {
+		    boolean isSuccess = false;
+		    String sql = "INSERT INTO User (nickname, login, password) VALUES (?, ?, ?)";
+		    try (Connection conn = getConnection();
+		         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+		        ps.setString(1, user.getNickname());
+		        ps.setString(2, user.getLogin());
+		        ps.setString(3, user.getPassword());
+
+		        ps.executeUpdate(); 
+		        isSuccess = true;
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return isSuccess;
+		}
+
+	
 }
