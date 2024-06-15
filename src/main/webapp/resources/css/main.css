@@ -39,7 +39,7 @@ body {
 }
 
 .search-bar input[type="text"] {
-    width: 60%;
+    width: 30%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
