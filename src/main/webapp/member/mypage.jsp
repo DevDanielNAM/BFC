@@ -5,6 +5,7 @@
 <%@ page import="com.bfc.member.UserDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, java.sql.*, java.net.URLEncoder" %>
 <% request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
 <html>
@@ -38,7 +39,7 @@
         <div class="posts">
         	<% for(SimplePostDTO post : SimplePosts){%>
             <div class="post" onclick="moveBoardDetail(<%=post.getPostId()%>)">
-            	<img class="contentImg" src="../resources/images/<%=post.getImage()%>" width ="300px" height="200px" />
+            	<img class="contentImg" src="../uploadImages/board<%= post.getPostId()%>/<%= URLEncoder.encode(post.getImage()) %>" width ="300px" height="200px" />
             	<br>
             	<%=post.getTitle()%>
             </div>
