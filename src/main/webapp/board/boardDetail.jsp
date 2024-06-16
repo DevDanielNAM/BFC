@@ -106,11 +106,18 @@
 					</section>
 				</section>
 			</section>
-			<!-- 로그인한 상태에서만 보이기 -->
-			<section class="content-buttons">
-			<input type="button" id="content-edit-button" value="수정하기" onclick="callConfirm('수정', <%= postId %>)" />
-				<input type="button" id="content-delete-button" value="삭제하기" onclick="callConfirm('삭제', <%= postId %>)" />
-			</section>
+			
+			
+			<%
+				if (session.getAttribute("user") != null && session.getAttribute("userId") != null) {
+		    %>
+				<section class="content-buttons">
+					<input type="button" id="content-edit-button" value="수정하기" onclick="callConfirm('수정', <%= postId %>)" />
+					<input type="button" id="content-delete-button" value="삭제하기" onclick="callConfirm('삭제', <%= postId %>)" />
+				</section>		    
+		    <%         
+		        }
+			%>
 		</section>
 		
 		
