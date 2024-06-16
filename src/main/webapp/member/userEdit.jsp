@@ -19,7 +19,13 @@ const callCacelConfirm = (type) => {
 </script>
 <body>
 	<%
-	 	int userId = 1;/* 세션에서 유저 id 가져와야함 */
+	if (session.getAttribute("user") == null || session.getAttribute("userId") == null) {
+        response.sendRedirect("../member/login.jsp");
+        return;
+    }
+    
+    int userId = (Integer) session.getAttribute("userId");
+    
 	 	UserDAO userDAO = new UserDAO();
         UserDTO userDTO = userDAO.getUserInfo(userId);
 	%>

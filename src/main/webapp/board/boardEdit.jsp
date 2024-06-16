@@ -18,6 +18,14 @@ const callCacelConfirm = (type) => {
 };
 </script>
 <body>
+<% 
+if (session.getAttribute("user") == null || session.getAttribute("userId") == null) {
+            response.sendRedirect("../member/login.jsp");
+            return;
+        }
+%>
+        
+        
 <jsp:include page="../common/header.jsp"></jsp:include>
     <div class="container">
         <form action="upload.jsp" method="post" enctype="multipart/form-data">

@@ -12,7 +12,12 @@
 </head>
 <body>
 <%
-int userId = 1; /* 세션에서 로그인 아이디 구해야함 */
+if (session.getAttribute("user") == null || session.getAttribute("userId") == null) {
+    response.sendRedirect("../member/login.jsp");
+    return;
+}
+
+int userId = (Integer) session.getAttribute("userId");
 String nickname = request.getParameter("nickname");
 String password = request.getParameter("pw");
 

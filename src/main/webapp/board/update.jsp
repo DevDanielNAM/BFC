@@ -15,9 +15,12 @@
 <% request.setCharacterEncoding("utf-8"); %>
 
 <%
-// 세션에서 userId 가져오기
-//String userId = (String) session.getAttribute("userId");
-int userId = 1;
+if (session.getAttribute("user") == null || session.getAttribute("userId") == null) {
+    response.sendRedirect("../member/login.jsp");
+    return;
+}
+
+int userId = (Integer) session.getAttribute("userId");
 
 PostDAO postDAO = new PostDAO();
 PostDTO postDTO = new PostDTO();

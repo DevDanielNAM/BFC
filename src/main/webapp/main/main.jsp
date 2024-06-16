@@ -1,3 +1,4 @@
+<%@ page import="java.util.*, java.sql.*, java.net.URLEncoder" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, java.sql.*" %>
 <%@ page import="com.bfc.board.PostDAO" %>
@@ -97,7 +98,7 @@
                     for (SimplePostDTO post : postsOnPage) {
                 %>
                 <div class="post" onclick="moveBoardDetail(<%= post.getPostId() %>)">
-                    <img class="contentImg" src="../resources/images/<%= post.getImage() %>" width="100%" />
+                    <img class="contentImg" src="../uploadImages/board<%= post.getPostId() %>/<%= URLEncoder.encode(post.getImage()) %>" width="100%" />
                     <br>
                     <h2><%= post.getTitle() %></h2>
                     <!-- 해시태그 출력 -->
@@ -142,7 +143,7 @@
         <button type="button" onclick="location.href='../board/boardEdit.jsp'">여행지 등록</button>
     </div>
     
-    <!-- 마이페이지 버튼 -->
+     <!-- 마이페이지 버튼 -->
     <div class="mypage-button">
         <button type="button" onclick="location.href='../member/mypage.jsp'">마이페이지</button>
     </div>

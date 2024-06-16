@@ -70,5 +70,28 @@ public class UserDAO {
 		    return isSuccess;
 		}
 
-	
+	 // 로그인 검증 메서드
+	    public UserDTO validateUser(String login, String password) {
+	        UserDTO user = null;
+	        String sql = "SELECT * FROM User WHERE login = ? AND password = ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+	            ps.setString(1, login);
+	            ps.setString(2, password);
+
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    user = new UserDTO();
+	                    user.setUserId(rs.getInt("userId"));
+	                    user.setNickname(rs.getString("nickname"));
+	                    user.setLogin(rs.getString("login"));
+	                    user.setPassword(rs.getString("password"));
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return user;
+	    }
 }
