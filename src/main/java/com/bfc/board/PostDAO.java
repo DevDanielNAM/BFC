@@ -220,6 +220,31 @@ public class PostDAO {
 		     return false;
 		 }
 	 }
+
+	 public boolean uploadNewContent(ContentDTO contentDTO) {  // 占쌔댐옙 post占쏙옙 content 占쏙옙占싸듸옙
+		 String sql = "INSERT INTO Content (postId,userId, contentTitle, location, content, image) VALUES (?, ?, ?, ?, ?, ?)";
+		 try (Connection conn = getConnection();
+				 PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+				ps.setInt(1, contentDTO.getPostId());
+				ps.setInt(2, contentDTO.getUserId());
+				ps.setString(3, contentDTO.getContentTitle());
+				ps.setString(4, contentDTO.getLocation());
+				ps.setString(5, contentDTO.getContent());
+				ps.setString(6, contentDTO.getImage());
+				ps.executeUpdate();
+
+				ResultSet generatedKeys = ps.getGeneratedKeys();
+				if (generatedKeys.next()) {
+					int contentId = generatedKeys.getInt(1);
+					contentDTO.setContentId(contentId);
+				}
+				uploadHashtag(contentDTO);
+			 return true;
+		 } catch (SQLException e) {
+		     e.printStackTrace();
+		     return false;
+		 }
+	 }
 	 
 	 public void uploadHashtag(ContentDTO contentDTO) {   // �� content���� �ؽ��±� ���ε�
 		 String sql = "INSERT INTO Hashtag (userId, contentId, postId, tag) VALUES (?, ?, ?, ?)";
