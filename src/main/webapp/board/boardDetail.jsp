@@ -1,6 +1,5 @@
 <%@page import="java.net.URLEncoder"%>
 <%@ page import="java.util.*, java.sql.*, com.bfc.board.PostDTO, com.bfc.board.ContentDTO, com.bfc.member.UserDTO, com.bfc.board.HashtagDTO" %>
-<%@ page import="java.net.URLDecoder" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:useBean id="postDAO" class="com.bfc.board.PostDAO" scope="page" />
@@ -16,7 +15,7 @@
 	<!-- Header -->
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<%
-		int postId = 16; //Integer.parseInt(request.getParameter("postId"));
+		int postId = Integer.parseInt(request.getParameter("postId"));
 		String IMG_PATH = "../uploadImages/board" + postId;
 		
 		Map<String, List<String>> contentImagesTitlesLocations = postDAO.getContentImagesTitlesLocations(postId);
@@ -107,11 +106,18 @@
 					</section>
 				</section>
 			</section>
-			<!-- 로그인한 상태에서만 보이기 -->
-			<section class="content-buttons">
-			<input type="button" id="content-edit-button" value="수정하기" onclick="callConfirm('수정', <%= postId %>)" />
-				<input type="button" id="content-delete-button" value="삭제하기" onclick="callConfirm('삭제', <%= postId %>)" />
-			</section>
+			
+			
+			<%
+				if (session.getAttribute("user") != null && session.getAttribute("userId") != null) {
+		    %>
+				<section class="content-buttons">
+					<input type="button" id="content-edit-button" value="수정하기" onclick="callConfirm('수정', <%= postId %>)" />
+					<input type="button" id="content-delete-button" value="삭제하기" onclick="callConfirm('삭제', <%= postId %>)" />
+				</section>		    
+		    <%         
+		        }
+			%>
 		</section>
 		
 		
@@ -121,14 +127,24 @@
 		<section class="reply">
 			<!-- textarea 클릭 시 로그인 여부 확인 -->
 			<section class="reply-write">
-				<form class="reply-form" action="addReply.jsp" method="POST" onsubmit="return confirmSubmission()">
+				<form class="reply-form" action="addReply.jsp?postId=<%= postId %>" method="POST" onsubmit="return confirmSubmission()">
 					<h4 id="reply-write-title">댓글 추가</h4>
-					<textarea id="reply-write-area" name="replyContent" rows="5" placeholder="댓글을 입력하세요"></textarea>
+					<%
+						if (session.getAttribute("user") == null || session.getAttribute("userId") == null) {
+		    		%>
+		    			<textarea id="reply-write-area" name="replyContent" rows="5" placeholder="로그인을 해주세요" onclick="showLoginAlert()" readonly></textarea>
+		    		<%
+						} else {
+		    		%>
+						<textarea id="reply-write-area" name="replyContent" rows="5" placeholder="댓글을 입력하세요"></textarea>
+					<%
+						}
+					%>
 					<input type="submit" id="reply-write-button" value="추가하기"/>
 				</form>
 			</section>
 			
-			<jsp:include page="replyList.jsp" />
+			<jsp:include page="replyList.jsp?postId=<%= postId %>" />
 			
 		</section>
 	
