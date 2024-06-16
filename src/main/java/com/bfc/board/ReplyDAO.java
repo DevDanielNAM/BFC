@@ -21,9 +21,9 @@ public class ReplyDAO {
     }
 	
 
-    public List<ReplyDTO> getAllReplies() {
+    public List<ReplyDTO> getAllReplies(int postId) {
         List<ReplyDTO> replies = new ArrayList<>();
-        String sql = "SELECT * FROM Reply ORDER BY replyId ASC";
+        String sql = "SELECT * FROM Reply WHERE postId = " + postId;
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -46,15 +46,16 @@ public class ReplyDAO {
     }
 
     public void addReply(ReplyDTO reply) {
-        String sql = "INSERT INTO Reply (content, createdAt, writerId, writerNickname) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Reply (postId, userId, content, createdAt, writerId, writerNickname) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, reply.getContent());
-            ps.setTimestamp(2, reply.getCreatedAt());
-            ps.setInt(3, reply.getWriterId());
-            ps.setString(4, reply.getWriterNickname());
+        	ps.setInt(1, reply.getPostId());
+        	ps.setInt(2, reply.getUserId());
+            ps.setString(3, reply.getContent());
+            ps.setTimestamp(4, reply.getCreatedAt());
+            ps.setInt(5, reply.getWriterId());
+            ps.setString(6, reply.getWriterNickname());
             ps.executeUpdate();
 
         } catch (SQLException e) {

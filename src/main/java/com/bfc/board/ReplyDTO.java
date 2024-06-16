@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 public class ReplyDTO {
  private int replyId;
+ private int postId;
+ private int userId;
  private String content;
  private Timestamp createdAt;
  private int writerId;
@@ -17,6 +19,23 @@ public class ReplyDTO {
  public void setReplyId(int replyId) {
      this.replyId = replyId;
  }
+ 
+ public int getPostId() {
+     return postId;
+ }
+
+ public void setPostId(int postId) {
+     this.postId = postId;
+ }
+
+ public int getUserId() {
+     return userId;
+ }
+
+ public void setUserId(int userId) {
+     this.userId = userId;
+ }
+
 
  public String getContent() {
      return content;
