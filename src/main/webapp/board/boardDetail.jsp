@@ -29,6 +29,8 @@
 		UserDTO userInfo = userDAO.getUserInfo(postDetail.getUserId());
 		List<ContentDTO> contentList = postDetail.getContents();
 		ContentDTO content = contentList.get(0);
+		
+		int USER_ID = postDetail.getUserId();
 		int contentId = contentList.get(0).getContentId();
 	%>
 	
@@ -109,7 +111,7 @@
 			
 			
 			<%
-				if (session.getAttribute("user") != null && session.getAttribute("userId") != null) {
+				if (session.getAttribute("user") != null && (Integer)session.getAttribute("userId") == USER_ID) {
 		    %>
 				<section class="content-buttons">
 					<input type="button" id="content-edit-button" value="수정하기" onclick="callConfirm('수정', <%= postId %>)" />
