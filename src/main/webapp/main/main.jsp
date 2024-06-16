@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>여행지 소개 메인 페이지</title>
 <link rel="stylesheet" href="../resources/css/main.css">
+<script type="text/javascript" src="../resources/js/main.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -19,33 +20,39 @@
         <h2>부산 풀코스에 오신 것을 환영합니다!</h2>
         <p>다양한 여행지를 탐색하고, 각 여행지에 대한 코스 확인할 수 있습니다.</p>
     </section>
-<!-- Random Hashtags -->
-	<section class="random-hashtags">
-	    <h3>해시태그 추천</h3>
-	    <p>태그로도 검색이 가능합니다!</p>
-	    <div class="hashtags">
-	        <%
-	            PostDAO postDAO2 = new PostDAO();
-	            List<String> randomHashtags = postDAO2.getRandomHashtags(6); // 6개의 랜덤 해시태그 가져오기
 
-	            for (String hashtag : randomHashtags) {
-	        %>
-	        <span class="hashtag"><%= hashtag %></span>
-	        <%
-	            }
-	        %>
-	    </div>
-	</section>
-	<!-- Search -->
-	<section class="search-bar">
-	    <form action="main.jsp" method="get">
-	        <input type="text" name="query" placeholder="여행지나 해시태그를 검색하세요">
-	        <button type="submit">검색</button>
-	    </form>
-	</section>
+    <!-- Random Hashtags -->
+    <section class="random-hashtags">
+        <h3>추천 해시태그!</h3>
+        <div class="hashtags">
+            <%
+                PostDAO postDAO2 = new PostDAO();
+                List<String> randomHashtags = postDAO2.getRandomHashtags(6); // 6개의 랜덤 해시태그 가져오기
 
-	
+                for (String hashtag : randomHashtags) {
+            %>
+            <span class="hashtag"><%= hashtag %></span>
+            <%
+                }
+            %>
+        </div>
+    </section>
 
+    <!-- 해시태그 검색 -->
+    <section class="search-bar">
+        <form action="main.jsp" method="get">
+            <input type="text" name="tagQuery" placeholder="태그로 검색하기">
+            <button type="submit">검색</button>
+        </form>
+    </section>
+    
+    <!-- 포스트 제목으로 검색 -->
+    <section class="search-bar">
+        <form action="main.jsp" method="get">
+            <input type="text" name="query" placeholder="글 제목으로 검색하기">
+            <button type="submit">검색</button>
+        </form>
+    </section>
 
     <!-- Main -->
     <main>
@@ -66,10 +73,15 @@
                     PostDAO postDAO = new PostDAO();
                     List<SimplePostDTO> allPosts;
                     String query = request.getParameter("query");
+                    String tagQuery = request.getParameter("tagQuery");
 
-                    // 검색어가 있을 경우 해당 키워드를 포함하는 포스트만 가져옴
+                    // 여행지 제목으로 검색
                     if (query != null && !query.trim().isEmpty()) {
                         allPosts = postDAO.searchPosts(query);
+                    }
+                    // 해시태그로 검색
+                    else if (tagQuery != null && !tagQuery.trim().isEmpty()) {
+                        allPosts = postDAO.searchPostsByTag(tagQuery);
                     } else {
                         allPosts = postDAO.getAllPosts(); // 검색어가 없을 경우 전체 포스트 가져오기
                     }
@@ -96,7 +108,7 @@
                     </div>
                 </div>
                 <%
-                    } 
+                    }
                 %>
             </div>
 
@@ -105,10 +117,14 @@
                 <%
                     // 페이지 링크 출력
                     for (int i = 1; i <= totalPages; i++) {
-                        // 검색어(query)가 있을 때와 없을 때의 링크 구성
+                        // 검색어(query 또는 tagQuery)가 있을 때와 없을 때의 링크 구성
                         if (query != null && !query.trim().isEmpty()) {
                 %>
                 <a href="main.jsp?page=<%= i %>&query=<%= query %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
+                <%
+                        } else if (tagQuery != null && !tagQuery.trim().isEmpty()) {
+                %>
+                <a href="main.jsp?page=<%= i %>&tagQuery=<%= tagQuery %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
                 <%
                         } else {
                 %>
@@ -133,7 +149,5 @@
 
     <!-- Footer -->
     <jsp:include page="../common/footer.jsp"></jsp:include>
-
-    <script type="text/javascript" src="../resources/js/boardMain.js" defer></script>
 </body>
 </html>

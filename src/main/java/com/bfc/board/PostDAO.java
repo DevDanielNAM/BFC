@@ -388,12 +388,14 @@ public class PostDAO {
 	        String sql = "SELECT p.postId, p.title, c.image " +
 	                     "FROM Post p " +
 	                     "JOIN Content c ON p.postId = c.postId " +
-	                     "JOIN HashTag h ON c.contentId = h.contentId " +
-	                     "WHERE p.title LIKE ? OR h.tag LIKE ?";
+	                     "WHERE p.title LIKE ? " +
+	                     "AND c.contentId = (SELECT MAX(c2.contentId) " +
+	                                        "FROM Content c2 " +
+	                                        "WHERE c2.postId = p.postId)";
+
 	        try (Connection conn = getConnection();
 	             PreparedStatement ps = conn.prepareStatement(sql)) {
 	            ps.setString(1, "%" + query + "%");
-	            ps.setString(2, "%" + query + "%");
 
 	            try (ResultSet rs = ps.executeQuery()) {
 	                while (rs.next()) {
@@ -401,13 +403,13 @@ public class PostDAO {
 	                    String title = rs.getString("title");
 	                    String image = rs.getString("image");
 
-	                    SimplePostDTO post = new SimplePostDTO();
-	                    post.setPostId(postId);
-	                    post.setTitle(title);
-	                    post.setImage(image);
-	                    post.setTags(getHashtagsByPostId(postId)); // 여행지의 해시태그 설정
+	                    SimplePostDTO simplePost = new SimplePostDTO();
+	                    simplePost.setPostId(postId);
+	                    simplePost.setTitle(title);
+	                    simplePost.setImage(image);
+	                    simplePost.setTags(getHashtagsByPostId(postId)); // 여행지의 해시태그 설정
 
-	                    searchedPosts.add(post);
+	                    searchedPosts.add(simplePost);
 	                }
 	            }
 	        } catch (SQLException e) {
@@ -416,28 +418,39 @@ public class PostDAO {
 
 	        return searchedPosts;
 	    }
+	    
+	    public List<SimplePostDTO> searchPostsByTag(String tagQuery) {
+	        List<SimplePostDTO> searchedPosts = new ArrayList<>();
+	        String sql = "SELECT p.postId, p.title, c.image " +
+	                     "FROM Post p " +
+	                     "JOIN Content c ON p.postId = c.postId " +
+	                     "JOIN HashTag h ON c.contentId = h.contentId " +
+	                     "WHERE h.tag LIKE ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setString(1, "%" + tagQuery + "%");
 
-//	    public List<SimplePostDTO> searchPosts(String query) {
-//	        List<SimplePostDTO> searchedPosts = new ArrayList<>();
-//	        String sql = "SELECT p.postId, p.title, c.image, c.content FROM Post p JOIN Content c ON p.postId = c.postId WHERE p.title LIKE ?";
-//	        try (Connection conn = getConnection();
-//	             PreparedStatement ps = conn.prepareStatement(sql)) {
-//	            ps.setString(1, "%" + query + "%");
-//	            try (ResultSet rs = ps.executeQuery()) {
-//	                while (rs.next()) {
-//	                    SimplePostDTO post = new SimplePostDTO();
-//	                    post.setPostId(rs.getInt("postId"));
-//	                    post.setTitle(rs.getString("title"));
-//	                    post.setImage(getImage(post.getPostId()));
-//	                    post.setTags(getHashtagsByPostId(post.getPostId()));
-//	                    searchedPosts.add(post);
-//	                }
-//	            }
-//	        } catch (SQLException e) {
-//	            e.printStackTrace();
-//	        }
-//	        return searchedPosts;
-//	    }
+	            try (ResultSet rs = ps.executeQuery()) {
+	                while (rs.next()) {
+	                    int postId = rs.getInt("postId");
+	                    String title = rs.getString("title");
+	                    String image = rs.getString("image");
+
+	                    SimplePostDTO simplePost = new SimplePostDTO();
+	                    simplePost.setPostId(postId);
+	                    simplePost.setTitle(title);
+	                    simplePost.setImage(image);
+	                    simplePost.setTags(getHashtagsByPostId(postId)); // 여행지의 해시태그 설정
+
+	                    searchedPosts.add(simplePost);
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        return searchedPosts;
+	    }
 
 	    
 	    public List<String> getRandomHashtags(int count) {
