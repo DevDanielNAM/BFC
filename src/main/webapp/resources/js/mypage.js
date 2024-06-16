@@ -17,5 +17,5 @@ const callConfirm = (type) => {
 };
 
 const moveBoardDetail = (postId) => {
-	window.location.href = "../board/boardDetail.jsp?type=" + encodeURIComponent(postId);
+	window.location.href = "../board/boardDetail.jsp?postId=" + encodeURIComponent(postId);
 };
