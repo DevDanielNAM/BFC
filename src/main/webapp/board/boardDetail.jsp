@@ -6,15 +6,7 @@
 <jsp:useBean id="userDAO" class="com.bfc.member.UserDAO" scope="page" />
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Busan Full Course</title>
-<link rel="stylesheet" href="../resources/css/boardDetail.css">
-</head>
-<body>
-	<!-- Header -->
-	<jsp:include page="../common/header.jsp"></jsp:include>
-	<%
+<%
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		String IMG_PATH = "../uploadImages/board" + postId;
 		
@@ -30,9 +22,19 @@
 		List<ContentDTO> contentList = postDetail.getContents();
 		ContentDTO content = contentList.get(0);
 		
-		int USER_ID = postDetail.getUserId();
-		int contentId = contentList.get(0).getContentId();
+        String user = (String) session.getAttribute("user");
+        String userId = session.getAttribute("userId").toString();
+        boolean isLoggedIn = user != null && userId != null;
+
 	%>
+<head>
+<meta charset="UTF-8">
+<title>Busan Full Course - <%= userInfo.getNickname() %>의 <%= postDetail.getTitle() %></title>
+<link rel="stylesheet" href="../resources/css/boardDetail.css">
+</head>
+<body>
+	<!-- Header -->
+	<jsp:include page="../common/header.jsp"></jsp:include>
 	
 	<!-- Main -->
 	<main>
@@ -55,9 +57,16 @@
 							int contentCount = postDAO.getContentCount(postId); 
 							for(int i=0; i<contentCount; i++) {
 						%>
-							<li>
+							<li onclick="showCourseDetail(this)">
 								<img src="<%= IMG_PATH %>/<%= URLEncoder.encode(images.get(i), "UTF-8") %>" />
 								<h1 class="course-image-title"><%= contentTitles.get(i) %></h1>
+								<div class="course-info" 
+						             data-title="<%= contentTitles.get(i) %>" 
+						             data-location="<%= locations.get(i) %>"
+						             data-image="<%= IMG_PATH %>/<%= URLEncoder.encode(images.get(i), "UTF-8") %>"
+						             data-content="<%= contents.get(i) %>"
+						             data-content-id="<%= contentIds.get(i) %>">
+						        </div>
 							</li>
 						<%
 							}
@@ -66,7 +75,8 @@
 					<div class="prev-button"></div>
 					<div class="next-button"></div>					
 				</article>
-				<!-- 이미지를 클릭하면 i를 넘겨준다 -->
+				
+				<!-- course detail -->
 				<section class="course-detail">
 					<section class="course-detail-title-wrap">
 						<article class="course-detail-title">
@@ -77,41 +87,34 @@
 					
 					<section class="course-detail-image-wrap">
 						<article class="course-detail-image">
-							<img src="../uploadImages/board1/img01.jpeg" />
-						</article>
-						<article class="course-detail-image">
-							<img src="../uploadImages/board1/img02.jpeg" />
-						</article>
-						<article class="course-detail-image">
-							<img src="../uploadImages/board1/img03.jpeg" />
+							<img id="course-detail-image" src="<%= IMG_PATH %>/<%= URLEncoder.encode(images.get(0), "UTF-8") %>" />
 						</article>
 					</section>
 					
 					<section class="course-detail-content">
-						<article>
+						<article id="course-detail-content">
 						<%= contents.get(0) %>
 						</article>
 					</section>
 					
 					<section class="course-detail-tags">
-						<ul>
-							<% 
-								List<HashtagDTO> hashtagList = postDAO.getHashtags(Integer.parseInt(contentIds.get(0)));
-								
-								for(int i=0; i<hashtagList.size(); i++) {
-							%>							
-								<li>#<%= hashtagList.get(i).getTag() %></li>
-							<%
-								}
-							%>
-						</ul>
+						<ul id="course-detail-tags">
+                            <% 
+                                List<HashtagDTO> hashtagList = postDAO.getHashtags(Integer.parseInt(contentIds.get(0)));
+                                for (HashtagDTO hashtag : hashtagList) {
+                            %>                            
+                                <li>#<%= hashtag.getTag() %></li>
+                            <% 
+                                }
+                            %>
+                        </ul>
 					</section>
 				</section>
 			</section>
 			
-			
+			<!-- content buttons -->
 			<%
-				if (session.getAttribute("user") != null && (Integer)session.getAttribute("userId") == USER_ID) {
+				if (isLoggedIn) {
 		    %>
 				<section class="content-buttons">
 					<input type="button" id="content-edit-button" value="수정하기" onclick="callConfirm('수정', <%= postId %>)" />
@@ -127,23 +130,26 @@
 		
 		<!-- reply section -->
 		<section class="reply">
-			<!-- textarea 클릭 시 로그인 여부 확인 -->
 			<section class="reply-write">
-				<form class="reply-form" action="addReply.jsp?postId=<%= postId %>" method="POST" onsubmit="return confirmSubmission()">
-					<h4 id="reply-write-title">댓글 추가</h4>
-					<%
-						if (session.getAttribute("user") == null || session.getAttribute("userId") == null) {
-		    		%>
-		    			<textarea id="reply-write-area" name="replyContent" rows="5" placeholder="로그인을 해주세요" onclick="showLoginAlert()" readonly></textarea>
-		    		<%
-						} else {
-		    		%>
+				<%
+					if (!isLoggedIn) {
+	    		%>
+		    		<article class="reply-form disable">
+		    			<h4 id="reply-write-title">댓글 추가</h4>	
+		    			<a id="disable-reply-box">댓글을 작성하시려면 로그인을 해주세요.</a>
+		    			<input type="button" id="reply-write-button" value="추가하기" disabled />	    		
+		    		</article>
+	    		<%
+					} else {
+	    		%>
+					<form class="reply-form" action="addReply.jsp?postId=<%= postId %>" method="POST" onsubmit="return confirmSubmission()">
+						<h4 id="reply-write-title">댓글 추가</h4>					
 						<textarea id="reply-write-area" name="replyContent" rows="5" placeholder="댓글을 입력하세요"></textarea>
-					<%
-						}
-					%>
-					<input type="submit" id="reply-write-button" value="추가하기"/>
-				</form>
+						<input type="submit" id="reply-write-button" value="추가하기" />
+					</form>
+				<% 
+					} 
+				%>
 			</section>
 			
 			<jsp:include page="replyList.jsp?postId=<%= postId %>" />
