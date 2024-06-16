@@ -127,14 +127,24 @@
 		<section class="reply">
 			<!-- textarea 클릭 시 로그인 여부 확인 -->
 			<section class="reply-write">
-				<form class="reply-form" action="addReply.jsp" method="POST" onsubmit="return confirmSubmission()">
+				<form class="reply-form" action="addReply.jsp?postId=<%= postId %>" method="POST" onsubmit="return confirmSubmission()">
 					<h4 id="reply-write-title">댓글 추가</h4>
-					<textarea id="reply-write-area" name="replyContent" rows="5" placeholder="댓글을 입력하세요"></textarea>
+					<%
+						if (session.getAttribute("user") == null || session.getAttribute("userId") == null) {
+		    		%>
+		    			<textarea id="reply-write-area" name="replyContent" rows="5" placeholder="로그인을 해주세요" onclick="showLoginAlert()" readonly></textarea>
+		    		<%
+						} else {
+		    		%>
+						<textarea id="reply-write-area" name="replyContent" rows="5" placeholder="댓글을 입력하세요"></textarea>
+					<%
+						}
+					%>
 					<input type="submit" id="reply-write-button" value="추가하기"/>
 				</form>
 			</section>
 			
-			<jsp:include page="replyList.jsp" />
+			<jsp:include page="replyList.jsp?postId=<%= postId %>" />
 			
 		</section>
 	

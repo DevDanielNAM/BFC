@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="../resources/css/boardDetail.css">
 </head>
 	<%
-		List<ReplyDTO> replyList = replyDAO.getAllReplies();
+		int postId = Integer.parseInt(request.getParameter("postId"));
+		List<ReplyDTO> replyList = replyDAO.getAllReplies(postId);
 	%>
 
     <ul class="reply-view-lists">
