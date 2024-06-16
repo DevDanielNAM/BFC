@@ -37,7 +37,7 @@ if (isSuccess) {
         alert("회원가입이 완료되었습니다.");
         setTimeout(function() {
             window.location.href = "../member/login.jsp";
-        }, 3000); // 3초 후에 리다이렉트
+        }, 1000); // 1초 후에 리다이렉트
     </script>
 <%
 } else {

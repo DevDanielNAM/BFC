@@ -28,8 +28,12 @@ const callCacelConfirm = (type) => {
 <body>
 
 <%
-	int userId = 1/* 세션에서 유저 id 가져와야함 */;
-/* 	int postId = 63; */
+if (session.getAttribute("user") == null || session.getAttribute("userId") == null) {
+    response.sendRedirect("../member/login.jsp");
+    return;
+}
+
+int userId = (Integer) session.getAttribute("userId");
 	int postId = Integer.parseInt(request.getParameter("postId"));
 	
 	PostDAO postDAO = new PostDAO();
