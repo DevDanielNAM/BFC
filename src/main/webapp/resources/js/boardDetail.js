@@ -1,3 +1,4 @@
+// confirm to edit or delete
 const callConfirm = (type, postId) => {
 	if(confirm(`${type}하시겠습니까?`)){
 		window.location.href = "boardEditDeleteRedirect.jsp?type=" + encodeURIComponent(type) + "&postId=" + encodeURIComponent(postId);
@@ -7,8 +8,18 @@ const callConfirm = (type, postId) => {
 };
 
 
+// reply login alert
 const showLoginAlert = () => {
-	alert("로그인을 해주세요!");
+	if(confirm(`로그인을 하시겠습니까?`)){
+		window.location.href = "../member/login.jsp";
+	} else {
+		alert(`로그인하기를 취소하셨습니다`);
+	}
+}
+
+const disabledReplyBox = document.getElementById("disable-reply-box");
+disabledReplyBox.onclick = (event) => {
+	showLoginAlert();
 }
 
 
@@ -22,6 +33,42 @@ const confirmSubmission = () => {
 }
 
 
+// Show course details when the course image is clicked
+const showCourseDetail = (element) => {
+    const courseDetailTitle = document.getElementById("course-detail-title");
+    const courseDetailLocation = document.getElementById("course-detail-location");
+    const courseDetailImage = document.getElementById("course-detail-image");
+    const courseDetailContent = document.getElementById("course-detail-content");
+    const courseDetailTags = document.getElementById("course-detail-tags");
+    
+    const courseInfo = element.querySelector('.course-info');
+
+    const title = courseInfo.getAttribute('data-title');
+    const location = courseInfo.getAttribute('data-location');
+    const image = courseInfo.getAttribute('data-image');
+    const content = courseInfo.getAttribute('data-content');
+    const contentId = courseInfo.getAttribute('data-content-id');
+    
+    courseDetailTitle.innerHTML = title;
+    courseDetailLocation.innerHTML = location;
+    courseDetailImage.src  = image;
+    courseDetailContent.innerHTML = content;
+    
+     fetch(`getHashtags.jsp?contentId=${contentId}`)
+        .then(response => response.json())
+        .then(hashtags => {
+            courseDetailTags.innerHTML = '';
+
+            // Add new tags
+            hashtags.forEach(tag => {
+                const li = document.createElement('li');
+                li.textContent = `#${tag}`;
+                courseDetailTags.appendChild(li);
+            });
+        })
+        .catch(error => console.error('Error fetching hashtags:', error));
+}
+
 
 // reply more button 클릭 시 수정, 삭제 toggle
 document.addEventListener("DOMContentLoaded", () => {
@@ -32,8 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const textareas = document.querySelectorAll(".edit-reply-form > textarea");
 
     function autoResizeTextarea(textarea) {
-        textarea.style.height = 'auto'; // 먼저 높이를 자동으로 설정하여 스크롤을 없앱니다.
-        textarea.style.height = (textarea.scrollHeight || 57) + 'px'; // 내용의 높이에 맞게 조절합니다.
+        textarea.style.height = 'auto'; // 먼저 높이를 자동으로 설정하여 스크롤을 없앰
+        textarea.style.height = (textarea.scrollHeight || 57) + 'px'; // 내용의 높이에 맞게 조절
     }
     
     moreButtons.forEach((moreButton, index) => {
@@ -104,10 +151,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Auto-resize textarea
 const textarea = document.getElementById("reply-write-area");
-textarea.addEventListener("input", () => {
-    textarea.style.height = "auto"; // Reset height to auto
-    textarea.style.height = (textarea.scrollHeight) + "px"; // Set height to scrollHeight
-});
+try{
+	textarea.addEventListener("input", () => {
+	    textarea.style.height = "auto"; // Reset height to auto
+	    textarea.style.height = (textarea.scrollHeight) + "px"; // Set height to scrollHeight
+	});	
+} catch(e) {
+	console.log("please login and then show textarea!");
+}
 
 
 // Carousel Slide
@@ -131,13 +182,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       function checkButtonVisibility() {
-        if (contentWidth - totalSlides * LIST_WIDTH >= 0) {
-          prevButton.style.display = 'none';
-          nextButton.style.display = 'none';
-        } else {
-          prevButton.style.display = 'block';
-          nextButton.style.display = 'block';
-        }
+		try {
+	        if (contentWidth - totalSlides * LIST_WIDTH >= 0) {
+	          prevButton.style.display = 'none';
+	          nextButton.style.display = 'none';
+	        } else {
+	          prevButton.style.display = 'block';
+	          nextButton.style.display = 'block';
+	        }			
+		} catch(e) {
+			  prevButton.style.display = 'none';
+		      nextButton.style.display = 'none';
+		}
       }
       
       function updateMaxIndex() {
