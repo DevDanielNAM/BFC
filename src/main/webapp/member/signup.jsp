@@ -17,7 +17,7 @@
 </section>
 <div class="signup-container">
     <h2>회원가입</h2>
-    <form action="../member/signupServlet.jsp" method="post">
+    <form action="../member/signupProcess.jsp" method="post">
         <div class="form-group">
             <label for="nickname">닉네임:</label>
             <input type="text" id="nickname" name="nickname" required>

@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>회원가입 처리</title>
 </head>
 <body>
 <%
@@ -32,7 +32,14 @@ UserDAO userDAO = new UserDAO();
 boolean isSuccess = userDAO.registerUser(user);
 if (isSuccess) {
     // 회원가입 성공 시 처리
-    response.sendRedirect("../member/login.jsp");
+%>
+    <script>
+        alert("회원가입이 완료되었습니다.");
+        setTimeout(function() {
+            window.location.href = "../member/login.jsp";
+        }, 3000); // 3초 후에 리다이렉트
+    </script>
+<%
 } else {
     // 회원가입 실패 시 처리
     response.sendRedirect("../error.jsp");
