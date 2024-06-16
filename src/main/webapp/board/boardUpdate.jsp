@@ -12,7 +12,7 @@
 <title>코스 수정  페이지</title>
 </head>
 <link rel="stylesheet" href="../resources/css/boardEdit.css">
-<script type="text/javascript" src="../resources/js/boardEdit.js" defer>
+<script type="text/javascript" src="../resources/js/boardUpdate.js" defer>
 </script>
 <script>
 const callCacelConfirm = (type) => {
@@ -24,20 +24,21 @@ const callCacelConfirm = (type) => {
 <%!
 	String tagString = "";
 	int nameNumber = 0;
+	int postId = 0;
 %>
 <body>
 
 <%
 	int userId = 1/* 세션에서 유저 id 가져와야함 */;
 /* 	int postId = 63; */
-	int postId = Integer.parseInt(request.getParameter("postId"));
 	
+	postId = Integer.parseInt(request.getParameter("postId"));
 	PostDAO postDAO = new PostDAO();
 	PostDTO postDTO = postDAO.getPostDetail(postId);
 %>
 <jsp:include page="../common/header.jsp"></jsp:include>
     <div class="container">
-        <form action="update.jsp" method="post" enctype="multipart/form-data">
+        <form action="update.jsp?postId=<%=postId%>" method="post" enctype="multipart/form-data">
             <div id="inputFields">
                 <div class="form-group">
                     <label for="title">제목:</label>
@@ -79,11 +80,12 @@ const callCacelConfirm = (type) => {
 					}%>
 				</div>
             </div>
-<!--             <div class="center-align">
+             <div class="center-align">
                 <button type="button" id = "content-add-button" onclick="addFields()">+</button>
-            </div> -->
-            <input type="hidden" name="postId" id="postId" value="<%=postDTO.getPostId()%>">
+            </div>
+            <%-- <input type="hidden" name="postId" id="postId" value="<%=postId%>"> --%>
             <input type="hidden" name="fc" id="fc" value="<%=nameNumber%>">
+            <input type="hidden" name="nfc" id="nfc" value="-1">
             <div class="form-actions">
             	<input type="button" id = "content-cancel-button" value="취소" onclick ="callCacelConfirm('취소')">
                 <input type="submit" id = "content-upload-button" value="수정">
