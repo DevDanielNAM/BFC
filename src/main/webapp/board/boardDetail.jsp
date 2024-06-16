@@ -1,6 +1,5 @@
 <%@page import="java.net.URLEncoder"%>
 <%@ page import="java.util.*, java.sql.*, com.bfc.board.PostDTO, com.bfc.board.ContentDTO, com.bfc.member.UserDTO, com.bfc.board.HashtagDTO" %>
-<%@ page import="java.net.URLDecoder" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:useBean id="postDAO" class="com.bfc.board.PostDAO" scope="page" />
@@ -16,7 +15,7 @@
 	<!-- Header -->
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<%
-		int postId = 16; //Integer.parseInt(request.getParameter("postId"));
+		int postId = Integer.parseInt(request.getParameter("postId"));
 		String IMG_PATH = "../uploadImages/board" + postId;
 		
 		Map<String, List<String>> contentImagesTitlesLocations = postDAO.getContentImagesTitlesLocations(postId);
