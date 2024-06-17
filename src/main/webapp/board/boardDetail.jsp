@@ -1,5 +1,5 @@
 <%@page import="java.net.URLEncoder"%>
-<%@ page import="java.util.*, java.sql.*, com.bfc.board.PostDTO, com.bfc.board.ContentDTO, com.bfc.member.UserDTO, com.bfc.board.HashtagDTO" %>
+<%@ page import="java.util.*, java.sql.*, com.bfc.board.PostDTO, com.bfc.board.ContentDTO, com.bfc.member.UserDTO, com.bfc.board.HashtagDTO, com.bfc.board.ImageDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:useBean id="postDAO" class="com.bfc.board.PostDAO" scope="page" />
@@ -52,28 +52,36 @@
 					<ul class="course-lists">
 						<% 
 							int contentCount = postDAO.getContentCount(postId); 
+							
 							for(int i=0; i<contentCount; i++) {
+								int contentId = Integer.parseInt(contentIds.get(i));
+								List<ImageDTO> imageLists = postDAO.getImageList(contentId);
+								int imageCounts = imageLists.size();
+								List<String> imageList = new ArrayList<>();
+								for(int j=0; j<imageCounts; j++) {
+									imageList.add(IMG_PATH + "/" + URLEncoder.encode(imageLists.get(j).getImage(), "UTF-8"));
+								}
 						%>
-								<% if(i==0) { %>
-								<li class="course-list course-on-half" onclick="showCourseDetail(this)">
-									<strong class="course-number active-course-number"><%= i+1 %></strong>
-									<div class="course-image-wrap active-course-image">
-										<figure class="course-image" style="background:url(<%= IMG_PATH %>/<%= URLEncoder.encode(images.get(i), "UTF-8") %>); 
-										background-size: contain; background-repeat: no-repeat; background-position: 50% 50%;"></figure>															
-									</div>
-								<% } else { %>
+						<% if(i==0) { %>
+							<li class="course-list course-on-half" onclick="showCourseDetail(this)">
+								<strong class="course-number active-course-number"><%= i+1 %></strong>
+								<div class="course-image-wrap">
+									<figure class="course-image active-course-image" style="background:url(<%= imageList.get(0) %>); 
+									background-size: cover; background-repeat: no-repeat; background-position: 50% 50%;"></figure>															
+								</div>
+						<% } else { %>
 							<li class="course-list" onclick="showCourseDetail(this)">
 								<strong class="course-number"><%= i+1 %></strong>
 								<div class="course-image-wrap">
-									<figure class="course-image" style="background:url(<%= IMG_PATH %>/<%= URLEncoder.encode(images.get(i), "UTF-8") %>); 
-									background-size: contain; background-repeat: no-repeat; background-position: 50% 50%;"></figure>															
+									<figure class="course-image" style="background:url(<%= imageList.get(0) %>); 
+									background-size: cover; background-repeat: no-repeat; background-position: 50% 50%;"></figure>															
 								</div>
 								<% } %>
 								<h1 class="course-image-title"><%= contentTitles.get(i) %></h1>
 								<div class="course-info" 
 						             data-title="<%= contentTitles.get(i) %>" 
 						             data-location="<%= locations.get(i) %>"
-						             data-image="<%= IMG_PATH %>/<%= URLEncoder.encode(images.get(i), "UTF-8") %>"
+						             data-image="<%= imageList %>"
 						             data-content="<%= contents.get(i) %>"
 						             data-content-id="<%= contentIds.get(i) %>">
 						        </div>
@@ -97,7 +105,16 @@
 					
 					<section class="course-detail-image-wrap">
 						<article class="course-detail-image">
-							<img id="course-detail-image" src="<%= IMG_PATH %>/<%= URLEncoder.encode(images.get(0), "UTF-8") %>" />
+							<%
+								int contentId = Integer.parseInt(contentIds.get(0));
+								List<ImageDTO> imageLists = postDAO.getImageList(contentId);
+								int imageCounts = imageLists.size();
+								
+								for(int i=0; i<imageCounts; i++) {
+							%>							
+									<img id="course-detail-image<%= i %>" src="<%= IMG_PATH %>/<%= URLEncoder.encode(imageLists.get(i).getImage(), "UTF-8") %>" />
+							<% } %>
+							
 						</article>
 					</section>
 					
@@ -113,7 +130,7 @@
                                 List<HashtagDTO> hashtagList = postDAO.getHashtags(Integer.parseInt(contentIds.get(0)));
                                 for (HashtagDTO hashtag : hashtagList) {
                             %>
-                            		<li>#<%= hashtag.getTag() %></li>
+                            		<li><a href="../main/main.jsp?tagQuery=<%= hashtag.getTag() %>">#<%= hashtag.getTag() %></a></li>
                             <% 
                                 }
                             %>

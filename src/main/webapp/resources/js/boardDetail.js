@@ -38,10 +38,10 @@ const confirmSubmission = () => {
 // Show course details when the course image is clicked
 const showCourseDetail = (element) => {
 	// 클릭된 코스 이미지의 배경과 숫자를 선택
-    document.querySelectorAll('.course-image-wrap').forEach(li => li.classList.remove('active-course-image'));
+    document.querySelectorAll('.course-image').forEach(li => li.classList.remove('active-course-image'));
     document.querySelectorAll('.course-number').forEach(li => li.classList.remove('active-course-number'));
 
-    element.querySelector('.course-image-wrap').classList.add('active-course-image');
+    element.querySelector('.course-image').classList.add('active-course-image');
     element.querySelector('.course-number').classList.add('active-course-number');
     
     // 클릭된 코스 숫자의 진행도 나타내는 선
@@ -62,23 +62,35 @@ const showCourseDetail = (element) => {
     // 선택된 코스의 상세 정보를 나타내줌
     const courseDetailTitle = document.getElementById("course-detail-title");
     const courseDetailLocation = document.getElementById("course-detail-location");
-    const courseDetailImage = document.getElementById("course-detail-image");
     const courseDetailContent = document.getElementById("course-detail-content");
     const courseDetailTags = document.getElementById("course-detail-tags");
+    
     
     const courseInfo = element.querySelector('.course-info');
 
     const title = courseInfo.getAttribute('data-title');
     const location = courseInfo.getAttribute('data-location');
-    const image = courseInfo.getAttribute('data-image');
     const content = courseInfo.getAttribute('data-content');
     const contentId = courseInfo.getAttribute('data-content-id');
     
     courseDetailTitle.innerHTML = title;
     courseDetailLocation.innerHTML = location;
-    courseDetailImage.src  = image;
     courseDetailContent.innerHTML = content;
     
+    
+    // 선택된 코스의 이미
+    document.querySelectorAll('.course-detail-image img').forEach(img => img.remove());
+    const courseDetailImage = document.querySelector(".course-detail-image");
+    const images = courseInfo.getAttribute('data-image').slice(1,-1).split(",");
+    
+    images.forEach((image, index) => {
+	    const img = document.createElement('img');
+	    img.setAttribute('id', `course-detail-image${index}`);
+	    img.setAttribute('src', image);	
+		courseDetailImage.appendChild(img);
+	})    
+	  
+    // 해시태그 비동
      fetch(`getHashtags.jsp?contentId=${contentId}`)
         .then(response => response.json())
         .then(hashtags => {
@@ -87,7 +99,10 @@ const showCourseDetail = (element) => {
             // Add new tags
             hashtags.forEach(tag => {
                 const li = document.createElement('li');
-                li.textContent = `#${tag}`;
+                const a = document.createElement('a');
+                a.setAttribute('href',`../main/main.jsp?tagQuery=${tag}`);
+                a.textContent = `#${tag}`;
+                li.appendChild(a);
                 courseDetailTags.appendChild(li);
             });
         })
@@ -191,24 +206,24 @@ document.addEventListener("DOMContentLoaded", () => {
       const content = document.querySelector(".content");
       const courseLists = document.querySelector(".course-lists");
       const slides = document.querySelectorAll(".course-lists li");
+      const slide = document.querySelector(".course-list");
       const prevButton = document.querySelector(".prev-button");
       const nextButton = document.querySelector(".next-button");
-      const LIST_WIDTH = 210;
       const LIST_MARGIN = 15;
       const totalSlides = slides.length;
+      let slideWidth = slide.offsetWidth + LIST_MARGIN*2;
       let contentWidth = content.offsetWidth;
       let currentIndex = 0;
       let maxIndex = 1;
-
 	  
       function updateSlidePosition() {
-        const newTransformValue = -currentIndex * Math.floor((contentWidth / LIST_WIDTH)) * LIST_WIDTH + "px";
+        const newTransformValue = -currentIndex * Math.floor((contentWidth / slideWidth)) * slideWidth + "px";
         courseLists.style.transform = `translateX(${newTransformValue})`;
       }
 
       function checkButtonVisibility() {
 		try {
-	        if (contentWidth - totalSlides * LIST_WIDTH >= 0) {
+	        if (contentWidth - totalSlides * slideWidth >= 0) {
 	          prevButton.style.display = 'none';
 	          nextButton.style.display = 'none';
 	        } else {
@@ -223,14 +238,15 @@ document.addEventListener("DOMContentLoaded", () => {
       
       function updateMaxIndex() {
         contentWidth = content.offsetWidth;
-        if ((totalSlides * LIST_WIDTH - contentWidth) < LIST_MARGIN) { 
+        slideWidth = slide.offsetWidth + LIST_MARGIN*2;
+        if ((totalSlides * slideWidth - contentWidth) < LIST_MARGIN) { 
           maxIndex = 0;
-        } else if ((totalSlides * LIST_WIDTH - contentWidth) < (LIST_WIDTH + LIST_MARGIN)) { 
+        } else if ((totalSlides * slideWidth - contentWidth) < (slideWidth + LIST_MARGIN)) { 
           maxIndex = 1;
-        } else if(Math.floor((contentWidth / LIST_WIDTH)) === 1) {
+        } else if(Math.floor((contentWidth / slideWidth)) === 1) {
 			maxIndex = totalSlides - 1;
 		} else {
-			maxIndex = Math.round(totalSlides / Math.floor((contentWidth / LIST_WIDTH))) - 1;
+			maxIndex = Math.round(totalSlides / Math.floor((contentWidth / slideWidth))) - 1;
 		}
         updateButtonStates();
       }
