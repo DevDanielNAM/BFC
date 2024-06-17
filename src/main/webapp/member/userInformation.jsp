@@ -13,11 +13,11 @@
 	} 
 	else if (type.equals("로그아웃")){
 		/* 로그아웃 로직 추가.  */
-		response.sendRedirect("../main/main.jsp");
+		response.sendRedirect("$../index.jsp");
 	}
 	else if (type.equals("탈퇴")){
 		/* 탈퇴 로직 추가.  */
-		response.sendRedirect("../main/main.jsp");
+		response.sendRedirect("../index.jsp");
 	}
 	%>
 </body>
