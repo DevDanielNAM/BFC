@@ -10,12 +10,15 @@
 	<%
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		List<ReplyDTO> replyList = replyDAO.getAllReplies(postId);
+		int userId = (Integer) (session.getAttribute("userId") != null? session.getAttribute("userId"): -1);
 	%>
 
     <ul class="reply-view-lists">
      	<%
      	for (int i = 0; i < replyList.size(); i++) {
      		ReplyDTO reply = replyList.get(i);
+     		int writerId = reply.getWriterId();							        
+	        boolean isWriter = writerId == userId;
         %>
 		<li class="reply-view-list">
 			<section class="reply-view">
@@ -29,8 +32,19 @@
 						<article class="reply-view-more-button">
 							<img id="reply-more-button-<%= i %>" class="reply-more-button" src="../resources/images/kebab_menu_icon.png" alt="reply more button" width="19" height="19" />									
 							<ul id="reply-view-more-button-lists-<%= i %>" class="reply-view-more-button-lists">
-								<li><a class="edit-reply" data-content="<%= reply.getContent() %>" data-index="<%= i %>">수정</a></li>
-								<li><a href="deleteReply.jsp?replyId=<%= reply.getReplyId() %>" onclick="return confirm('댓글을 삭제하시겠습니까?');">삭제</a></li>
+								<%
+							        if(isWriter) {
+								%>
+									<li><a class="edit-reply" data-content="<%= reply.getContent() %>" data-index="<%= i %>">수정</a></li>
+									<li><a href="deleteReply.jsp?postId=<%= postId %>&writerId=<%= reply.getWriterId() %>&replyId=<%= reply.getReplyId() %>" onclick="return confirm('댓글을 삭제하시겠습니까?');">삭제</a></li>
+								<%
+							        } else {
+								%>
+									<li><a>수정</a></li>
+									<li><a>삭제</a></li>
+								<%
+							        }
+								%>
 							</ul>
 						</article>
 					</section>
@@ -40,7 +54,8 @@
 					<article id="reply-content-<%= i %>">
 						<%= reply.getContent() %>
 					</article>
-					<form class="edit-reply-form" id="edit-reply-form-<%= i %>" action="editReply.jsp" method="post" style="display:none;">
+					<form class="edit-reply-form" id="edit-reply-form-<%= i %>" action="editReply.jsp?postId=<%= postId %>" method="post" style="display:none;">
+	                    <input type="hidden" name="writerId" value="<%= reply.getWriterId() %>">
 	                    <input type="hidden" name="replyId" value="<%= reply.getReplyId() %>">
 	                    <textarea name="replyContent" rows="3"><%= reply.getContent() %></textarea>
 	                    <input type="submit" value="수정하기" onclick="return confirm('댓글을 수정하시겠습니까?');">
