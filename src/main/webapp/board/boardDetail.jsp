@@ -130,7 +130,7 @@
                                 List<HashtagDTO> hashtagList = postDAO.getHashtags(Integer.parseInt(contentIds.get(0)));
                                 for (HashtagDTO hashtag : hashtagList) {
                             %>
-                            		<li><a href="../main/main.jsp?tagQuery=<%= hashtag.getTag() %>">#<%= hashtag.getTag() %></a></li>
+                            		<li><a href="../index.jsp?tagQuery=<%= hashtag.getTag() %>">#<%= hashtag.getTag() %></a></li>
                             <% 
                                 }
                             %>

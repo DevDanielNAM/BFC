@@ -100,7 +100,7 @@ const showCourseDetail = (element) => {
             hashtags.forEach(tag => {
                 const li = document.createElement('li');
                 const a = document.createElement('a');
-                a.setAttribute('href',`../main/main.jsp?tagQuery=${tag}`);
+                a.setAttribute('href',`../index.jsp?tagQuery=${tag}`);
                 a.textContent = `#${tag}`;
                 li.appendChild(a);
                 courseDetailTags.appendChild(li);
