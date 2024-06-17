@@ -22,10 +22,7 @@
 		List<ContentDTO> contentList = postDetail.getContents();
 		ContentDTO content = contentList.get(0);
 		
-        String user = (String) session.getAttribute("user");
-        String userId = session.getAttribute("userId").toString();
-        boolean isLoggedIn = user != null && userId != null;
-
+        boolean isLoggedIn = session.getAttribute("user") != null && session.getAttribute("userId") != null;
 	%>
 <head>
 <meta charset="UTF-8">
@@ -102,8 +99,8 @@
                             <% 
                                 List<HashtagDTO> hashtagList = postDAO.getHashtags(Integer.parseInt(contentIds.get(0)));
                                 for (HashtagDTO hashtag : hashtagList) {
-                            %>                            
-                                <li>#<%= hashtag.getTag() %></li>
+                            %>
+                            		<li>#<%= hashtag.getTag() %></li>
                             <% 
                                 }
                             %>
@@ -115,7 +112,7 @@
 			<!-- content buttons -->
 			<%
 				if (isLoggedIn) {
-		    %>
+			%>
 				<section class="content-buttons">
 					<input type="button" id="content-edit-button" value="수정하기" onclick="callConfirm('수정', <%= postId %>)" />
 					<input type="button" id="content-delete-button" value="삭제하기" onclick="callConfirm('삭제', <%= postId %>)" />
@@ -133,7 +130,7 @@
 			<section class="reply-write">
 				<%
 					if (!isLoggedIn) {
-	    		%>
+				%>
 		    		<article class="reply-form disable">
 		    			<h4 id="reply-write-title">댓글 추가</h4>	
 		    			<a id="disable-reply-box">댓글을 작성하시려면 로그인을 해주세요.</a>
@@ -141,7 +138,7 @@
 		    		</article>
 	    		<%
 					} else {
-	    		%>
+				%>
 					<form class="reply-form" action="addReply.jsp?postId=<%= postId %>" method="POST" onsubmit="return confirmSubmission()">
 						<h4 id="reply-write-title">댓글 추가</h4>					
 						<textarea id="reply-write-area" name="replyContent" rows="5" placeholder="댓글을 입력하세요"></textarea>

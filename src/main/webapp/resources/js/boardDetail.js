@@ -18,9 +18,11 @@ const showLoginAlert = () => {
 }
 
 const disabledReplyBox = document.getElementById("disable-reply-box");
-disabledReplyBox.onclick = (event) => {
-	showLoginAlert();
-}
+try {
+	disabledReplyBox.onclick = (event) => {
+		showLoginAlert();
+	};	
+} catch(e) {}
 
 
 // confirm reply submission
