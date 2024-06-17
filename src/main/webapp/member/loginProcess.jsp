@@ -32,7 +32,7 @@ if (user != null) {
     // 로그인 성공 메시지
     out.println("<script>");
     out.println("alert('로그인에 성공했습니다.');");
-    out.println("location.href='../main/main.jsp';");
+    out.println("location.href='../index.jsp';");
     out.println("</script>");
 } else {
     // 로그인 실패 시 처리

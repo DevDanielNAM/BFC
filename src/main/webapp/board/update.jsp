@@ -184,13 +184,13 @@ for(int i = 0; i <= newfieldcount; i++){
 if(postDAO.updatePost(postDTO)){
     out.println("<script type='text/javascript'>");
     out.println("alert('게시글이 수정되었습니다.');");
-    out.println("window.location.href = '../main/main.jsp';");
+    out.println("window.location.href = '../index.jsp';");
     out.println("</script>");
 }
 else{
 	 out.println("<script type='text/javascript'>");
 	 out.println("alert('게시글에 실패했습니다.');");
-	 out.println("window.location.href = '../main/main.jsp';");
+	 out.println("window.location.href = '../index.jsp';");
 	 out.println("</script>");
 }
 

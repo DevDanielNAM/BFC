@@ -13,8 +13,6 @@
 <script type="text/javascript" src="../resources/js/main.js" defer></script>
 </head>
 <body>
-    <!-- Header -->
-    <jsp:include page="../common/header.jsp"></jsp:include>
 
     <!-- Site Introduction Banner -->
     <section class="site-banner">
@@ -41,7 +39,7 @@
 
     <!-- 해시태그 검색 -->
     <section class="search-bar">
-        <form action="main.jsp" method="get">
+        <form action="${pageContext.request.contextPath}/index.jsp" method="get">
             <input type="text" name="tagQuery" placeholder="태그로 검색하기">
             <button type="submit">검색</button>
         </form>
@@ -49,7 +47,7 @@
     
     <!-- 포스트 제목으로 검색 -->
     <section class="search-bar">
-        <form action="main.jsp" method="get">
+        <form action="${pageContext.request.contextPath}/index.jsp" method="get">
             <input type="text" name="query" placeholder="글 제목으로 검색하기">
             <button type="submit">검색</button>
         </form>
@@ -98,7 +96,7 @@
                     for (SimplePostDTO post : postsOnPage) {
                 %>
                 <div class="post" onclick="moveBoardDetail(<%= post.getPostId() %>)">
-                    <img class="contentImg" src="../uploadImages/board<%= post.getPostId() %>/<%= URLEncoder.encode(post.getImage()) %>" width="100%" />
+                    <img class="contentImg" src="uploadImages/board<%= post.getPostId() %>/<%= URLEncoder.encode(post.getImage()) %>" width="100%" />
                     <br>
                     <h2><%= post.getTitle() %></h2>
                     <!-- 해시태그 출력 -->
@@ -116,20 +114,21 @@
             <!-- Pagination -->
             <div class="pagination">
                 <%
+                
                     // 페이지 링크 출력
                     for (int i = 1; i <= totalPages; i++) {
                         // 검색어(query 또는 tagQuery)가 있을 때와 없을 때의 링크 구성
                         if (query != null && !query.trim().isEmpty()) {
                 %>
-                <a href="main.jsp?page=<%= i %>&query=<%= query %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&query=<%= query %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
                 <%
                         } else if (tagQuery != null && !tagQuery.trim().isEmpty()) {
                 %>
-                <a href="main.jsp?page=<%= i %>&tagQuery=<%= tagQuery %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&tagQuery=<%= tagQuery %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
                 <%
                         } else {
                 %>
-                <a href="main.jsp?page=<%= i %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
                 <%
                         }
                     }
@@ -140,15 +139,13 @@
 
     <!-- 여행지 등록 버튼 -->
     <div class="registration-button">
-        <button type="button" onclick="location.href='../board/boardEdit.jsp'">여행지 등록</button>
+        <button type="button" onclick="location.href='board/boardEdit.jsp'">여행지 등록</button>
     </div>
     
      <!-- 마이페이지 버튼 -->
     <div class="mypage-button">
-        <button type="button" onclick="location.href='../member/mypage.jsp'">마이페이지</button>
+        <button type="button" onclick="location.href='member/mypage.jsp'">마이페이지</button>
     </div>
 
-    <!-- Footer -->
-    <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

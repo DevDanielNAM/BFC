@@ -15,7 +15,7 @@
 		response.sendRedirect("boardUpdate.jsp?postId=" + postId);
 	} else if(type.equals("삭제")) {
 		postDAO.deletePostByPostId(Integer.parseInt(postId));
-		response.sendRedirect("../main/main.jsp");
+		response.sendRedirect("../index.jsp");
 	}
 	%>
 </body>

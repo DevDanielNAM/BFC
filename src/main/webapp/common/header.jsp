@@ -12,21 +12,21 @@
     <header class="header">
         <div class="container">
            <div class="site-name">
-                  <h1><a href="../main/main.jsp">BusanFullCourse</a></h1>
+                  <h1><a href="${pageContext.request.contextPath}/index.jsp">BusanFullCourse</a></h1>
             </div>
            <div class="login-button">
             <% if (session != null && session.getAttribute("user") != null) {
                 // 세션이 있고 로그인 되어있는 경우
                 UserDTO user = (UserDTO) session.getAttribute("user");
             %>
-                <form action="../member/logout.jsp" method="post" id="logoutForm">
+                <form action="${pageContext.request.contextPath}/member/logout.jsp" method="post" id="logoutForm">
                     <input type="hidden" name="logout" value="true">
                     <a href="javascript:{}" onclick="document.getElementById('logoutForm').submit();">로그아웃</a>
                 </form>
             <% } else {
                 // 세션이 없거나 로그인 되어있지 않은 경우
             %>
-                <a href="../member/login.jsp">로그인</a>
+                <a href="${pageContext.request.contextPath}/member/login.jsp">로그인</a>
             <% } %>
         </div>
         </div>

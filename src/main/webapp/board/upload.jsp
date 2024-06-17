@@ -119,12 +119,12 @@ for(int i = 0 ; i <= fieldcount; i++){ // 코스 리스트
 		if (postDAO.uploadPost(postDTO)) {
 	out.println("<script type='text/javascript'>");
 	out.println("alert('게시글이 등록되었습니다.');");
-	out.println("window.location.href = '../main/main.jsp';");
+	out.println("window.location.href = '../index.jsp';");
 	out.println("</script>");
 		} else {
 	out.println("<script type='text/javascript'>");
 	out.println("alert('게시글에 실패했습니다.');");
-	out.println("window.location.href = '../main/main.jsp';");
+	out.println("window.location.href = '../index.jsp';");
 	out.println("</script>");
 		}
 %>
