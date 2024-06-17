@@ -215,7 +215,6 @@ document.addEventListener("DOMContentLoaded", () => {
       let contentWidth = content.offsetWidth;
       let currentIndex = 0;
       let maxIndex = 1;
-		console.log(slideWidth)
 	  
       function updateSlidePosition() {
         const newTransformValue = -currentIndex * Math.floor((contentWidth / slideWidth)) * slideWidth + "px";
