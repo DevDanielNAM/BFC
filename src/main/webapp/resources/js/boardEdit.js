@@ -11,7 +11,31 @@ function addFields() {
 
     var newFileInput = document.createElement("input");
     newFileInput.type = "file";
-    newFileInput.name = "file" + fieldCount;
+    newFileInput.name = "file" + fieldCount + "0";
+    newFileInput.id = "file" + fieldCount;
+    newFileInput.required = false;
+
+    newFileDiv.appendChild(newFileLabel);
+    newFileDiv.appendChild(newFileInput);
+    
+    var newFileLabel = document.createElement("label");
+    newFileLabel.innerHTML = "파일 업로드:";
+
+    var newFileInput = document.createElement("input");
+    newFileInput.type = "file";
+    newFileInput.name = "file" + fieldCount + "1";
+    newFileInput.id = "file" + fieldCount;
+    newFileInput.required = false;
+
+    newFileDiv.appendChild(newFileLabel);
+    newFileDiv.appendChild(newFileInput);
+    
+    var newFileLabel = document.createElement("label");
+    newFileLabel.innerHTML = "파일 업로드:";
+
+    var newFileInput = document.createElement("input");
+    newFileInput.type = "file";
+    newFileInput.name = "file" + fieldCount + "2";
     newFileInput.id = "file" + fieldCount;
     newFileInput.required = false;
 

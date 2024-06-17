@@ -11,6 +11,7 @@
 <%@ page import="com.bfc.board.PostDTO" %>
 <%@ page import="com.bfc.board.ContentDTO" %>
 <%@ page import="com.bfc.board.HashtagDTO" %>
+<%@ page import="com.bfc.board.ImageDTO" %>
 
 <% request.setCharacterEncoding("utf-8"); %>
 
@@ -63,59 +64,68 @@ for(int i = 0 ; i <= fieldcount; i++){ // 코스 리스트
 	String content = multi.getParameter("" + cName);
 	// Content 테이블에 삽입 (파일 경로만 저장)
 
-	String file = (String) files.nextElement();
-	String fName = "file" + i;
-	String filename1 = multi.getFilesystemName("" + fName);
-	    
-	 // 고유한 파일 이름 생성
-	String uniqueFileName = filename1;
-	uniqueFileName = URLEncoder.encode(uniqueFileName, "UTF-8");
-	    
-	// 파일을 고유한 이름으로 디렉토리에 저장
-	File oldFile = new File(uploadPath, filename1);
-	File newFile = new File(uploadPath, uniqueFileName);
-	if (oldFile.renameTo(newFile)) {
-	    System.out.println("File renamed successfully to " + uniqueFileName);
-	} else {
-	    System.out.println("Failed to rename file " + filename1);
+	List<ImageDTO> images = new ArrayList<>();
+	for(int j = 0; j < 3; j++){
+		String file = (String) files.nextElement();
+		String fName = "file" + i;
+		fName = fName + j;
+		String filename1 = multi.getFilesystemName("" + fName);
+
+		if(filename1 != null){
+			// 고유한 파일 이름 생성
+			String uniqueFileName = filename1;
+			uniqueFileName = URLEncoder.encode(uniqueFileName, "UTF-8");
+
+			// 파일을 고유한 이름으로 디렉토리에 저장
+			File oldFile = new File(uploadPath, filename1);
+			File newFile = new File(uploadPath, uniqueFileName);
+			if (oldFile.renameTo(newFile)) {
+				System.out.println("File renamed successfully to " + uniqueFileName);
+			} else {
+				System.out.println("Failed to rename file " + filename1);
+			}		
+			ImageDTO imageDTO = new ImageDTO();
+			imageDTO.setImage(uniqueFileName);
+			images.add(imageDTO);
+		}
+
 	}
-	
+
 	String tname = "tag" + i;
 	String tag = multi.getParameter("" + tname);
-    
+
 	List<HashtagDTO> tags = new ArrayList<>();
-    
-    if(tag != null && !tag.trim().isEmpty()) {
-        String[] tagsArray = tag.split(" ");
-        for(String t : tagsArray){ // 해쉬태그 리스트
-            HashtagDTO hashtagDTO = new HashtagDTO();
-            hashtagDTO.setTag(t);
-            hashtagDTO.setUserId(userId);
-            tags.add(hashtagDTO);
-        }
-    }
+
+	if (tag != null && !tag.trim().isEmpty()) {
+		String[] tagsArray = tag.split(" ");
+		for (String t : tagsArray) { // 해쉬태그 리스트
+			HashtagDTO hashtagDTO = new HashtagDTO();
+			hashtagDTO.setTag(t);
+			hashtagDTO.setUserId(userId);
+			tags.add(hashtagDTO);
+		}
+	}
 	ContentDTO contentDTO = new ContentDTO();
 	contentDTO.setContentTitle(contentTitle);
 	contentDTO.setUserId(userId);
 	contentDTO.setLocation(location);
 	contentDTO.setContent(content);
-	contentDTO.setImage(uniqueFileName);
+	contentDTO.setImages(images);
 	contentDTO.setTags(tags);
 	contents.add(contentDTO);
-}
-postDTO.setContents(contents);
+		}
+		postDTO.setContents(contents);
 
-if(postDAO.uploadPost(postDTO)){
-    out.println("<script type='text/javascript'>");
-    out.println("alert('게시글이 등록되었습니다.');");
-    out.println("window.location.href = '../main/main.jsp';");
-    out.println("</script>");
-}
-else{
-	 out.println("<script type='text/javascript'>");
-	 out.println("alert('게시글에 실패했습니다.');");
-	 out.println("window.location.href = '../main/main.jsp';");
-	 out.println("</script>");
-}
+		if (postDAO.uploadPost(postDTO)) {
+	out.println("<script type='text/javascript'>");
+	out.println("alert('게시글이 등록되었습니다.');");
+	out.println("window.location.href = '../main/main.jsp';");
+	out.println("</script>");
+		} else {
+	out.println("<script type='text/javascript'>");
+	out.println("alert('게시글에 실패했습니다.');");
+	out.println("window.location.href = '../main/main.jsp';");
+	out.println("</script>");
+		}
 %>
 

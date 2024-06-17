@@ -11,7 +11,7 @@
 <%@ page import="com.bfc.board.PostDTO" %>
 <%@ page import="com.bfc.board.ContentDTO" %>
 <%@ page import="com.bfc.board.HashtagDTO" %>
-
+<%@ page import="com.bfc.board.ImageDTO" %>
 <% request.setCharacterEncoding("utf-8"); %>
 
 <%
@@ -65,22 +65,31 @@ for(int i = 0 ; i < fieldcount; i++){ // 코스 리스트
 	String content = multi.getParameter("" + cName);
 	// Content 테이블에 삽입 (파일 경로만 저장)
 
-	String file = (String) files.nextElement();
-	String fName = "file" + i;
-	String filename1 = multi.getFilesystemName("" + fName);
-	
-	System.out.println(fName + "  "+filename1);
-	 // 고유한 파일 이름 생성
-	String uniqueFileName = filename1;
-	uniqueFileName = URLEncoder.encode(uniqueFileName, "UTF-8");
-	    
-	// 파일을 고유한 이름으로 디렉토리에 저장
-	File oldFile = new File(uploadPath, filename1);
-	File newFile = new File(uploadPath, uniqueFileName);
-	if (oldFile.renameTo(newFile)) {
-	    System.out.println("File renamed successfully to " + uniqueFileName);
-	} else {
-	    System.out.println("Failed to rename file " + filename1);
+	List<ImageDTO> images = new ArrayList<>();
+	for(int j = 0; j < 3; j++){
+		String file = (String) files.nextElement();
+		String fName = "file" + i;
+		fName = fName + j;
+		String filename1 = multi.getFilesystemName("" + fName);
+
+		if(filename1 != null){
+			// 고유한 파일 이름 생성
+			String uniqueFileName = filename1;
+			uniqueFileName = URLEncoder.encode(uniqueFileName, "UTF-8");
+
+			// 파일을 고유한 이름으로 디렉토리에 저장
+			File oldFile = new File(uploadPath, filename1);
+			File newFile = new File(uploadPath, uniqueFileName);
+			if (oldFile.renameTo(newFile)) {
+				System.out.println("File renamed successfully to " + uniqueFileName);
+			} else {
+				System.out.println("Failed to rename file " + filename1);
+			}		
+			ImageDTO imageDTO = new ImageDTO();
+			imageDTO.setImage(uniqueFileName);
+			images.add(imageDTO);
+		}
+
 	}
 	
 	String tname = "tag" + i;
@@ -102,7 +111,7 @@ for(int i = 0 ; i < fieldcount; i++){ // 코스 리스트
 	contentDTO.setUserId(userId);
 	contentDTO.setLocation(location);
 	contentDTO.setContent(content);
-	contentDTO.setImage(uniqueFileName);
+	contentDTO.setImages(images);
 	contentDTO.setTags(tags);
 	contents.add(contentDTO);
 }
@@ -120,21 +129,31 @@ for(int i = 0; i <= newfieldcount; i++){
 	String content = multi.getParameter("" + cName);
 	// Content 테이블에 삽입 (파일 경로만 저장)
 
-	String file = (String) files.nextElement();
-	String fName = "newfile" + i;
-	String filename1 = multi.getFilesystemName("" + fName);
-	
-	 // 고유한 파일 이름 생성
-	String uniqueFileName = filename1;
-	uniqueFileName = URLEncoder.encode(uniqueFileName, "UTF-8");
-	    
-	// 파일을 고유한 이름으로 디렉토리에 저장
-	File oldFile = new File(uploadPath, filename1);
-	File newFile = new File(uploadPath, uniqueFileName);
-	if (oldFile.renameTo(newFile)) {
-	    System.out.println("File renamed successfully to " + uniqueFileName);
-	} else {
-	    System.out.println("Failed to rename file " + filename1);
+	List<ImageDTO> images = new ArrayList<>();
+	for(int j = 0; j < 3; j++){
+		String file = (String) files.nextElement();
+		String fName = "newfile" + i;
+		fName = fName + j;
+		String filename1 = multi.getFilesystemName("" + fName);
+
+		if(filename1 != null){
+			// 고유한 파일 이름 생성
+			String uniqueFileName = filename1;
+			uniqueFileName = URLEncoder.encode(uniqueFileName, "UTF-8");
+
+			// 파일을 고유한 이름으로 디렉토리에 저장
+			File oldFile = new File(uploadPath, filename1);
+			File newFile = new File(uploadPath, uniqueFileName);
+			if (oldFile.renameTo(newFile)) {
+				System.out.println("File renamed successfully to " + uniqueFileName);
+			} else {
+				System.out.println("Failed to rename file " + filename1);
+			}		
+			ImageDTO imageDTO = new ImageDTO();
+			imageDTO.setImage(uniqueFileName);
+			images.add(imageDTO);
+		}
+
 	}
 	
 	String tname = "newtag" + i;
@@ -157,7 +176,7 @@ for(int i = 0; i <= newfieldcount; i++){
 	contentDTO.setUserId(userId);
 	contentDTO.setLocation(location);
 	contentDTO.setContent(content);
-	contentDTO.setImage(uniqueFileName);
+	contentDTO.setImages(images);
 	contentDTO.setTags(tags);
 	postDAO.uploadNewContent(contentDTO);
 }

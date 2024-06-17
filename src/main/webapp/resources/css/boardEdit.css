@@ -100,6 +100,19 @@ body {
 	margin-right: 10px;
 }
 
+#fileFields {
+    display: flex; /* Flexbox 레이아웃을 사용 */
+    justify-content: space-between; /* 요소들 사이에 균등한 간격 */
+}
+
+#fileFields .form-group {
+    margin-right: 10px; /* 각 그룹 간의 간격을 위한 여백 */
+}
+
+/* #fileFields .form-group:last-child {
+    margin-right: 0;
+}
+ */
 input[type="text"], input[type="file"], textarea {
 	flex: 1;
 	padding: 8px;
