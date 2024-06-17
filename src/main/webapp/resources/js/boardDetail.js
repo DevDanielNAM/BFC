@@ -37,6 +37,29 @@ const confirmSubmission = () => {
 
 // Show course details when the course image is clicked
 const showCourseDetail = (element) => {
+	// 클릭된 코스 이미지의 배경과 숫자를 선택
+    document.querySelectorAll('.course-image-wrap').forEach(li => li.classList.remove('active-course-image'));
+    document.querySelectorAll('.course-number').forEach(li => li.classList.remove('active-course-number'));
+
+    element.querySelector('.course-image-wrap').classList.add('active-course-image');
+    element.querySelector('.course-number').classList.add('active-course-number');
+    
+    // 클릭된 코스 숫자의 진행도 나타내는 선
+    const allLiElements = document.querySelectorAll('.course-lists .course-list');
+        
+    allLiElements.forEach(li => {
+        li.classList.remove('course-on-half', 'course-on-full');
+    });
+
+    const index = Array.from(allLiElements).indexOf(element);
+
+    element.classList.add('course-on-half');
+
+    for (let i = 0; i < index; i++) {
+        allLiElements[i].classList.add('course-on-full');
+    }
+    
+    // 선택된 코스의 상세 정보를 나타내줌
     const courseDetailTitle = document.getElementById("course-detail-title");
     const courseDetailLocation = document.getElementById("course-detail-location");
     const courseDetailImage = document.getElementById("course-detail-image");

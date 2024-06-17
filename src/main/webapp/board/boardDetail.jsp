@@ -54,8 +54,21 @@
 							int contentCount = postDAO.getContentCount(postId); 
 							for(int i=0; i<contentCount; i++) {
 						%>
-							<li onclick="showCourseDetail(this)">
-								<img src="<%= IMG_PATH %>/<%= URLEncoder.encode(images.get(i), "UTF-8") %>" />
+								<% if(i==0) { %>
+								<li class="course-list course-on-half" onclick="showCourseDetail(this)">
+									<strong class="course-number active-course-number"><%= i+1 %></strong>
+									<div class="course-image-wrap active-course-image">
+										<figure class="course-image" style="background:url(<%= IMG_PATH %>/<%= URLEncoder.encode(images.get(i), "UTF-8") %>); 
+										background-size: contain; background-repeat: no-repeat; background-position: 50% 50%;"></figure>															
+									</div>
+								<% } else { %>
+							<li class="course-list" onclick="showCourseDetail(this)">
+								<strong class="course-number"><%= i+1 %></strong>
+								<div class="course-image-wrap">
+									<figure class="course-image" style="background:url(<%= IMG_PATH %>/<%= URLEncoder.encode(images.get(i), "UTF-8") %>); 
+									background-size: contain; background-repeat: no-repeat; background-position: 50% 50%;"></figure>															
+								</div>
+								<% } %>
 								<h1 class="course-image-title"><%= contentTitles.get(i) %></h1>
 								<div class="course-info" 
 						             data-title="<%= contentTitles.get(i) %>" 
