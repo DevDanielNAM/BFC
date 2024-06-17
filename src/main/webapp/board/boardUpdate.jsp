@@ -36,7 +36,7 @@ if (session.getAttribute("user") == null || session.getAttribute("userId") == nu
 }
 
 int userId = (Integer) session.getAttribute("userId");
-	int postId = Integer.parseInt(request.getParameter("postId"));
+	postId = Integer.parseInt(request.getParameter("postId"));
 	
 	postId = Integer.parseInt(request.getParameter("postId"));
 	PostDAO postDAO = new PostDAO();
@@ -56,7 +56,15 @@ int userId = (Integer) session.getAttribute("userId");
 					<div id="fileFields">
 						<div class="form-group">
 							<label for="file0">파일 업로드:</label> <input type="file"
-								name="file<%=nameNumber%>" id="file0">
+								name="file<%=nameNumber%>0" id="file0">
+						</div>
+						<div class="form-group">
+							<label for="file0">파일 업로드:</label> <input type="file"
+								name="file<%=nameNumber%>1" id="file0">
+						</div>
+						<div class="form-group">
+							<label for="file0">파일 업로드:</label> <input type="file"
+								name="file<%=nameNumber%>2" id="file0">
 						</div>
 					</div>
 					<div class="form-group">

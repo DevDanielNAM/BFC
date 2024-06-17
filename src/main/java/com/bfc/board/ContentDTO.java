@@ -8,7 +8,7 @@ public class ContentDTO {
 	private String contentTitle;
 	private String location;
 	private String content;
-	private String image;
+	private List<ImageDTO> images;
 	private List<HashtagDTO> tags;
 	
 	public int getUserId() {
@@ -54,10 +54,10 @@ public class ContentDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getImage() {
-		return image;
+	public List<ImageDTO> getImages() {
+		return images;
 	}
-	public void setImage(String image) {
-		this.image = image;
+	public void setImages(List<ImageDTO> images) {
+		this.images = images;
 	}
 }

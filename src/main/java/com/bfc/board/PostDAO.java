@@ -40,7 +40,7 @@ public class PostDAO {
 	 
 	 public String getImage(int PostId) {  // ����Ϸ� ����� ���� ��������
 	     String image = "";
-	     String sql = "SELECT * FROM Content WHERE PostId = " + PostId;
+	     String sql = "SELECT * FROM Image WHERE PostId = " + PostId;
 	     try (Connection conn = getConnection();
 	          PreparedStatement ps = conn.prepareStatement(sql);
 	          ResultSet rs = ps.executeQuery()) {
@@ -87,7 +87,7 @@ public class PostDAO {
 	        	 contentDTO.setLocation(rs.getString("location"));
 	        	 contentDTO.setContentTitle(rs.getString("contentTitle"));
 	        	 contentDTO.setContent(rs.getString("content"));
-	        	 contentDTO.setImage(rs.getString("image"));
+	        	 contentDTO.setImages(getImageList(contentDTO.getContentId()));
 	        	 contentDTO.setTags(getHashtags(contentDTO.getContentId()));
 	        	 contents.add(contentDTO);
 	         }
@@ -97,6 +97,27 @@ public class PostDAO {
 		 return contents;
 	 }
 	 
+	 public List<ImageDTO> getImageList(int contentId){
+		 List<ImageDTO> images = new ArrayList<>();
+		 String sql = "SELECT * FROM Image WHERE ContentId = " + contentId;
+	     try (Connection conn = getConnection();
+	          PreparedStatement ps = conn.prepareStatement(sql);
+	          ResultSet rs = ps.executeQuery()) {
+	         while (rs.next()) {
+	        	 ImageDTO imageDTO = new ImageDTO();
+	        	 imageDTO.setContentId(rs.getInt("contentId"));
+	        	 imageDTO.setPostId(rs.getInt("PostId"));
+	        	 imageDTO.setUserId(rs.getInt("UserId"));
+	        	 imageDTO.setImageId(rs.getInt("ImageId"));
+	        	 imageDTO.setImage(rs.getString("image"));
+	        	 images.add(imageDTO);
+	         }
+	     } catch (SQLException e) {
+	         e.printStackTrace();
+	     }
+		 return images;
+	 }
+	 
 	 public Map<String, List<String>> getContentImagesTitlesLocations(int postId) {
 		 	List<String> contentIds = new ArrayList<>();
 		 	List<String> contents = new ArrayList<>();
@@ -104,7 +125,7 @@ public class PostDAO {
 		    List<String> locations = new ArrayList<>();
 		    List<String> images = new ArrayList<>();
 		    
-		    String sql = "SELECT contentId, content, contentTitle, location, image FROM Content WHERE PostId = " + postId;
+		    String sql = "SELECT contentId, content, contentTitle, location FROM Content WHERE PostId = " + postId;
 		    try (Connection conn = getConnection();
 		         PreparedStatement ps = conn.prepareStatement(sql);
 		         ResultSet rs = ps.executeQuery()) {
@@ -113,7 +134,7 @@ public class PostDAO {
 		        	contents.add(rs.getString("content"));
 		            contentTitles.add(rs.getString("contentTitle"));
 		            locations.add(rs.getString("location"));
-		            images.add(rs.getString("image"));
+		            images.add(getImage(postId));
 		        }
 		    } catch (SQLException e) {
 		        e.printStackTrace();
@@ -194,7 +215,7 @@ public class PostDAO {
 	 }
 	 
 	 public boolean uploadContent(PostDTO postDTO) {  // �ش� post�� content ���ε�
-		 String sql = "INSERT INTO Content (postId,userId, contentTitle, location, content, image) VALUES (?, ?, ?, ?, ?, ?)";
+		 String sql = "INSERT INTO Content (postId,userId, contentTitle, location, content) VALUES (?, ?, ?, ?, ?)";
 		 try (Connection conn = getConnection();
 				 PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
 			 for(ContentDTO contentDTO : postDTO.getContents()) {
@@ -203,7 +224,6 @@ public class PostDAO {
 					ps.setString(3, contentDTO.getContentTitle());
 					ps.setString(4, contentDTO.getLocation());
 					ps.setString(5, contentDTO.getContent());
-					ps.setString(6, contentDTO.getImage());
 					ps.executeUpdate();
 					
 					ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -212,6 +232,7 @@ public class PostDAO {
 						contentDTO.setContentId(contentId);
 					}
 					contentDTO.setPostId(postDTO.getPostId());
+					uploadImage(contentDTO);
 					uploadHashtag(contentDTO);
 			 }
 			 return true;
@@ -220,9 +241,27 @@ public class PostDAO {
 		     return false;
 		 }
 	 }
+	 
+	 public void uploadImage(ContentDTO contentDTO) {   // �� content���� �ؽ��±� ���ε�
+		 String sql = "INSERT INTO Image (userId, contentId, postId, image) VALUES (?, ?, ?, ?)";
+		 try (Connection conn = getConnection();
+				 PreparedStatement ps = conn.prepareStatement(sql)){
+			 ps.setInt(1, contentDTO.getUserId());
+			 ps.setInt(2, contentDTO.getContentId());
+			 ps.setInt(3, contentDTO.getPostId());
+			 for(ImageDTO images : contentDTO.getImages()) {
+				 ps.setString(4, images.getImage());
+				 ps.executeUpdate();
+			 }
+			 return;
+		 } catch (SQLException e) {
+		     e.printStackTrace();
+		     return;
+		 }
+	 }
 
 	 public boolean uploadNewContent(ContentDTO contentDTO) {  // 占쌔댐옙 post占쏙옙 content 占쏙옙占싸듸옙
-		 String sql = "INSERT INTO Content (postId,userId, contentTitle, location, content, image) VALUES (?, ?, ?, ?, ?, ?)";
+		 String sql = "INSERT INTO Content (postId,userId, contentTitle, location, content) VALUES (?, ?, ?, ?, ?)";
 		 try (Connection conn = getConnection();
 				 PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
 				ps.setInt(1, contentDTO.getPostId());
@@ -230,7 +269,6 @@ public class PostDAO {
 				ps.setString(3, contentDTO.getContentTitle());
 				ps.setString(4, contentDTO.getLocation());
 				ps.setString(5, contentDTO.getContent());
-				ps.setString(6, contentDTO.getImage());
 				ps.executeUpdate();
 
 				ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -238,6 +276,7 @@ public class PostDAO {
 					int contentId = generatedKeys.getInt(1);
 					contentDTO.setContentId(contentId);
 				}
+				uploadImage(contentDTO);
 				uploadHashtag(contentDTO);
 			 return true;
 		 } catch (SQLException e) {
@@ -280,7 +319,7 @@ public class PostDAO {
 		}
 
 		public boolean updateContent(PostDTO postDTO, PostDTO prePostDTO) {  // �ش� post�� content ������Ʈ
-		    String sql = "UPDATE Content SET contentTitle = ?,location = ?, content = ?, image = ? WHERE contentId = ?";
+		    String sql = "UPDATE Content SET contentTitle = ?,location = ?, content = ?WHERE contentId = ?";
 		    int idx = 0;
 		    List<ContentDTO> preContent = prePostDTO.getContents();
 		    try (Connection conn = getConnection();
@@ -289,12 +328,12 @@ public class PostDAO {
 		            ps.setString(1, contentDTO.getContentTitle());
 		            ps.setString(2, contentDTO.getLocation());
 		            ps.setString(3, contentDTO.getContent());
-		            ps.setString(4, contentDTO.getImage());
-		            ps.setInt(5, preContent.get(idx).getContentId());
+		            ps.setInt(4, preContent.get(idx).getContentId());
 		            ps.executeUpdate();
 		           
 		            contentDTO.setPostId(prePostDTO.getPostId());
 		            contentDTO.setContentId(preContent.get(idx).getContentId());
+		            updateImage(contentDTO);
 		            updateHashtag(contentDTO);
 		            idx++;
 		        }
@@ -308,19 +347,34 @@ public class PostDAO {
 		public void updateHashtag(ContentDTO contentDTO) {   // �� content���� �ؽ��±� ������Ʈ
 			deleteHashtagsByContentId(contentDTO.getContentId());
 			uploadHashtag(contentDTO);
-//		    String sql = "UPDATE Hashtag SET tag = ? WHERE tagId = ? ";
-//		    try (Connection conn = getConnection();
-//		         PreparedStatement ps = conn.prepareStatement(sql)) {
-//		        for (HashtagDTO tags : contentDTO.getTags()) {
-//		            ps.setString(1, tags.getTag());
-//		            ps.executeUpdate();
-//		        }
-//		        return;
-//		    } catch (SQLException e) {
-//		        e.printStackTrace();
-//		        return;
-//		    }
 		}
+		
+		public void updateImage(ContentDTO contentDTO) {   // �� content���� �ؽ��±� ������Ʈ
+			deleteImagesByContentId(contentDTO.getContentId());
+			uploadImage(contentDTO);
+		}
+		
+	    public void deleteImagesByContentId(int contentId) {
+	        String sql = "DELETE FROM Image WHERE contentId = ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, contentId);
+	            ps.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    public void deleteImageByPostId(int postId) {
+	        String sql = "DELETE FROM Image WHERE postId = ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, postId);
+	            ps.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 		
 	    public void deleteHashtagsByContentId(int contentId) {
 	        String sql = "DELETE FROM Hashtag WHERE contentId = ?";
@@ -357,6 +411,7 @@ public class PostDAO {
 	    
 	    public void deletePostByPostId(int postId) {   // PostId�� ����Ʈ ����
 	    	deleteHashtagsByPostId(postId);
+	    	deleteImageByPostId(postId);
 	    	deleteContentByPostId(postId);
 	        String sql = "DELETE FROM Post WHERE postId = ?";
 	        try (Connection conn = getConnection();
@@ -410,7 +465,7 @@ public class PostDAO {
 	    
 	    public List<SimplePostDTO> searchPosts(String query) {
 	        List<SimplePostDTO> searchedPosts = new ArrayList<>();
-	        String sql = "SELECT p.postId, p.title, c.image " +
+	        String sql = "SELECT p.postId, p.title" +
 	                     "FROM Post p " +
 	                     "JOIN Content c ON p.postId = c.postId " +
 	                     "WHERE p.title LIKE ? " +
@@ -426,12 +481,11 @@ public class PostDAO {
 	                while (rs.next()) {
 	                    int postId = rs.getInt("postId");
 	                    String title = rs.getString("title");
-	                    String image = rs.getString("image");
 
 	                    SimplePostDTO simplePost = new SimplePostDTO();
 	                    simplePost.setPostId(postId);
 	                    simplePost.setTitle(title);
-	                    simplePost.setImage(image);
+	                    simplePost.setImage(getImage(simplePost.getPostId()));
 	                    simplePost.setTags(getHashtagsByPostId(postId)); // 여행지의 해시태그 설정
 
 	                    searchedPosts.add(simplePost);
@@ -446,7 +500,7 @@ public class PostDAO {
 	    
 	    public List<SimplePostDTO> searchPostsByTag(String tagQuery) {
 	        List<SimplePostDTO> searchedPosts = new ArrayList<>();
-	        String sql = "SELECT p.postId, p.title, c.image " +
+	        String sql = "SELECT p.postId, p.title " +
 	                     "FROM Post p " +
 	                     "JOIN Content c ON p.postId = c.postId " +
 	                     "JOIN HashTag h ON c.contentId = h.contentId " +
@@ -459,12 +513,11 @@ public class PostDAO {
 	                while (rs.next()) {
 	                    int postId = rs.getInt("postId");
 	                    String title = rs.getString("title");
-	                    String image = rs.getString("image");
 
 	                    SimplePostDTO simplePost = new SimplePostDTO();
 	                    simplePost.setPostId(postId);
 	                    simplePost.setTitle(title);
-	                    simplePost.setImage(image);
+	                    simplePost.setImage(getImage(simplePost.getPostId()));
 	                    simplePost.setTags(getHashtagsByPostId(postId)); // 여행지의 해시태그 설정
 
 	                    searchedPosts.add(simplePost);
