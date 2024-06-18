@@ -8,10 +8,9 @@
 <html>
 <body>
     <!-- Site Introduction Banner -->
-    <section class="site-banner">
-        <h2>부산 풀코스에 오신 것을 환영합니다!</h2>
-        <p>다양한 여행지를 탐색하고, 각 여행지에 대한 코스 확인할 수 있습니다.</p>
-    </section>
+    <!-- <section class="site-banner">
+        <p>다양한 부산 여행지를 탐색하고, 각 여행지에 대한 코스 확인해보세요</p>
+    </section> -->
 
     <!-- Random Hashtags -->
     <section class="random-hashtags">
@@ -23,7 +22,7 @@
 
                 for (String hashtag : randomHashtags) {
             %>
-            <span class="hashtag"><%= hashtag %></span>
+            <span class="hashtag">#<%= hashtag %></span>
             <%
                 }
             %>
@@ -33,18 +32,18 @@
     <!-- 해시태그 검색 -->
     <section class="search-bar">
         <form action="${pageContext.request.contextPath}/index.jsp" method="get">
-            <input type="text" name="tagQuery" placeholder="태그로 검색하기">
+            <input type="text" name="tagQuery" placeholder="태그로 검색해보세요">
             <button type="submit">검색</button>
         </form>
     </section>
     
     <!-- 포스트 제목으로 검색 -->
-    <section class="search-bar">
+<%--     <section class="search-bar">
         <form action="${pageContext.request.contextPath}/index.jsp" method="get">
             <input type="text" name="query" placeholder="글 제목으로 검색하기">
             <button type="submit">검색</button>
         </form>
-    </section>
+    </section> --%>
 
     <!-- Main -->
     <main>
@@ -113,15 +112,15 @@
                         // 검색어(query 또는 tagQuery)가 있을 때와 없을 때의 링크 구성
                         if (query != null && !query.trim().isEmpty()) {
                 %>
-                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&query=<%= query %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&query=<%= query %>" <%= (i == currentPage) ? "style='font-weight: bold; background-color: #066AE0; color: white;" : "" %>><%= i %></a>
                 <%
                         } else if (tagQuery != null && !tagQuery.trim().isEmpty()) {
                 %>
-                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&tagQuery=<%= tagQuery %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&tagQuery=<%= tagQuery %>" <%= (i == currentPage) ? "style='font-weight: bold; background-color: #066AE0; color: white;'" : "" %>><%= i %></a>
                 <%
                         } else {
                 %>
-                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>" <%= (i == currentPage) ? "style='font-weight: bold; background-color: #066AE0; color: white;'" : "" %>><%= i %></a>
                 <%
                         }
                     }
@@ -134,11 +133,5 @@
     <div class="registration-button">
         <button type="button" onclick="location.href='board/boardEdit.jsp'">여행지 등록</button>
     </div>
-    
-     <!-- 마이페이지 버튼 -->
-    <div class="mypage-button">
-        <button type="button" onclick="location.href='member/mypage.jsp'">마이페이지</button>
-    </div>
-
 </body>
 </html>

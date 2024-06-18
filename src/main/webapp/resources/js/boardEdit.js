@@ -14,7 +14,8 @@ function addFields() {
     newFileInput.name = "file" + fieldCount + "0";
     newFileInput.id = "file" + fieldCount;
     newFileInput.className = "form-control";
-    newFileInput.required = false;
+    newFileInput.required = true;
+    newFileInput.setAttribute('required', 'required');
 
     newFileDiv.appendChild(newFileLabel);
     newFileDiv.appendChild(newFileInput);

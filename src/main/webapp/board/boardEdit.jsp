@@ -49,7 +49,7 @@ if (session.getAttribute("user") == null || session.getAttribute("userId") == nu
 					<div id="fileFields">
 						<div class="form-group mb-3">
 							<label>파일 업로드:</label>
-							<input class="form-control" type="file" name="file00" id="file0">
+							<input class="form-control" type="file" name="file00" id="file0" required>
 							<input class="form-control" type="file" name="file01" id="file0">
 							<input class="form-control" type="file" name="file02" id="file0">
 						</div>
