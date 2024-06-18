@@ -1,1 +1,20 @@
 @charset "UTF-8";
+
+footer {
+    width: auto;
+    height: 8vh;
+    position: relative;
+}
+
+footer > hr {
+	width: 95vw;
+    margin: 30px auto 10px auto;
+    border: #e6e6e6 1px solid;
+}
+
+footer p {
+    position: absolute;
+    bottom: 0;
+    left: 2vw;
+    color: gray;
+}
