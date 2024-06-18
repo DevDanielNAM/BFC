@@ -44,7 +44,7 @@
             </ul>
         </div>
         <div class="content">
-            <h2 class="myContent">내가 작성한 글</h2>
+            <h2 class="myContent">내가 공유한 부산 풀코스</h2>
             <div class="posts">
                 <% for (SimplePostDTO post : simplePosts) { %>
                 <div class="post" onclick="moveBoardDetail(<%= post.getPostId() %>)">
