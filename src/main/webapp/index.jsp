@@ -6,6 +6,7 @@
 <title>여행지 소개 메인 페이지</title>
 <link rel="stylesheet" href="resources/css/main.css">
 <link rel="stylesheet" href="resources/css/header.css">
+<link rel="stylesheet" href="resources/css/footer.css">
 <script type="text/javascript" src="resources/js/main.js" defer></script>
 </head>
 <body>

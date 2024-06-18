@@ -15,6 +15,8 @@
 <meta charset="UTF-8">
 <title>마이페이지</title>
 <link rel="stylesheet" href="../resources/css/mypage.css">
+<link rel="stylesheet" href="../resources/css/header.css">
+<link rel="stylesheet" href="../resources/css/footer.css">
 <script type="text/javascript" src="../resources/js/mypage.js" defer></script>
 </head>
 <body>

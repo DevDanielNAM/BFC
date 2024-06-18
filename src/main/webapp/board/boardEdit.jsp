@@ -8,6 +8,8 @@
 <title>코스 작성 페이지</title>
 </head>
 <link rel="stylesheet" href="../resources/css/boardEdit.css">
+<link rel="stylesheet" href="../resources/css/header.css">
+<link rel="stylesheet" href="../resources/css/footer.css">
 <script type="text/javascript" src="../resources/js/boardEdit.js" defer>
 </script>
 <script>

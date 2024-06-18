@@ -9,6 +9,8 @@
 <title>유저 정보 수정 페이지</title>
 </head>
 <link rel="stylesheet" href="../resources/css/userEdit.css">
+<link rel="stylesheet" href="../resources/css/header.css">
+<link rel="stylesheet" href="../resources/css/footer.css">
 <script type="text/javascript" src="../resources/js/userEdit.js" defer></script>
 <script>
 const callCacelConfirm = (type) => {
