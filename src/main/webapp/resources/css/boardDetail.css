@@ -1,4 +1,6 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gowun+Dodum&family=Orbit&display=swap');
+
 body {
 	margin: 0;
     box-sizing: border-box;
@@ -19,6 +21,9 @@ body {
 }
 
 #content-title {
+	font-family: "Do Hyeon", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 	font-size: 2.5rem;
 	text-align: center;
 }
@@ -100,10 +105,13 @@ body {
 
 .course-image-title {
 	position: absolute;
-	top: 40%;
+	top: 33%;
 	width: 95%;
 	text-align: center;
-	font-size: 1.3rem;
+    font-family: "Do Hyeon", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+	font-size: 2rem;
 	padding: 0 5px;
 	color: white;
 	word-break: break-all;
@@ -232,12 +240,18 @@ body {
 
 #course-detail-title {
     margin: 20px auto 0 auto;
+    font-family: "Do Hyeon", sans-serif;
+    font-weight: 400;
+    font-style: normal;
     font-size: 2rem;
     text-align: center;
 }
 
 #course-detail-location {
     margin: 0 auto 20px auto;
+    font-family: "Gowun Dodum", sans-serif;
+    font-weight: 400;
+    font-style: normal;
     font-size: 1.2rem;
     text-align: center;
     color: #95959a;
@@ -268,6 +282,9 @@ body {
 }
 
 .course-detail-content > article {
+	font-family: "Orbit", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 	font-size: 1.2rem;
 }
 
@@ -276,6 +293,9 @@ body {
 }
 
 .course-detail-tags > ul {
+	font-family: "Gowun Dodum", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 	list-style: none;
 	display: flex;
 	padding: 0;
@@ -324,6 +344,10 @@ hr {
 }
 
 #reply-write-title {
+	font-family: "Do Hyeon", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.3rem;
 	margin: 2px;
 }
 
@@ -332,6 +356,9 @@ hr {
 	padding: 5px;
 	border-radius: 7px;
 	resize: none;
+	font-family: "Orbit", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 #reply-write-button {
