@@ -4,34 +4,33 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="site-name">
-                  <h1><a href="${pageContext.request.contextPath}/index.jsp">BusanFullCourse</a></h1>
-            </div>
+    <header class="header" >
+
+	    <div class="site-name">
+	          <a href="${pageContext.request.contextPath}/index.jsp"></a>
+	    </div>
             
-            <div class="login-button">
-            <% if (session != null && session.getAttribute("user") != null) {
-                // 세션이 있고 로그인 되어있는 경우
-                UserDTO user = (UserDTO) session.getAttribute("user");
-            %>
-                <form action="${pageContext.request.contextPath}/member/logout.jsp" method="post" id="logoutForm">
-                    <input type="hidden" name="logout" value="true">
-                    <input id="current-url" type="hidden" name="currentURL" value="../index.jsp">
-                    <a href="javascript:{}" onclick="document.getElementById('logoutForm').submit();">로그아웃</a>
-                </form>
-            <% } else { // 세션이 없거나 로그인 되어있지 않은 경우
-                // 현재 페이지에 쿼리스트링 존재여부에 따른 로그
-                if(request.getQueryString() == null){
-            %>
-                	<a href="${pageContext.request.contextPath}/member/login.jsp">로그인</a>
-                <% } else {
-                	String queryString = request.getQueryString();
-               	 %>
-                	<a href="${pageContext.request.contextPath}/member/login.jsp?<%= queryString %>">로그인</a>
-               	<% } %>
-            <% } %>
-            </div>
+        <div class="login-button">
+        <% if (session != null && session.getAttribute("user") != null) {
+            // 세션이 있고 로그인 되어있는 경우
+            UserDTO user = (UserDTO) session.getAttribute("user");
+        %>
+            <form action="${pageContext.request.contextPath}/member/logout.jsp" method="post" id="logoutForm">
+                <input type="hidden" name="logout" value="true">
+                <input id="current-url" type="hidden" name="currentURL" value="../index.jsp">
+                <a href="javascript:{}" onclick="document.getElementById('logoutForm').submit();">로그아웃</a>
+            </form>
+        <% } else { // 세션이 없거나 로그인 되어있지 않은 경우
+            // 현재 페이지에 쿼리스트링 존재여부에 따른 로그
+            if(request.getQueryString() == null){
+        %>
+            	<a href="${pageContext.request.contextPath}/member/login.jsp">로그인</a>
+            <% } else {
+            	String queryString = request.getQueryString();
+           	 %>
+            	<a href="${pageContext.request.contextPath}/member/login.jsp?<%= queryString %>">로그인</a>
+           	<% } %>
+        <% } %>
         </div>
     </header>
     <script>

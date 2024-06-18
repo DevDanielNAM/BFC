@@ -1,4 +1,8 @@
 @charset "UTF-8";
+body {
+	margin: 0;
+    box-sizing: border-box;
+}
 
 .contents {
 	width: 88%;

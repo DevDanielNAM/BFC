@@ -1,65 +1,53 @@
+.header {
+	background-image: url("../images/header.png");
+	background-size: contain;
+    height: 34vw;
+    background-repeat: no-repeat;
+    position: relative;
+}
 
 .header .login-button a {
     display: inline-block;
     padding: 10px 20px;
     font-size: 1rem;
     text-decoration: none;
+    background-color: white;
     color: #066AE0;
     border: 2px solid #066AE0;
     border-radius: 5px;
-    transition: color 0.3s ease, border-color 0.3s ease; /* 색상과 테두리 색상 변경 애니메이션 추가 */
+    transition: 0.3s ease; 
 }
 
 .header .login-button a:hover {
-    color: #024a9f; /* 호버 시 텍스트 색상 변경 */
-    border-color: #024a9f; /* 호버 시 테두리 색상 변경 */
+    background-color: #024a9f;
+    border-color: #024a9f;
+    color: white;
 }
 
 .header .login-button a:focus {
     outline: none; /* 포커스 시 테두리 제거 */
 }
-.header .container {
-    width: 90%;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+.site-name {
+    width: 100%;
+    height: 97%;
+    position: absolute;
 }
 
-.header .site-name h1 {
-    margin: 0;
-    font-size: 1.5rem; /* 현재 크기 유지 또는 필요에 따라 조정 */
-    font-family: 'Arial', sans-serif; /* 사용할 폰트 설정 */
-    font-weight: bold; /* 글꼴 굵기 설정 */
-    color: #333; /* 글자 색상 설정 */
-    text-decoration: none; /* 링크 스타일 제거 */
-    transition: color 0.3s ease; /* 색상 변경 애니메이션 */
-}
-
-.header .site-name h1 a {
+.header .site-name a {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     text-decoration: none; /* 링크 스타일 제거 */
     color: inherit; /* 부모 요소의 색상 상속 */
 }
 
-.header .site-name h1 a:hover {
+.header .site-name a:hover {
     color: #066AE0; /* 호버 시 색상 변경 */
 }
 
 .header .login-button {
-    margin-left: auto; /* 로그인 버튼을 오른쪽으로 밀어줍니다. */
-}
-
-.header .login-button button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: #066AE0;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease; /* 배경색 변경 애니메이션 추가 */
-}
-
-.header .login-button button:hover {
-    background-color: #024a9f; /* 호버 시 배경색 변경 */
+    position: absolute;
+    right: 18px;
+    top: 7px;
 }
