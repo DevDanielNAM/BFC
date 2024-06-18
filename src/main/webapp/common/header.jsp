@@ -15,6 +15,10 @@
             // 세션이 있고 로그인 되어있는 경우
             UserDTO user = (UserDTO) session.getAttribute("user");
         %>
+        	<div class="mypage-button">
+		        <img src="${pageContext.request.contextPath}/resources/images/profile.png" onclick="location.href='${pageContext.request.contextPath}/member/mypage.jsp'">
+		    </div>
+		    
             <form action="${pageContext.request.contextPath}/member/logout.jsp" method="post" id="logoutForm">
                 <input type="hidden" name="logout" value="true">
                 <input id="current-url" type="hidden" name="currentURL" value="../index.jsp">

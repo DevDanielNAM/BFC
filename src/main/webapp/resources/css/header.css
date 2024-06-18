@@ -47,7 +47,22 @@
 }
 
 .header .login-button {
+	display: flex;
     position: absolute;
     right: 18px;
     top: 7px;
+}
+
+.mypage-button > img {
+    width: 47px;
+    height: 47px;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 50%;
+    margin-right: 5px;
+    transition: 0.7s ease-out;
+}
+
+.mypage-button > img:hover {
+	background-color: #d3eb1e;
 }
