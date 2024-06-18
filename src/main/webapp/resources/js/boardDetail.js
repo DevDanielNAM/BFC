@@ -9,20 +9,13 @@ const callConfirm = (type, postId) => {
 
 
 // reply login alert
-const showLoginAlert = () => {
+const showLoginAlert = (postId) => {
 	if(confirm(`로그인을 하시겠습니까?`)){
-		window.location.href = "../member/login.jsp";
+		window.location.href = `../member/login.jsp?postId=${postId}`;
 	} else {
 		alert(`로그인하기를 취소하셨습니다`);
 	}
 }
-
-const disabledReplyBox = document.getElementById("disable-reply-box");
-try {
-	disabledReplyBox.onclick = (event) => {
-		showLoginAlert();
-	};	
-} catch(e) {}
 
 
 // confirm reply submission

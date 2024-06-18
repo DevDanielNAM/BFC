@@ -9,9 +9,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>코스 수정  페이지</title>
+<title>코스 수정 페이지</title>
 </head>
 <link rel="stylesheet" href="../resources/css/boardEdit.css">
+<link rel="stylesheet" href="../resources/css/header.css">
+<link rel="stylesheet" href="../resources/css/footer.css">
 <script type="text/javascript" src="../resources/js/boardUpdate.js" defer>
 </script>
 <script>

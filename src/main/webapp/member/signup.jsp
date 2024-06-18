@@ -2,9 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>회원가입</title>
-    <link rel="stylesheet" href="../resources/css/signup.css"> <!-- 회원가입 페이지에 맞는 CSS 파일 링크 -->
+<meta charset="UTF-8">
+<title>회원가입</title>
+<link rel="stylesheet" href="../resources/css/signup.css"> <!-- 회원가입 페이지에 맞는 CSS 파일 링크 -->
+<link rel="stylesheet" href="../resources/css/header.css">
+<link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body>
 <!-- Header -->

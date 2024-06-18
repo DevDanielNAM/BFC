@@ -28,6 +28,8 @@
 <meta charset="UTF-8">
 <title>Busan Full Course - <%= userInfo.getNickname() %>의 <%= postDetail.getTitle() %></title>
 <link rel="stylesheet" href="../resources/css/boardDetail.css">
+<link rel="stylesheet" href="../resources/css/header.css">
+<link rel="stylesheet" href="../resources/css/footer.css">
 </head>
 <body>
 	<!-- Header -->
@@ -163,7 +165,7 @@
 				%>
 		    		<article class="reply-form disable">
 		    			<h4 id="reply-write-title">댓글 추가</h4>	
-		    			<a id="disable-reply-box">댓글을 작성하시려면 로그인을 해주세요.</a>
+		    			<a id="disable-reply-box" onclick='showLoginAlert(<%= postId %>)'>댓글을 작성하시려면 로그인을 해주세요.</a>
 		    			<input type="button" id="reply-write-button" value="추가하기" disabled />	    		
 		    		</article>
 	    		<%

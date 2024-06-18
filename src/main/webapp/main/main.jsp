@@ -6,14 +6,7 @@
 <%@ page import="com.bfc.board.HashtagDTO" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>여행지 소개 메인 페이지</title>
-<link rel="stylesheet" href="../resources/css/main.css">
-<script type="text/javascript" src="../resources/js/main.js" defer></script>
-</head>
 <body>
-
     <!-- Site Introduction Banner -->
     <section class="site-banner">
         <h2>부산 풀코스에 오신 것을 환영합니다!</h2>
