@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<body>
-this is footer
-</body>
+<footer>
+<hr>
+<p>Copyright &copy; 2024 Busan Full Course All reserved.</p>
+</footer>
 </html>
