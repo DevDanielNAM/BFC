@@ -1,12 +1,16 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gowun+Dodum&family=Orbit&display=swap');
 
 body {
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
 	height: 100vh;
 	margin: 0;
 	font-family: Arial, sans-serif;
+}
+
+#inputFields {
+	font-family: "Gowun Dodum", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 #content-upload-button {
@@ -16,13 +20,14 @@ body {
 	background-color: #65A1E7;
 	color: white;
 	border: none;
-	height : 30px;
+	height : 35px;
 	width : 60px;
 	font-size : 13px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding: 0px;
+	transition: 0.3s ease;
 }
 
 #form-actions{
@@ -37,25 +42,38 @@ body {
 	background-color: #E47C7C;
 	color: white;
 	border: none;
-	height : 30px;
+	height : 35px;
 	width : 60px;
 	font-size : 13px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	transition: 0.3s ease;
 }
 
 #content-add-button{
 	cursor: pointer;
 	border-radius: 7px;
-	background-color: #E47C7C;
+	background-color: #8f7ce4;
 	color: white;
 	border: none;
-	height : 30px;
-	width : 60px;
+	height : 35px;
+	width : 45px;
 	font-size : 13px;
-	justify-content: center;
-	align-items: center;
+	padding: 0;
+	transition: 0.3s ease;
+}
+
+#content-upload-button:hover {
+	background-color: #1d78e2;
+}
+
+#content-cancel-button:hover {
+	background-color: #cd0909;
+}
+
+#content-add-button:hover {
+	background-color: #593be1;
 }
 
 #form-form-group{
@@ -65,29 +83,19 @@ body {
 .container {
 	width: 80%;
 	max-width: 1200px;
-	margin-top: 50px; /* 상단 여백 추가 */
-	margin-bottom: 50px; /* 상단 여백 추가 */
-	
-	margin: 50px auto;
-	padding: 5px 10px;
-	border: lightsteelblue solid 1px;
+	margin: 30px auto;
+	padding: 20px;
+	border: #198754 solid 1px;
 	border-radius: 7px;
-	box-shadow: 2px 2px 10px 0px rgba(150,149,149,1);
+	box-shadow: 0px 0px 5px 0px #198754;
 	word-break: break-all;
 	overflow-wrap: break-word;
 }
 
-.course-detail {
-	margin: 50px auto;
-	padding: 5px 10px;
-	border: lightsteelblue solid 1px;
-	border-radius: 7px;
-	box-shadow: 2px 2px 10px 0px rgba(150,149,149,1);
-	word-break: break-all;
-	overflow-wrap: break-word;
+.container > form {
+	width: 95%;
+	margin: auto;
 }
-
-
 
 .form-group {
 	display: flex;
@@ -100,19 +108,39 @@ body {
 	margin-right: 10px;
 }
 
+.form-form-group > .form-group-title:first-child {
+	border: none;
+	height: auto;
+	margin-bottom: 20px;
+}
+
+.form-group-title {
+    border-top: #1f66cfd9 2px dotted;
+	height: 80px;
+    margin-bottom: 0;
+}
+
 #fileFields {
     display: flex; /* Flexbox 레이아웃을 사용 */
-    justify-content: space-between; /* 요소들 사이에 균등한 간격 */
 }
 
 #fileFields .form-group {
     margin-right: 10px; /* 각 그룹 간의 간격을 위한 여백 */
 }
 
-/* #fileFields .form-group:last-child {
-    margin-right: 0;
+#fileFields .form-group:last-child {
+    margin-right: 0px; 
 }
- */
+
+.form-group .form-control {
+	padding: 6px;
+	margin-right: 10px;
+}
+
+.form-group .form-control:last-child {
+	margin-right: 0;
+}
+
 input[type="text"], input[type="file"], textarea {
 	flex: 1;
 	padding: 8px;

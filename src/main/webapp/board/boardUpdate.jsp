@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="../resources/css/boardEdit.css">
 <link rel="stylesheet" href="../resources/css/header.css">
 <link rel="stylesheet" href="../resources/css/footer.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script type="text/javascript" src="../resources/js/boardUpdate.js" defer>
 </script>
 <script>
@@ -54,28 +55,22 @@ int userId = (Integer) session.getAttribute("userId");
                 </div>
 				<div class="form-form-group">
 					<% for(ContentDTO contents : postDTO.getContents()) {
-					%>
-					<div id="fileFields">
-						<div class="form-group">
-							<label for="file0">파일 업로드:</label> <input type="file"
-								name="file<%=nameNumber%>0" id="file0">
-						</div>
-						<div class="form-group">
-							<label for="file0">파일 업로드:</label> <input type="file"
-								name="file<%=nameNumber%>1" id="file0">
-						</div>
-						<div class="form-group">
-							<label for="file0">파일 업로드:</label> <input type="file"
-								name="file<%=nameNumber%>2" id="file0">
-						</div>
-					</div>
-					<div class="form-group">
+					%>					
+					<div class="form-group form-group-title">
 						<label for="title0">코스 제목:</label> <input type="text" name="title<%=nameNumber%>"
 							id="title0" size="1" required value = "<%=contents.getContentTitle()%>">
 					</div>
 					<div class="form-group">
 						<label for="location0">코스 위치:</label> <input type="text"
 							name="location<%=nameNumber%>" id="location0" size="1" required value = "<%=contents.getLocation()%>">
+					</div>
+					<div id="fileFields">
+						<div class="form-group mb-3">
+							<label>파일 업로드:</label> 
+							<input class="form-control" type="file" name="file<%=nameNumber%>0" id="file0">						
+							<input class="form-control" type="file" name="file<%=nameNumber%>1" id="file0">		
+							<input class="form-control" type="file" name="file<%=nameNumber%>2" id="file0">
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="content0">코스 소개:</label>

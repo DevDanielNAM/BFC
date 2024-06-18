@@ -4,7 +4,7 @@ function addFields() {
 
     // Create new file input group
     var newFileDiv = document.createElement("div");
-    newFileDiv.className = "form-group";
+    newFileDiv.className = "form-group mb-3";
 
     var newFileLabel = document.createElement("label");
     newFileLabel.innerHTML = "파일 업로드:";
@@ -13,38 +13,35 @@ function addFields() {
     newFileInput.type = "file";
     newFileInput.name = "newfile" + fieldCount + "0";
     newFileInput.id = "file" + fieldCount;
+    newFileInput.className = "form-control";
     newFileInput.required = false;
 
     newFileDiv.appendChild(newFileLabel);
     newFileDiv.appendChild(newFileInput);
-    
-    var newFileLabel = document.createElement("label");
-    newFileLabel.innerHTML = "파일 업로드:";
+   
 
     var newFileInput = document.createElement("input");
     newFileInput.type = "file";
     newFileInput.name = "newfile" + fieldCount + "1";
     newFileInput.id = "file" + fieldCount;
+    newFileInput.className = "form-control";
     newFileInput.required = false;
 
-    newFileDiv.appendChild(newFileLabel);
     newFileDiv.appendChild(newFileInput);
     
-     var newFileLabel = document.createElement("label");
-    newFileLabel.innerHTML = "파일 업로드:";
 
     var newFileInput = document.createElement("input");
     newFileInput.type = "file";
     newFileInput.name = "newfile" + fieldCount + "2";
     newFileInput.id = "file" + fieldCount;
+    newFileInput.className = "form-control";
     newFileInput.required = false;
 
-    newFileDiv.appendChild(newFileLabel);
     newFileDiv.appendChild(newFileInput);
     
     // Create new title input group
     var newTitleDiv = document.createElement("div");
-    newTitleDiv.className = "form-group";
+    newTitleDiv.className = "form-group form-group-title";
 
     var newTitleLabel = document.createElement("label");
     newTitleLabel.innerHTML = "코스 제목:";
