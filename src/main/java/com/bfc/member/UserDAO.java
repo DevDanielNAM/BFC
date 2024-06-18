@@ -1,5 +1,6 @@
 package com.bfc.member;
 import java.util.*;
+import com.bfc.board.PostDAO;
 import java.sql.*;
 
 public class UserDAO {
@@ -93,5 +94,18 @@ public class UserDAO {
 	            e.printStackTrace();
 	        }
 	        return user;
+	    }
+	    
+	    public void deleteUser(int userId) {   // PostId�� ����Ʈ ����
+	    	PostDAO postDAO = new PostDAO();
+	    	postDAO.deletePostByUserId(userId);
+	        String sql = "DELETE FROM User WHERE userId = ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, userId);
+	            ps.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
 	    }
 }
