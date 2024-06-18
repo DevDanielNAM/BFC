@@ -398,6 +398,17 @@ public class PostDAO {
 	        }
 	    }
 	    
+	    public void deleteReplyByPostId(int postId) {   // �ڽ� ����
+	        String sql = "DELETE FROM Reply WHERE postId = ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, postId);
+	            ps.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
 	    public void deleteContentByPostId(int postId) {   // �ڽ� ����
 	        String sql = "DELETE FROM Content WHERE postId = ?";
 	        try (Connection conn = getConnection();
@@ -412,11 +423,69 @@ public class PostDAO {
 	    public void deletePostByPostId(int postId) {   // PostId�� ����Ʈ ����
 	    	deleteHashtagsByPostId(postId);
 	    	deleteImageByPostId(postId);
+	    	deleteReplyByPostId(postId);
 	    	deleteContentByPostId(postId);
 	        String sql = "DELETE FROM Post WHERE postId = ?";
 	        try (Connection conn = getConnection();
 	             PreparedStatement ps = conn.prepareStatement(sql)) {
 	            ps.setInt(1, postId);
+	            ps.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    public void deleteImageByUserId(int userId) {
+	        String sql = "DELETE FROM Image WHERE userId = ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, userId);
+	            ps.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    public void deleteHashtagsByUserId(int userId) {   // �ؽ��±� ����
+	        String sql = "DELETE FROM Hashtag WHERE userId = ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, userId);
+	            ps.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    public void deleteReplyByUserId(int userId) {   // �ڽ� ����
+	        String sql = "DELETE FROM Reply WHERE userId = ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, userId);
+	            ps.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    public void deleteContentByUserId(int userId) {   // �ڽ� ����
+	        String sql = "DELETE FROM Content WHERE userId = ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, userId);
+	            ps.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    public void deletePostByUserId(int userId) {   // PostId�� ����Ʈ ����
+	    	deleteHashtagsByUserId(userId);
+	    	deleteImageByUserId(userId);
+	    	deleteContentByUserId(userId);
+	    	deleteReplyByUserId(userId);
+	        String sql = "DELETE FROM Post WHERE userId = ?";
+	        try (Connection conn = getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	            ps.setInt(1, userId);
 	            ps.executeUpdate();
 	        } catch (SQLException e) {
 	            e.printStackTrace();
