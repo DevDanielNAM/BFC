@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>유저 정보 수정 페이지</title>
+<title>회원 정보 수정 페이지</title>
 </head>
 <link rel="stylesheet" href="../resources/css/userEdit.css">
 <link rel="stylesheet" href="../resources/css/header.css">
@@ -38,11 +38,11 @@ const callCacelConfirm = (type) => {
         <form action="UserUpload.jsp" method="post">
             <div id="inputFields">
 				<div class="form-group">
-					<label for="title">닉네임:</label> <input type="text" name="nickname"
+					<label for="title">닉 네 임:</label> <input type="text" name="nickname"
 						id="nickname" size="1" value = "<%=userDTO.getNickname()%>" required>
 				</div>
 				<div class="form-group">
-					<label for="title">아이디:</label> <input type="text" name="id"
+					<label for="title">아 이 디:</label> <input type="text" name="id"
 						id="id" size="1" value = "<%=userDTO.getLogin()%>" required disabled>
 				</div>
 				<div class="form-group">
