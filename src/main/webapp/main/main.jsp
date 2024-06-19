@@ -101,16 +101,16 @@
                         if (searchQuery != null && !searchQuery.trim().isEmpty()) {
                             if (searchType.equals("tag")) {
                 %>
-                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&searchQuery=#<%= searchQuery %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&searchQuery=#<%= searchQuery %>" <%= (i == currentPage) ? "style='font-weight: bold; background-color: #066AE0; color: white;" : "" %>><%= i %></a>
                 <%
                             } else {
                 %>
-                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&searchQuery=<%= searchQuery %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&searchQuery=<%= searchQuery %>" <%= (i == currentPage) ? "style='font-weight: bold; background-color: #066AE0; color: white;" : "" %>><%= i %></a>
                 <%
                             }
                         } else {
                 %>
-                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>" <%= (i == currentPage) ? "style='font-weight: bold; background-color: #066AE0; color: white;" : "" %>><%= i %></a>
                 <%
                         }
                     }
