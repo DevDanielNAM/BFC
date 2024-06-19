@@ -567,16 +567,32 @@ public class PostDAO {
 	        return searchedPosts;
 	    }
 	    
-	    public List<SimplePostDTO> searchPostsByTag(String tagQuery) {
+	    public List<SimplePostDTO> searchPostsByTag(String searchQuery, String searchType) {
 	        List<SimplePostDTO> searchedPosts = new ArrayList<>();
-	        String sql = "SELECT p.postId, p.title " +
-	                     "FROM Post p " +
-	                     "JOIN Content c ON p.postId = c.postId " +
-	                     "JOIN HashTag h ON c.contentId = h.contentId " +
-	                     "WHERE h.tag LIKE ?";
+	        String sql = "";
+
+	        if ("tag".equalsIgnoreCase(searchType)) {
+	            sql = "SELECT p.postId, p.title " +
+	                  "FROM Post p " +
+	                  "JOIN Content c ON p.postId = c.postId " +
+	                  "JOIN HashTag h ON c.contentId = h.contentId " +
+	                  "WHERE h.tag LIKE ?";
+	        } else if ("title".equalsIgnoreCase(searchType)) {
+	            sql = "SELECT p.postId, p.title " +
+	                  "FROM Post p " +
+	                  "WHERE p.title LIKE ?";
+	        } else {
+	            // 기본적으로 태그로 검색하도록 설정
+	            sql = "SELECT p.postId, p.title " +
+	                  "FROM Post p " +
+	                  "JOIN Content c ON p.postId = c.postId " +
+	                  "JOIN HashTag h ON c.contentId = h.contentId " +
+	                  "WHERE h.tag LIKE ?";
+	        }
+
 	        try (Connection conn = getConnection();
 	             PreparedStatement ps = conn.prepareStatement(sql)) {
-	            ps.setString(1, "%" + tagQuery + "%");
+	            ps.setString(1, "%" + searchQuery + "%");
 
 	            try (ResultSet rs = ps.executeQuery()) {
 	                while (rs.next()) {

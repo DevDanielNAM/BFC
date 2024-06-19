@@ -7,11 +7,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <!-- Site Introduction Banner -->
-    <!-- <section class="site-banner">
-        <p>다양한 부산 여행지를 탐색하고, 각 여행지에 대한 코스 확인해보세요</p>
-    </section> -->
-
+    
     <!-- Random Hashtags -->
     <section class="random-hashtags">
         <h3>추천 해시태그!</h3>
@@ -29,21 +25,13 @@
         </div>
     </section>
 
-    <!-- 해시태그 검색 -->
+    <!-- #태그 또는 제목으로 검색 -->
     <section class="search-bar">
         <form action="${pageContext.request.contextPath}/index.jsp" method="get">
-            <input type="text" name="tagQuery" placeholder="태그로 검색해보세요">
+            <input type="text" name="searchQuery" placeholder="#태그 또는 제목으로 검색해보세요">
             <button type="submit">검색</button>
         </form>
     </section>
-    
-    <!-- 포스트 제목으로 검색 -->
-<%--     <section class="search-bar">
-        <form action="${pageContext.request.contextPath}/index.jsp" method="get">
-            <input type="text" name="query" placeholder="글 제목으로 검색하기">
-            <button type="submit">검색</button>
-        </form>
-    </section> --%>
 
     <!-- Main -->
     <main>
@@ -63,16 +51,18 @@
 
                     PostDAO postDAO = new PostDAO();
                     List<SimplePostDTO> allPosts;
-                    String query = request.getParameter("query");
-                    String tagQuery = request.getParameter("tagQuery");
+                    
+                    String searchQuery = request.getParameter("searchQuery");
+                    String searchType = null;
 
-                    // 여행지 제목으로 검색
-                    if (query != null && !query.trim().isEmpty()) {
-                        allPosts = postDAO.searchPosts(query);
-                    }
-                    // 해시태그로 검색
-                    else if (tagQuery != null && !tagQuery.trim().isEmpty()) {
-                        allPosts = postDAO.searchPostsByTag(tagQuery);
+                    if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+                        if (searchQuery.startsWith("#")) {
+                            searchType = "tag";
+                            searchQuery = searchQuery.substring(1); // '#' 제거
+                        } else {
+                            searchType = "title";
+                        }
+                        allPosts = postDAO.searchPostsByTag(searchQuery, searchType);
                     } else {
                         allPosts = postDAO.getAllPosts(); // 검색어가 없을 경우 전체 포스트 가져오기
                     }
@@ -103,24 +93,24 @@
                 %>
             </div>
 
-            <!-- Pagination -->
+             <!-- Pagination -->
             <div class="pagination">
                 <%
-                
                     // 페이지 링크 출력
                     for (int i = 1; i <= totalPages; i++) {
-                        // 검색어(query 또는 tagQuery)가 있을 때와 없을 때의 링크 구성
-                        if (query != null && !query.trim().isEmpty()) {
+                        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+                            if (searchType.equals("tag")) {
                 %>
-                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&query=<%= query %>" <%= (i == currentPage) ? "style='font-weight: bold; background-color: #066AE0; color: white;" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&searchQuery=#<%= searchQuery %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
                 <%
-                        } else if (tagQuery != null && !tagQuery.trim().isEmpty()) {
+                            } else {
                 %>
-                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&tagQuery=<%= tagQuery %>" <%= (i == currentPage) ? "style='font-weight: bold; background-color: #066AE0; color: white;'" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>&searchQuery=<%= searchQuery %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
                 <%
+                            }
                         } else {
                 %>
-                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>" <%= (i == currentPage) ? "style='font-weight: bold; background-color: #066AE0; color: white;'" : "" %>><%= i %></a>
+                <a href="${pageContext.request.contextPath}/index.jsp?page=<%= i %>" <%= (i == currentPage) ? "style='font-weight: bold;'" : "" %>><%= i %></a>
                 <%
                         }
                     }
