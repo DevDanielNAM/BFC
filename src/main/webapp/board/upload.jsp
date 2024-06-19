@@ -31,13 +31,21 @@ int lastPostId = postDAO.getLastPostId();
 int newPostId = lastPostId + 1;
 
 //경로 설정
-String uploadPath = getServletContext().getRealPath("/uploadImages/board" + newPostId);
+String baseUploadPath = getServletContext().getRealPath("/uploadImages/");
+String uploadPath = baseUploadPath + File.separator + "board" + newPostId;
 
+//이미 존재하는 폴더인 경우 newPostId를 증가시키며 확인
 File uploadDir = new File(uploadPath);
-if (!uploadDir.exists()) {
-    uploadDir.mkdirs();
+while (uploadDir.exists()) {
+ newPostId++;
+ uploadPath = baseUploadPath + File.separator + "board" + newPostId;
+ uploadDir = new File(uploadPath);
 }
 
+//폴더 생성
+if (!uploadDir.exists()) {
+ uploadDir.mkdirs();
+}
 
 MultipartRequest multi = new MultipartRequest(request, uploadPath,
 		5 * 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
