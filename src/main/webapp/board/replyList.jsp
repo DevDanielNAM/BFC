@@ -40,7 +40,7 @@
 								<%
 							        } else {
 								%>
-									<li><a>수정</a></li>
+									<li><a class="edit-reply" data-content="<%= reply.getContent() %>" data-index="<%= i %>">수정</a></li>
 									<li><a>삭제</a></li>
 								<%
 							        }
