@@ -134,6 +134,7 @@ body {
 .contentImg {
     width: 50%;
     height: 50%;
+    border-radius: 5px;
 }
 
 .post h2 {

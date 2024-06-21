@@ -49,11 +49,12 @@ body {
 .contentImg{
 	width: auto;
 	height: 15vw;
+	border-radius: 5px;
 }
 
 .myContent{
 	margin-top: 10px;
-	margin-left: 10px;
+	margin-left: 10px;	
 }
 
 .sidebar img {
