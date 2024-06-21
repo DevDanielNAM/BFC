@@ -1,4 +1,6 @@
-# BFC(Busan Full Course)
+![Header](https://github.com/DevDanielNAM/BFC/assets/108088887/9fcfbc33-13ae-4945-9780-8282d2c45b0c)
+
+
 
 ## Introduction
 <pre>
@@ -7,6 +9,7 @@
 서로 공유하고 소통하는 웹사이트입니다.
 </pre>
 ***
+
 ## Stack
 
 <div align="center">
@@ -19,7 +22,7 @@
   <img src="https://img.shields.io/badge/Java-007396.svg?&style=for-the-badge&logo=openjdk&logoColor=white"> 
   <img src="https://img.shields.io/badge/Jsp-e76f00?style=for-the-badge&logo=openjdk&logoColor=white">
   <br>
-  <img src="https://img.shields.io/badge/ORACLE%20DATABASE-F80000?style=for-the-badge&logo=oracle&logoColor=white"/> 
+  <img src="https://img.shields.io/badge/MySQL-blue?style=for-the-badge&logo=mysql&logoColor=white"/> 
   <img src="https://img.shields.io/badge/apachetomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=black"> 
   <br>
   <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>
@@ -27,6 +30,84 @@
   <img src="https://img.shields.io/badge/Eclipse%20IDE-2C2255.svg?&style=for-the-badge&logo=Eclipse%20IDE&logoColor=white"> 
   <img src="https://img.shields.io/badge/Discord-5865F2.svg?&style=for-the-badge&logo=Discord&logoColor=white"> 
 </div>
+
+## Flow Chart
+<img width="792" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/a0477c4e-4d08-4230-83a6-677266406d15">
+
+## ERD
+<img width="831" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/eb61be26-e42a-4d5d-b5d9-45218dc96241">
+
+## 주요기능
+### 메인페이지
+<img width="600" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/92d17bcd-f9d7-4425-97f5-b51a3af3e084"><br>
+<ul>
+  <li>작성되어진 여행지들을 전체적으로 확인 가능</li>
+  <li>추천 해시태그는 등록된 여행지의 해시태그중 6개를 랜덤으로 추천</li>
+  <li>태그를 검색할 수도 있고 여행지 제목으로도 검색 가능</li>
+  <li>상단 헤더의 로그인 버튼을 눌러 로그인 화면으로 이동</li>
+</ul>
+
+### 로그인, 회원가입 페이지
+<img width="425" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/6b63c8e5-76a3-4ced-bb61-2f97a612dce9">
+<img width="421" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/ae775efc-d404-4dec-8e42-be7de2e48118">
+
+### 검색
+<img width="600" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/5aadbb2e-d732-4921-99de-811d5d70360c"><br>
+<ul>
+  <li>태그나 제목을 검색하여 본인이 찾고 싶은 풀코스를 찾아볼 수 있음</li>
+</ul>
+
+### 코스 게시글 작성, 수정 페이지
+<img width="600" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/0aa49ba7-0260-491a-87a6-1fe1ce9124bd"><br>
+<ul>
+  <li>여행지 등록 버튼을 눌러 본인의 부산 풀코스를 작성</li>
+  <li>소개글 제목, 코스 제목, 코스 위치, 사진, 소개, 태그들을 작성할 수 있음</li>
+  <li>태그는 띄어쓰기로 구분되어 DB에 저장</li>
+  <li>하단 중앙에 있는 + 버튼을 눌러 원하는 만큼 코스를 추가 가능</li>
+</ul>
+
+### 상세페이지
+<img width="600" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/a2494f39-d279-4f99-9bfa-32b54c646f64"><br>
+<ul>
+  <li>각 코스를 눌러 해당 코스의 정보를 볼 수 있음</li>
+  <li>자신의 글이라면 수정, 삭제 버튼을 눌러 수정, 삭제 가능</li>
+</ul>
+
+### 댓글
+<img width="450" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/9f3af1f8-db12-4e6f-a763-22481a18ddda"><br>
+<img width="450" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/4eed9912-7a67-4790-a0ee-c9cdcb677f31"><br>
+<img width="450" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/6cd0070f-e701-4207-a06e-a6f5fb5c862b">
+<ul>
+  <li>상세 페이지 하단에서 해당 게시글에 댓글을 달 수 있음</li>
+  <li>본인의 댓글은 우측 케밥 메뉴 버튼을 눌러 수정, 삭제 가능</li>
+</ul>
+
+### 마이페이지
+<img width="477" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/e79978b3-a69f-436d-97f4-7f34e1691652">
+<img width="275" alt="image" src="https://github.com/DevDanielNAM/BFC/assets/108088887/12bc5a58-6743-4dfc-baa7-c229119b8890">
+<ul>
+  <li>상단 우측 프로필 이미지를 눌러 마이페이지로 이동</li>
+  <li>마이페이지에서 유저 정보 수정, 회원 탈퇴, 자신이 작성한 부산 풀코스를 모아볼 수 있음</li>
+</ul>
+
+## Members
+<table align="center">
+  <tr>
+    <td align="center"><a href="https://github.com/DevDanielNAM"><img src="https://avatars.githubusercontent.com/u/108088887?v=4" width="100px;" alt=""/>
+    <td align="center"><a href="https://github.com/SHSong99"><img src="https://avatars.githubusercontent.com/u/161740297?v=4" width="100px;" alt=""/>
+    <td align="center"><a href="https://github.com/JONG-KYEONG"><img src="https://avatars.githubusercontent.com/u/111286262?v=4" width="100px;" alt=""/>
+  </tr>
+    <tr>
+    <td align="center"><a href="https://github.com/DevDanielNAM" title="Code">남기성</a></td>
+    <td align="center"><a href="https://github.com/SHSong99" title="Code">송성현</a></td>
+    <td align="center"><a href="https://github.com/JONG-KYEONG" title="Code">김종경</a></td>
+  </tr>
+    <tr>
+    <td align="center"><p>순서도 설계<br>상세페이지<br>댓글<br>CSS</p></td>
+    <td align="center"><p>메인페이지<br>검색<br>로그인<br>회원가입</p></td>
+    <td align="center"><p>ERD 설계<br>코스 게시글 작성<br>수정페이지<br>마이페이지</p></td>
+    </tr>
+</table>
 
 ***
 ## Git Flow
